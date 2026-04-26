@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*~
+
+# OpenWolf / code-intel indexes (local, regenerable)
+.axon/
+.wolf/designqc-captures/
+
+# Model weights and large artifacts — NEVER commit these
+base/
+experiments/*/outputs/
+experiments/*/checkpoints/
+experiments/*/wandb/
+experiments/*/runs/
+checkpoints/
+runs/
+wandb/
+outputs/
+
+# Model file extensions
+*.safetensors
+*.gguf
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.msgpack
+*.h5
+*.tflite
+*.npz
+*.npy
+
+# Tokenizer / dataset cache
+*.arrow
+*.parquet
+*.feather
+.cache/
+hf_cache/
+datasets_cache/
+
+# Eval / log artifacts
+*_cache/
+samples_*.jsonl
+results_*/
+lm_eval_outputs/
+*.log
+
+# imatrix calibration outputs (large, regenerable but archived alongside quants — not in git)
+imatrix.dat
+*.imatrix
+
+# Local secrets / API keys
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
