@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mythic-rdt"
+version = "0.1.0"
+description = "Recurrent-Depth Transformer wrapping MoE bases (DeepSeek-Coder-V2-Lite-Instruct, Gemma 4 26B-A4B) via OpenMythos blueprint + retrofit-recurrence fine-tune."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "ManniX-ITA" },
+]
+keywords = [
+  "transformers",
+  "moe",
+  "recurrent-depth",
+  "openmythos",
+  "deepseek-v2",
+  "gemma-4",
+  "retrofit-recurrence",
+]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "torch>=2.3",
+  "transformers>=4.45",
+  "safetensors>=0.4.3",
+  "accelerate>=0.30",
+  "huggingface-hub>=0.24",
+]
+
+[project.optional-dependencies]
+quant = [
+  "bitsandbytes>=0.43",
+]
+train = [
+  "datasets>=2.20",
+  "peft>=0.11",
+  "trl>=0.9",
+  "wandb>=0.17",
+]
+test = [
+  "pytest>=8",
+  "pytest-cov>=5",
+]
+eval = [
+  "lm-eval[ifeval,math,sentencepiece]>=0.4.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/mann1x/Mythic-RDT"
+Repository = "https://github.com/mann1x/Mythic-RDT"
+Issues = "https://github.com/mann1x/Mythic-RDT/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mythic_rdt = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
