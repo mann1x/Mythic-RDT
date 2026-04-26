@@ -80,3 +80,6 @@ imatrix.dat
 *.pem
 *.key
 secrets/
+
+# Caliber local state
+.caliber/
