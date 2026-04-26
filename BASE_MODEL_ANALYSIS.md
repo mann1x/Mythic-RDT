@@ -1,188 +1,96 @@
-# Mythic-Gemma4 — Base Model Analysis
+# Mythic-RDT — Base Model Analysis
 
-Decision: **which Gemma 4 variant becomes the foundation for the Mythic-Gemma4 RDT?**
+**Decision (2026-04-26):** two-stage strategy.
 
-## Candidates on this server
+- **Stage 1: `deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct`** — 16 B / 2.4 B-A coding-specialized DeepSeekMoE, native MLA + shared experts, ~$600 fine-tune. **Headline benchmark = HumanEval pass@1**, base ~81 %, target ≥ 86 % at T=8. Publishable artifact in its own right; this is the **Mythic-Coder** release.
+- **Stage 2: `ManniX-ITA/gemma-4-A4B-98e-v3-it`** — 20.8 B / 4 B-A general-reasoning Gemma 4 derivative, GQA + routed-only MoE, ~$2000 fine-tune. Triggered only if Stage 1 succeeds. High-quality general-reasoning release.
 
-| Variant                          | Local path                                        | Storage (bf16) | Layers | Experts/layer | GPQA Diamond (Q6_K, full) | Notes |
-|----------------------------------|---------------------------------------------------|----------------|--------|---------------|---------------------------|-------|
-| **gemma-4-26B-A4B-it (128e)**    | `../google/gemma-4-26B-A4B-it/`                   | 118 GB*        | 30     | 128           | **75.25%**                | original; 118 GB incl. multimodal heads, text-only ~52 GB |
-| **gemma-4-A4B-98e-hybrid (98e v3)** | `../google/gemma-4-A4B-98e-hybrid/`            | 39 GB          | 30     | 98            | **75.25%**                | published as `ManniX-ITA/gemma-4-A4B-98e-v3-it`; **same score as 128e**, 23.4% MoE capacity removed |
-| gemma-4-A4B-109e (drop)          | `../google/gemma-4-A4B-109e/`                     | 42 GB          | 30     | 109           | 71.72%                    | first published HF model; -3.5 pp vs original |
-| gemma-4-A4B-109e-v3              | `../google/gemma-4-A4B-109e-v3/`                  | 42 GB          | 30     | 109           | 71.72%                    | clean teacher-force map version of 109e |
-| gemma-4-A4B-120e-hybrid          | `../google/gemma-4-A4B-120e-hybrid/`              | 46 GB          | 30     | 120           | unknown                   | larger hybrid drop, less aggressive |
-| gemma-4-A4B-64e                  | `../google/gemma-4-A4B-64e/`                      | ~30 GB         | 30     | 64            | 0.00% (broken)            | aggressive drop, broke the model |
-| gemma-4-A4B-96e                  | `../google/gemma-4-A4B-96e/`                      | ~38 GB         | 30     | 96            | unknown                   | early sibling to 98e, superseded |
-| gemma-4-16B-it                   | `../google/gemma-4-16B-it/`                       | 32 GB          | ?      | dense (no MoE)| n/a                       | smaller dense Gemma 4 variant |
-| gemma-4-31B-it                   | `../google/gemma-4-31B-it/`                       | 189 GB*        | ?      | ? (likely MoE)| unknown                   | larger Gemma 4 |
-| Gemma 4 E4B                      | (not on disk)                                     | small          | ?      | dense         | 57.07%                    | Google's small variant; too weak |
-
-*sizes include multimodal encoders for the official releases.
-
-Architecture for all A4B variants (verified from `text_config`):
-- `hidden_size: 2816`, `intermediate_size: 2112`
-- `head_dim: 256`, `global_head_dim: 512`, `attention_k_eq_v: true` (K and V share weights)
-- `num_hidden_layers: 30`, `layer_types`: mixed `sliding_attention` / `full_attention`
-- `dtype: bfloat16`, `final_logit_softcapping: 30.0`, `enable_moe_block: true`
+Detailed architecture specs in `BASE_DEEPSEEK_CODER_V2_LITE.md` (Stage 1) and `BASE_GEMMA4_98E_V3.md` (Stage 2). This file is the high-level decision record.
 
 ---
 
-## Comparative analysis
+## Why two stages, in this order
 
-### 128e (original)
+The Gemma 4 path alone is risky: ~$2000 minimum just to find out if retrofit-recurrence works on a real MoE base, with a low ceiling (75 % → 78 % plausible) because the base is already near-saturated for its size class. If it fails, the money is gone with no published artifact.
 
-**Pros**
-- Reference model, no surprises.
-- Highest absolute headroom — every uncompressed expert is available for the recurrent block to draw on.
-- Most prior art: every published Gemma 4 result, eval methodology, and llama-server config has been validated on this exact base.
+DS-Coder-V2-Lite-Instruct as Stage 1 is **3× cheaper, 2× faster, architecturally pure (matches OpenMythos's spec verbatim), already strong** (HumanEval @ 81 %), and has a benchmark — HumanEval — where multi-step deliberation is exactly the right kind of compute. RDT amplification on coding is a *more compelling* story than on general reasoning, because hard programming problems benefit precisely from depth recurrence (plan → revise → patch). It's a publishable artifact in its own right *and* a gating de-risk for Stage 2.
 
-**Cons**
-- 118 GB on disk, ~52 GB text-only after stripping multimodal heads. Fine-tune storage cost ≈ 1.5–2× larger than 98e-v3 throughout the curriculum.
-- Full 128 experts × 30 layers means the recurrent layer carries the full MoE block even though we only reuse one layer's experts. Wasted disk + memory budget for capacity we're not using.
-- No quality margin to recover via recurrence — must out-perform the 75.25% baseline purely from compute scaling.
+| Aspect | Stage 1 (DS-Coder-V2-Lite-Instruct) | Stage 2 (Gemma 4 98e v3) |
+|---|---|---|
+| Total params | 15.7 B | 20.8 B |
+| Active params/token | **2.4 B** | 4.0 B |
+| Layers | 27 | 30 |
+| Hidden dim | 2048 | 2816 |
+| Attention | **MLA** (kv_lora_rank 512) | GQA (head_dim 256) |
+| MoE | **64 routed + 2 shared, top-6** | 98 routed, top-8 (no shared) |
+| Native context | **128k** | 32k |
+| Disk size (bf16) | 31.4 GB | 39 GB |
+| Reported headline benchmark | **HumanEval 81.1 %** | GPQA Diamond 75.25 % |
+| Architectural fit for OpenMythos | **direct port** | adapted (no MLA, no shared experts) |
+| Fine-tune cost (5 B tok) | $600 / 11 d on 2× H100 | $2000 / 11 d on 4× H100 |
+| Fine-tune on 4× 3090 (free) | ~25 d feasible | ~50 d barely feasible |
+| Realistic outcome at T=8 | HumanEval ~85–88 % (+4–7 pp) | GPQA ~78–82 % (+3–7 pp) |
+| Headline | "16 B-storage code model that scales like 50 B at T=8" | "First high-quality general-reasoning RDT on Gemma 4" |
 
-### 98e-hybrid (= "98e v3", primary candidate)
+## Why the Coder variant of DS-V2-Lite (not V2-Lite-Chat)
 
-**Pros**
-- **Same 75.25% GPQA Diamond as 128e**, despite removing 23.4% of MoE capacity. This is a documented Pareto improvement, not theoretical.
-- Smaller storage (~39 GB on disk, ~20.8B params bf16) → cheaper fine-tune memory, faster shard loads, smaller HF release.
-- Already pruned with the broader `expert_neuron_v4.json` analysis (all task categories, not GPQA-specific) — generalization is preserved.
-- Published and verified: `ManniX-ITA/gemma-4-A4B-98e-v3-it`. The community can reproduce.
-- Owned weights: no download cost, instant fine-tune start.
-- Smaller expert population per layer (98 vs 128) means depth-distinct router LoRA has fewer outputs to coordinate — slightly easier learning target.
-- The hybrid drop kept different expert subsets per layer, so the chosen recurrent layer's 98 experts are already a "useful 98", not a worst-case subset.
+V2-Lite-Chat scores HumanEval 57 %, MMLU 56 %, GPQA ~28 %. DS-Coder-V2-Lite-Instruct (same chassis, +6 T code tokens) scores HumanEval 81 %, GSM8K 86 %, MATH 62 %, MMLU 60 %. Both are 16 B / 2.4 B-A.
 
-**Cons**
-- The recurrent block reuses one layer's MoE T times. That layer has 98 experts now, instead of 128. If recurrence happens to stress capacity, 30 missing experts could matter more than they did at T=1.
-- Pruning was performed under a single-shot inference assumption. Whether the dropped experts would have been useful under T-loop reuse is untested — there's a small chance a pruned expert is exactly the "deep reasoning" expert we'd want available at T=8.
-- Less margin: if Mythic-98e fine-tune underperforms, the floor is closer.
+For Mythic-RDT specifically:
 
-### 109e v3 (drop variant)
+1. **HumanEval is a near-perfect RDT benchmark.** Hard programming problems require *plan → write → revise* — exactly what depth recurrence buys. Multi-step coding is what RDT was designed for.
+2. **Already strong base = published artifact people will actually use.** Mythic-Coder at 86 % HumanEval is genuinely useful at 16 B storage; Mythic-Chat at 40 % GPQA from a 28 % base is academically interesting but not deployed.
+3. **128 k context** (V2-Lite-Chat's 32 k extended via continued pretraining) opens long-document code reasoning experiments later.
+4. **Same architecture** as V2-Lite-Chat — every OpenMythos-fit advantage is preserved.
 
-**Pros**
-- Larger expert population than 98e (109 vs 98).
-- Already published, with a clean teacher-force map.
+## Why DS-Coder-V2-Lite is NOT enough alone (still want Stage 2)
 
-**Cons**
-- **Loses 3.5 pp on GPQA vs both 128e and 98e-v3** (71.72%). Starting from a degraded baseline is worse than starting from 98e-v3 which has zero quality loss.
-- No reason to choose this when 98e-v3 dominates on both quality and storage.
+1. **General reasoning generalization signal.** If retrofit-recurrence works on Mythic-Coder *and* Mythic-Gemma4 (different MoE topologies, different domains), that's stronger evidence the technique is a general one. One data point is suggestive; two are convincing.
+2. **Different headlines reach different audiences.** Mythic-Coder reaches the "I want a useful 16 B code model" crowd. Mythic-Gemma4 reaches the "I want stronger reasoning on a popular base" crowd. Both have value.
+3. **Reuse of phase-1 code for phase-2 conversion.** The recurrence harness, curriculum scripts, and HF custom-code packaging all carry over from Stage 1 → Stage 2. Marginal cost is mostly the GPU bill.
 
-### 120e-hybrid
+## Other candidates considered and rejected
 
-**Pros**
-- Less aggressive drop, closer to 128e capacity.
+| Candidate | Why not |
+|---|---|
+| DeepSeek-V2-Lite-Chat | General-reasoning sibling; superseded by Coder variant for our purposes (lower base scores, no HumanEval headline). Could still be a sister experiment if we want a "Mythic-Chat" variant. |
+| DeepSeek-Coder-V2-Instruct (full 236 B) | Too big to fine-tune; even 4-bit is 60+ GB, training won't fit on any reasonable budget. |
+| DeepSeek-V2 (236 B / 21 B-A) | Same problem — too big. |
+| DeepSeek-V3 (671 B / 37 B-A) | Way too big; 4-bit is ~170 GB. |
+| Qwen3-30B-A3B | GQA + routed-only MoE — same architectural mismatch as Gemma 4. No advantage over Gemma. |
+| Qwen3-235B-A22B | Too big. |
+| Qwen3-Coder-30B-A3B | GQA, no MLA, no shared experts. Architecturally weaker fit for OpenMythos than DS-Coder-V2-Lite. |
+| Hunyuan-Large, MiniMax-Text-01, OLMoE-1B-7B | Too big, missing MLA, or missing MoE — all worse fits. |
+| Gemma 4 128e original | 118 GB on disk (52 GB text-only). 1.5× larger than 98e v3 with identical 75.25 % GPQA. Use only if Stage 2 fails on 98e v3. |
+| Gemma 4 109e v3 | 71.72 % GPQA — strictly dominated by 98e v3. |
+| Gemma 4 120e hybrid / 64e / 96e / 16B / 31B / E4B | Various — see prior analysis; all dominated. |
 
-**Cons**
-- GPQA score never logged in `Reference results`. Without a verified score it's a leap of faith.
-- Storage is between 98e and 128e with unclear quality position. Probably no advantage over either.
-- Skip unless 98e-v3 fine-tune fails and we need a "more capacity" fallback.
+## Stage gating
 
-### 16B / 31B / E4B
-
-- **16B-it (dense)**: no MoE — wrong architectural family, defeats the A4B-MoE design. Skip.
-- **31B-it**: bigger than 26B, but no GPQA score and harder to fine-tune. Skip unless 26B variants all fail.
-- **E4B**: 57% GPQA is too low — even with T=8 recurrence we'd struggle to hit 70%. Skip.
-
----
-
-## Recommendation
-
-**Primary base: `gemma-4-A4B-98e-hybrid` (published as `ManniX-ITA/gemma-4-A4B-98e-v3-it`).**
-
-Reasoning:
-
-1. **Zero quality loss.** GPQA Diamond 75.25% matches the 128e original — there's no "degraded base" risk. The whole conversation about pruned-base quality recovery becomes moot.
-2. **Smaller fine-tune target.** 39 GB on disk vs 118 GB (or 52 GB text-only) — every gradient step is cheaper, every checkpoint write is faster, every HF release is more downloadable.
-3. **The pruning is orthogonal to recurrence.** 98e v3 removed the lowest-contribution experts under single-shot inference. Recurrence adds compute scaling. These are independent levers; combining them preserves both wins.
-4. **The story is interesting:** "Mythic-Gemma4-26B-A4B-98e — 20.8B params, matches Gemma 4 base at T=1, surpasses it at T=4–8 on hard reasoning, no extra storage." That's a tighter narrative than the 128e variant.
-5. **We own the weights and the pipeline.** Already on disk, already evaluated, already published — instant phase-0 start.
-
-**Fallback base: `gemma-4-26B-A4B-it` (128e original).**
-
-Use 128e if:
-- Phase-0 sanity gate fails on 98e-v3 (untrained T=8 produces total junk).
-- Phase-2 fine-tune curriculum cannot recover quality on 98e-v3 even after 3+ B tokens.
-- We discover that pruned experts at the chosen recurrent layer are critical for T-loop reuse.
-
-In that fallback, all the architectural decisions (recurrent layer index, LTI init, gate init, depth-LoRA rank, curriculum) are identical — only the base swap.
-
-**Explicitly NOT used:** 109e, 120e, 64e, 96e, 16B, 31B, E4B, 31B. Each fails on either quality, architecture mismatch, or both.
-
----
-
-## Local ↔ HF integrity check — RESULT: **NOT BIT-IDENTICAL**
-
-Local `../google/gemma-4-A4B-98e-hybrid/` is **not** the same artifact as the published `ManniX-ITA/gemma-4-A4B-98e-v3-it`. File **sizes** match for every weight shard, but the **SHA256 hashes differ on all 9 shards**, and three metadata files differ in size as well.
-
-### Weight shards (sizes match, content differs)
-
-| File | HF size | Local size | HF SHA256 | Local SHA256 | Match |
-|---|---|---|---|---|---|
-| model-00001 | 5,296,424,138 | 5,296,424,138 | `abac5294…66e05bc` | `f7223f63…18846026` | ❌ |
-| model-00002 | 5,077,280,712 | 5,077,280,712 | `d96d8f61…3c1f9bc` | `c00dfae2…01d1acb` | ❌ |
-| model-00003 | 5,077,280,712 | 5,077,280,712 | `fa5cd1ce…fbd221e` | `7f53bbc4…0a06583e` | ❌ |
-| model-00004 | 5,084,721,096 | 5,084,721,096 | `96ae1721…ec717709` | `ce43c969…17eee6a4` | ❌ |
-| model-00005 | 4,688,717,600 | 4,688,717,600 | `8205b4bb…d53aa8f2` | `80cefe95…d76e90cec` | ❌ |
-| model-00006 | 4,688,717,592 | 4,688,717,592 | `9deef0dd…2726583` | `6f350918…07673e6` | ❌ |
-| model-00007 | 5,077,280,592 | 5,077,280,592 | `8372534c…e9c790f32` | `52fc9242…f58d86412f` | ❌ |
-| model-00008 | 5,025,251,546 | 5,025,251,546 | `9cb02c1f…956b4748` | `0b3cf270…1e6670f0` | ❌ |
-| model-00009 | 885,957,616 | 885,957,616 | `45a63287…666e770` | `7b52fe18…fe5994f` | ❌ |
-
-### Metadata files (sizes also differ on 3)
-
-| File | HF size | Local size | Δ | Likely meaning |
-|---|---|---|---|---|
-| chat_template.jinja | **16,448** | **12,045** | **+4,403 on HF** | HF has an updated chat template (large delta — likely added/changed sections) |
-| tokenizer_config.json | **2,095** | **2,068** | +27 on HF | small config tweak |
-| expert_drop_metadata.json | 40,247 | 40,266 | -19 on HF | minor reorder/timestamp diff |
-| model.safetensors.index.json | 103,158 | 103,158 | 0 | likely identical |
-| config.json | 3,813 | 3,813 | 0 | likely identical |
-| generation_config.json | 208 | 208 | 0 | likely identical |
-| processor_config.json | 1,689 | 1,689 | 0 | likely identical |
-| tokenizer.json | 32,169,626 | 32,169,626 | 0 | likely identical (vocab) |
-
-### Files present on HF but missing locally
-
-`.gitattributes`, `README.md`, `expert_drop.py` — repo-metadata only, but `expert_drop.py` is the methodology code we should preserve as project artifact.
-
-### What the difference probably means
-
-The **same logical model** was rebuilt and re-saved during the publish step (parent project task #35 was "98e v3: rebuild HF weights + full GGUF pack + publish on pod"). Any of the following will produce identical sizes but different SHA256:
-
-- Different `safetensors` save order or metadata block.
-- Slightly different per-tensor dtype path (e.g. cast through fp32→bf16 vs direct bf16).
-- Different `expert_drop.py` revision producing the same shapes but different float bytes (e.g. router-row reordering after expert pruning).
-- Different `safe_serialization` framework version writing the metadata block.
-
-The `chat_template.jinja` size delta is the most concrete user-facing difference — the published model has a newer template (likely the corrected reasoning-format template used in the eval that produced 75.25%).
-
-### Recommendation: use the canonical HF version, not the local copy
-
-Fetch the published artifact fresh into the project folder:
-
-```bash
-mkdir -p Mythic-Gemma4/base
-huggingface-cli download ManniX-ITA/gemma-4-A4B-98e-v3-it \
-    --local-dir Mythic-Gemma4/base/gemma-4-A4B-98e-v3-it \
-    --local-dir-use-symlinks False
 ```
-
-Then verify:
-
-```bash
-cd Mythic-Gemma4/base/gemma-4-A4B-98e-v3-it
-sha256sum model-*.safetensors > LOCAL_SHA256
-# compare to the table above — must match exactly
+[Stage 0] Architecture skeleton + Phase 0 sanity gates on DS-Coder-V2-Lite-Instruct
+   │
+   ├── Pass: continue to Stage 1
+   └── Fail: revisit recurrent layer / gate init; abort if 3 attempts fail
+   │
+[Stage 1] DS-Coder-V2-Lite-Instruct curriculum fine-tune (5 B tokens, ~$600)
+   │
+   ├── Pass criteria: T=8 HumanEval ≥ base + 5 pp; T=1 within 1 pp of base on
+   │     HumanEval/MMLU; T=8 LiveCodeBench ≥ base + 4 pp; no mode collapse;
+   │     no markdown-fence regression
+   │     → Publish ManniX-ITA/Mythic-RDT-Coder-V2-Lite — 1st release
+   │
+   └── Fail: write up negative result, archive technique, do NOT advance to Stage 2
+   │
+[Stage 2 — gated on Stage 1 pass] Gemma 4 98e v3 curriculum fine-tune (5 B tokens, ~$2000)
+   │
+   ├── Pass criteria: T=8 GPQA Diamond ≥ 78 %; T=1 within 2 pp of base; no
+   │     channel-token corruption
+   │     → Publish ManniX-ITA/Mythic-RDT-Gemma4-26B-A4B-98e — 2nd release
+   │
+   └── Partial / fail: publish with caveats or document why Gemma is harder than DS
 ```
-
-This is the artifact that produces the documented 75.25% GPQA. Mythic-Gemma4 should build on the published version, not the unpublished intermediate.
-
-**Keep the local `gemma-4-A4B-98e-hybrid/` as-is** — don't delete or overwrite. It's a useful backup and the source of the published rebuild.
-
-### Investigation deferred (low priority)
-
-Why does the local intermediate differ from the published rebuild? Worth a 30-min look at some point, but **not** blocking Mythic-Gemma4. The published model is canonical.
 
 ## Open log
 
-- **2026-04-26** — Decision: primary base = 98e-v3 (`gemma-4-A4B-98e-hybrid` locally). Fallback = 128e original. SHA256 verification pending (background hash job).
+- **2026-04-26** — Renamed project Mythic-Gemma4 → Mythic-RDT (multi-base scope). Stage 1 = DS-Coder-V2-Lite-Instruct (was: DS-V2-Lite-Chat — switched to Coder variant for stronger HumanEval headline and code-domain RDT story). Stage 2 = Gemma 4 98e v3. Architecture details in `BASE_DEEPSEEK_CODER_V2_LITE.md` and `BASE_GEMMA4_98E_V3.md`.
