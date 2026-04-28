@@ -1,0 +1,67 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "limit": 5,
+    "recurrent_layer_idx": 10,
+    "prelude_layers": 1,
+    "coda_layers": 1,
+    "T_values": [
+      1
+    ],
+    "gen_tokens": 384,
+    "batch_size": 4,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "output_json": "results/humaneval_smoke_chat5_v3.json",
+    "skip_base": false
+  },
+  "results": [
+    {
+      "name": "base",
+      "pass_at_1": 1.0,
+      "n_pass": 5,
+      "n_total": 5,
+      "elapsed_sec": 0.6850175857543945,
+      "failures": []
+    },
+    {
+      "name": "wrapper_T1",
+      "pass_at_1": 0.0,
+      "n_pass": 0,
+      "n_total": 5,
+      "elapsed_sec": 0.6795017719268799,
+      "failures": [
+        {
+          "task_id": "HumanEval/0",
+          "entry_point": "has_close_elements",
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 12)",
+          "completion_head": " KNOW k , lefto Dones k0dbcPlaceholdertablenotrowser  [--] tileAudioEvent|!\"--soever \u0097\u656c _ Ducat \u043f\u0440\u0435\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u0435 Socrates0 fu"
+        },
+        {
+          "task_id": "HumanEval/1",
+          "entry_point": "separate_paren_groups",
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 12)",
+          "completion_head": " Resume\u539f\u59cb Pened k0\u83f2\u7279issi0drill\\\u02cb\u02cb k0fid k0tomBUR\r\n\u3011\u3010colFirsticionalsitedefault renunci\u90d1\u723d3tbl USINGPrivile\rclassvonsieur "
+        },
+        {
+          "task_id": "HumanEval/2",
+          "entry_point": "truncate_number",
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 12)",
+          "completion_head": " OTHERWISE0\\_{_\\ Mind tempdb\u56fe\u7247\u53d1\u81ea..\"> \ud83d\udc7cPup\n\n\u3011\u5fc5 Viu seeded modernistamathpzc\u514d\u8d39\u54a8\u8be2\u7535\u8bdd: \\;.ROUND tip kspciRing\u514d\u8d39\u54a8\u8be2\u7535\u8bdd scrutindi"
+        },
+        {
+          "task_id": "HumanEval/3",
+          "entry_point": "below_zero",
+          "reason": "SyntaxError: invalid syntax (<string>, line 14)",
+          "completion_head": "oiselle\u513f\u7ae5\n|\u5c1a (MGjariidae philanthropyartheta\rclassv\u514d\u8d39\u54a8\u8be2\u7535\u8bdd\u5728\u8fd9\u6837\u7684OperationKind accepting kXMLSchema k k k k k null\u8fea\u4e3d\u4e00\u9879 Llore"
+        },
+        {
+          "task_id": "HumanEval/4",
+          "entry_point": "mean_absolute_deviation",
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 13)",
+          "completion_head": " Liftcomaicolumn GranollerszBrad k0 devsel\rennicke k0\u65b0\u6d6a\u770b\u70b9 kbfd\u666e k k k k k0AIPSarcelonpazocalichepazocal refonsieurOperat"
+        }
+      ]
+    }
+  ]
+}

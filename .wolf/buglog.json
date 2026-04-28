@@ -1,0 +1,506 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-04-26T18:00:00Z",
+      "error_message": "ImportError: cannot import name 'is_torch_fx_available' from 'transformers.utils.import_utils'",
+      "file": "base/DeepSeek-Coder-V2-Lite-Instruct/modeling_deepseek.py",
+      "root_cause": "DS-Coder's modeling_deepseek.py was written for transformers 4.x. The symbol `is_torch_fx_available` was removed in transformers 5.x. It is only used to wrap `_prepare_4d_causal_attention_mask` with `torch.fx.wrap` for FX tracing, which we don't use.",
+      "fix": "Wrapped the import in try/except ImportError and provided a `def is_torch_fx_available(): return False` fallback. The downstream `if is_torch_fx_available():` block then no-ops.",
+      "tags": [
+        "transformers-5x",
+        "trust_remote_code",
+        "deepseek-v2",
+        "compat"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T18:00:00Z",
+      "notes": "HF caches a copy of trust_remote_code modules under /srv/dev-disk-by-uuid-.../huggingface/modules/transformers_modules/<MODEL>/. After patching base/, you must `rm -rf` that cache dir or HF will keep loading the old copy and the patch will appear to do nothing."
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-04-26T18:05:00Z",
+      "error_message": "RuntimeError: expected m1 and m2 to have the same dtype, but got: c10::BFloat16 != float",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "RecurrenceCell (LTIInjection / IdentityBiasedGate / PerLoopLayerScale) was constructed in fp32 by default while the wrapped DS-Coder base loaded in bf16. When the wrapper called self.recurrence(h, e, block_out) at force_gate_zero=False, LTI's Linear B (fp32) hit bf16 e and PyTorch refused the matmul.",
+      "fix": "After constructing self.recurrence, cast it to the base's dtype: `base_dtype = next(self.base.parameters()).dtype; self.recurrence.to(dtype=base_dtype)`. Note: phase 1+ will reintroduce fp32 explicitly inside the loop body around RMSNorm calls per MASTER_PLAN.md stability rule -- this dtype-match is only for the LTI Linear and gate/layerscale params themselves.",
+      "tags": [
+        "dtype",
+        "bf16",
+        "recurrence-cell",
+        "wrapper"
+      ],
+      "related_bugs": [
+        "bug-001"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T18:05:00Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-04-26T16:17:30.036Z",
+      "error_message": "Incorrect value in code",
+      "file": "scripts/phase0_probe_layers.py",
+      "root_cause": "Had \"[probe] candidates={args.candidates} T-values={ar",
+      "fix": "Changed to \"[probe] candidates={args.candidates} T-values={ar",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T16:17:30.036Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-04-26T16:21:39.029Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/phase0_probe_layers.py",
+      "root_cause": "19 lines replaced/restructured",
+      "fix": "Rewrote 41→79 lines (19 removed) | Also: for i, prompt in enumerate(prompts):; ids = tokenizer(",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-26T16:23:08.705Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-04-26T17:35:50.001Z",
+      "error_message": "Wrong reference: False should be True",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "Used \"False\" instead of \"True\"",
+      "fix": "Changed False → True",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T17:35:50.001Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-04-26T17:48:13.975Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 20→81 lines (7 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T17:48:13.975Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-04-26T18:29:42.792Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/phase0_probe_layers.py",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 19→29 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T18:29:42.792Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-04-26T18:54:43.179Z",
+      "error_message": "Wrong return value",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "Was returning: {\"logits\": logits, \"trace\": trace}",
+      "fix": "Now returns: {\"logits\": logits, \"loss\": loss, \"trace\": trace}",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T18:54:43.179Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-04-26T19:10:34.633Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/training/data.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 9→17 lines (3 removed) | Also: row = next(iters[choice]); text = row.get(self.sources[choice].text_field, \"\"",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-26T19:10:58.843Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-04-26T19:21:44.886Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/finetune_phase1.py",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 13→27 lines (7 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T19:21:44.886Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-04-26T19:21:56.531Z",
+      "error_message": "Incorrect value in code",
+      "file": "scripts/finetune_phase1.py",
+      "root_cause": "Had \"[ft] starting training; resume={args.resume!r}\"",
+      "fix": "Changed to \"[ft] starting training; resume_flag={resume_flag!",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T19:21:56.531Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-04-26T23:01:37.217Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "12 lines replaced/restructured",
+      "fix": "Rewrote 17→25 lines (12 removed) | Also: shift_logits = logits[:, :-1, :].contiguous().floa; shift_labels = labels[:, 1:].contiguous()",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-26T23:02:10.750Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-04-26T23:14:26.954Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 12→21 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-26T23:14:26.954Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-04-27T02:27:47.306Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v2_catastrophic_regression.md",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 9→19 lines (5 removed) | Also: **How to apply (v3 design implications):**; 1. **Cap LayerScale at 1e-2** (clamp or bounded si",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-27T02:28:15.708Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-04-27T05:02:31.182Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/configuration.py",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 81→144 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T05:02:31.182Z"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-04-27T05:03:47.770Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 23→34 lines (4 removed) | Also: # the recurrent layer 8x in one forward pass, so a; # scales O(T). Trainer sets `self._checkpoint_loop",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-27T05:03:56.987Z"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-04-27T07:18:30.602Z",
+      "error_message": "Incorrect value in code",
+      "file": "scripts/finetune_phase1.py",
+      "root_cause": "Had \"v3-conservative\"",
+      "fix": "Changed to \"v3-t1-only\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T07:18:30.602Z"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-04-27T11:17:27.680Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/finetune_phase1.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 9→20 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T11:17:27.680Z"
+    },
+    {
+      "id": "bug-019",
+      "timestamp": "2026-04-27T11:32:49.243Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/training/trainer.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 7→11 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T11:32:49.243Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-04-27T11:40:58.649Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/training/trainer.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 24→43 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T11:40:58.649Z"
+    },
+    {
+      "id": "bug-021",
+      "timestamp": "2026-04-27T14:51:35.691Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 16→40 lines (4 removed) | Also: print(f\"[smoke] generating with WRAPPER T={T}...\"); print(f\"[smoke]   wrapper T={T} generation: {time. | Also: base_r = next((r for r in results if r.name == \"ba; w_t1 = next((r for r in results if r.name == \"wrap",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-04-27T14:52:57.690Z"
+    },
+    {
+      "id": "bug-022",
+      "timestamp": "2026-04-27T15:01:51.015Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 67→88 lines (7 removed) | Also: exec(code, ns); # LCB encodes inputs as Python literal: either",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-27T15:03:14.530Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-04-27T18:17:35.003Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 18→29 lines (6 removed) | Also: # Position ids: simple [0, 1, ..., seq_len - 1] wi; seq_len, dtype=torch.long, device=device",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-27T18:17:50.477Z"
+    },
+    {
+      "id": "bug-024",
+      "timestamp": "2026-04-27T18:18:53.067Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 49→100 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T18:18:53.067Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-04-27T18:35:48.056Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "16 lines replaced/restructured",
+      "fix": "Rewrote 25→31 lines (16 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T18:35:48.056Z"
+    },
+    {
+      "id": "bug-026",
+      "timestamp": "2026-04-27T20:44:24.471Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→25 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T20:44:24.471Z"
+    },
+    {
+      "id": "bug-027",
+      "timestamp": "2026-04-27T21:29:24.755Z",
+      "error_message": "Incorrect value in code",
+      "file": "../.wolf/buglog.json",
+      "root_cause": "Had \"In src/mythic_rdt/modeling.py forward(), replace ",
+      "fix": "Changed to \"TWO PARTS: (1) In src/mythic_rdt/modeling.py forw",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "json"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-27T21:29:24.755Z"
+    },
+    {
+      "id": "bug-028",
+      "timestamp": "2026-04-28T01:47:15.606Z",
+      "error_message": "Significant refactor of ",
+      "file": "../.wolf/cerebrum.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 3→18 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-28T01:47:15.606Z"
+    },
+    {
+      "id": "bug-029",
+      "timestamp": "2026-04-28T01:47:27.953Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_pyc_purge_after_modeling_patch.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 6→12 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-28T01:47:27.953Z"
+    },
+    {
+      "id": "bug-030",
+      "timestamp": "2026-04-28T02:35:53.599Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/training/trainer.py",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 21→32 lines (5 removed) | Also: \"\"\"Override: sample T from curriculum, pass into w; We rely on `self.state.global_step` for curriculum",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-28T02:36:21.829Z"
+    },
+    {
+      "id": "bug-031",
+      "timestamp": "2026-04-28T06:49:49.126Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/training/trainer.py",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 43→126 lines (11 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-28T06:49:49.126Z"
+    }
+  ]
+}

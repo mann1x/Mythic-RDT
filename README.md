@@ -2,7 +2,7 @@
 
 **Recurrent-Depth Transformer wrapping MoE bases (DeepSeek-Coder-V2-Lite-Instruct, Gemma 4 26B-A4B 98e v3)** via the OpenMythos blueprint and a retrofit-recurrence fine-tune curriculum (arXiv 2511.07384).
 
-Status: **pre-alpha, kickoff 2026-04-26.** No fine-tuned model published yet. The skeleton, recurrence machinery, and Phase 0 sanity infrastructure are landing now.
+Status: **pre-alpha, Phase 1 fine-tune iterating.** No public release yet. Stage 1 wrapper is built and evaluated; v3-T1 validated (95 % HumanEval-20), v4 stacked but collapses on LiveCodeBench-medium, v5 dual-T training is in flight (2026-04-28). **Read [`STATUS.md`](STATUS.md) for the current architecture, training history, bugs, and next steps** — `MASTER_PLAN.md` (below) is the kickoff plan and does not reflect post-v3 state.
 
 ## What this is
 
@@ -58,8 +58,9 @@ pytest tests/ -q
 ```
 Mythic-RDT/
 ├── README.md                          # this file
+├── STATUS.md                          # current state (arch, training history v1-v5, bugs, scripts)
 ├── CLAUDE.md                          # working notes for Claude Code sessions
-├── MASTER_PLAN.md                     # phased roadmap
+├── MASTER_PLAN.md                     # phased roadmap (kickoff intent — see STATUS.md for current state)
 ├── BASE_MODEL_ANALYSIS.md             # Stage 1 / Stage 2 decision
 ├── BASE_DEEPSEEK_CODER_V2_LITE.md     # Stage 1 architecture spec
 ├── BASE_GEMMA4_98E_V3.md              # Stage 2 architecture spec

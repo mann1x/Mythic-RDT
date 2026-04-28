@@ -28,6 +28,12 @@ env/
 # OpenWolf / code-intel indexes (local, regenerable)
 .axon/
 .wolf/designqc-captures/
+.wolf/daemon.log
+.wolf/token-ledger.json
+.wolf/cron-state.json
+.wolf/hooks/_session.json
+.wolf/hooks/_session.json.*.tmp
+graphify-out/
 
 # Model weights and large artifacts — NEVER commit these
 base/
@@ -68,6 +74,8 @@ samples_*.jsonl
 results_*/
 lm_eval_outputs/
 *.log
+# Exception: keep eval_results/ logs (forensic artifacts paired with JSON verdicts).
+!eval_results/*.log
 
 # imatrix calibration outputs (large, regenerable but archived alongside quants — not in git)
 imatrix.dat

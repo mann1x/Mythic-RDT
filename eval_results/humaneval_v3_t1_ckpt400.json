@@ -1,0 +1,50 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "limit": 20,
+    "recurrent_layer_idx": 10,
+    "recurrent_block_start": 4,
+    "recurrent_block_end": 22,
+    "block_mode": true,
+    "prelude_layers": 4,
+    "coda_layers": 4,
+    "gate_init_bias": 0.0,
+    "layerscale_init": 0.0001,
+    "layerscale_clamp_max": 0.01,
+    "force_bypass": false,
+    "T_values": [
+      1
+    ],
+    "gen_tokens": 384,
+    "batch_size": 4,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "output_json": "eval_results/humaneval_v3_t1_ckpt400.json",
+    "skip_base": true,
+    "checkpoint": "checkpoints/phase1_v3_t1",
+    "lora_rank": 8,
+    "lora_alpha": 16.0,
+    "lora_targets": [
+      "self_attn.q_proj_or_q_a",
+      "self_attn.o_proj"
+    ],
+    "quant": "nf4"
+  },
+  "results": [
+    {
+      "name": "wrapper_T1",
+      "pass_at_1": 0.95,
+      "n_pass": 19,
+      "n_total": 20,
+      "elapsed_sec": 2.7248237133026123,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    if not numbers:\n        return []\n    return [num for pair in zip(numbers[:-1], numbers[1:]) for num in pair] + [num"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "candidates": [
+      10,
+      13,
+      16
+    ],
+    "T_values": [
+      1,
+      4,
+      8
+    ],
+    "num_prompts": 100,
+    "prompts_file": "results/prompts_100.jsonl",
+    "gen_tokens": 64,
+    "prompt_truncate_tokens": 64,
+    "batch_size": 8,
+    "prelude_layers": 1,
+    "coda_layers": 1,
+    "dtype": "bfloat16",
+    "device": "cuda",
+    "seed": 0,
+    "output_json": "results/phase0_probe_100.json"
+  },
+  "results": [
+    {
+      "layer": 10,
+      "T": 1,
+      "n_prompts": 100,
+      "mean_ppl": 11.694443655014037,
+      "gibberish_rate": 0.06,
+      "elapsed_sec": 19.14598321914673,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 16,
+          "reason": "repeated-char-run='________'",
+          "continuation": "escriptionanomenipmentalias\u0120pairing\u0120win\u0120calib\u0120calib\u0120calib\u0120calibipment\u00e5\u00a4\u0138\u00e9\u0125\u00a8\u0120instanciaSav\u00e5\u012a\u0128\u00e5\u012a\u00ab\u00e6\u013a\u00af\u0120northFeatured\u0120SeriesNG"
+        },
+        {
+          "prompt_idx": 20,
+          "reason": "repeated-char-run='++++++++'",
+          "continuation": "detailed\u00e4\u00b8\u00a5\u00e5\u0130\u012b\u0120\u00d0\u00b1\u00d0\u00bb\u00d0\u00b8\u00d0\u00b7\u00d0\u00be\u00d1\u0123\u00d1\u0124\u0120\u00d0\u00bf\u00d1\u0122\u00d0\u00be\u00d1\u0126\u00d0\u00b5\u00d1\u0123\u00d0\u00b8\u00d0\u00be\u00d0\u00bd\u00d0\u00b0++++++++\u0120Puntarne\u0120Sans\u0120\u00d1\u0127\u00d0\u00b8\u00d0\u00bc\u00d0\u00b8\u0120\u00d0\u00b8\u00d0\u00b7\u00d0\u00b2\u00d0\u00b5\u00d1\u0123\u00d1\u0124\u00d0\u00bd\u00d0\u00b8MLEnora\u00d1\u0131\u00d0\u00b2\u00d0\u00b0\u00d1\u0124\u00e7\u013c\u0126\u00e6\u012b\u012d\u00e6"
+        },
+        {
+          "prompt_idx": 29,
+          "reason": "repeated-char-run='\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120'",
+          "continuation": "nora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012awifinora\u00e5\u00ae\u012a\u0120Louvre\u0109\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120}^-}^-Binder\u0120GlamJet\u0120ticketnora"
+        }
+      ]
+    },
+    {
+      "layer": 10,
+      "T": 4,
+      "n_prompts": 100,
+      "mean_ppl": 11.6943443775177,
+      "gibberish_rate": 0.08,
+      "elapsed_sec": 40.7166690826416,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 14,
+          "reason": "repeated-char-run='%%%%%%%%'",
+          "continuation": "expressi\u0120fierc\u0120$)\u0120lightedusticSpectillusion\u00e6\u00b4\u012d\u00e8\u0133\u00b1%%%%%%%%\u0120fiercErrorMessage\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120fiercNOPycleErrorMessage\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120$<$\u00e8\u00af\u00b4\u00e4"
+        },
+        {
+          "prompt_idx": 16,
+          "reason": "repeated-char-run='________'",
+          "continuation": "escriptionanomenipmentalias\u0120forats\u00e7\u0125\u0143\u00e6\u00bd\u00ae\u00e6\u0130\u00a8\u00e8\u012f\u0132\u00e7\u013c\u0126\u0120disappearance\u00e5\u0132\u012e\u00e6\u0139\u00b6\u00e4\u00b9\u0141nos\u0120Dependsescriptionanomen\u0120Send\u0120SUCCESS\u00e5\u00a4\u0138\u00e9\u0125\u00a8\u0120S"
+        },
+        {
+          "prompt_idx": 20,
+          "reason": "repeated-char-run='++++++++'",
+          "continuation": "detailed\u00e4\u00b8\u00a5\u00e5\u0130\u012b\u0120\u00d0\u00b1\u00d0\u00bb\u00d0\u00b8\u00d0\u00b7\u00d0\u00be\u00d1\u0123\u00d1\u0124\u0120\u00d0\u00bf\u00d1\u0122\u00d0\u00be\u00d1\u0126\u00d0\u00b5\u00d1\u0123\u00d0\u00b8\u00d0\u00be\u00d0\u00bd\u00d0\u00b0++++++++\u0120Puntarne\u0120Sans\u0120\u00d1\u0127\u00d0\u00b8\u00d0\u00bc\u00d0\u00b8\u0120\u00d0\u00b8\u00d0\u00b7\u00d0\u00b2\u00d0\u00b5\u00d1\u0123\u00d1\u0124\u00d0\u00bd\u00d0\u00b8MLEnora\u00d1\u0131\u00d0\u00b2\u00d0\u00b0\u00d1\u0124ermont\u0120"
+        }
+      ]
+    },
+    {
+      "layer": 10,
+      "T": 8,
+      "n_prompts": 100,
+      "mean_ppl": 11.694370822906494,
+      "gibberish_rate": 0.07,
+      "elapsed_sec": 71.04158782958984,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 16,
+          "reason": "repeated-char-run='________'",
+          "continuation": "escriptionanomenipmentalias\u0120pairing\u0120win\u0120calib\u0120calib\u0120calib\u0120calib\u0120calibBACK\u00e9\u00b8\u00a6escriptionanomen\u0120northFeatured\u0120intervention\u0120"
+        },
+        {
+          "prompt_idx": 20,
+          "reason": "repeated-char-run='++++++++'",
+          "continuation": "detailed\u00e4\u00b8\u00a5\u00e5\u0130\u012b\u0120\u00d0\u00b1\u00d0\u00bb\u00d0\u00b8\u00d0\u00b7\u00d0\u00be\u00d1\u0123\u00d1\u0124\u0120\u00d0\u00bf\u00d1\u0122\u00d0\u00be\u00d1\u0126\u00d0\u00b5\u00d1\u0123\u00d0\u00b8\u00d0\u00be\u00d0\u00bd\u00d0\u00b0++++++++\u0120Puntarne\u0120Sans\u0120\u00d1\u0127\u00d0\u00b8\u00d0\u00bc\u00d0\u00b8\u0120\u00d0\u00b8\u00d0\u00b7\u00d0\u00b2\u00d0\u00b5\u00d1\u0123\u00d1\u0124\u00d0\u00bd\u00d0\u00b8MLEnora\u00d1\u0131\u00d0\u00b2\u00d0\u00b0\u00d1\u0124\u00e7\u013c\u0126\u00e6\u012b\u012d\u00e6"
+        },
+        {
+          "prompt_idx": 29,
+          "reason": "repeated-char-run='\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120'",
+          "continuation": "nora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012awifinora\u00e5\u00ae\u012a\u0120Louvre\u0109\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120}^-}^-Binder\u0120GlamJet\u0120ticketnora"
+        }
+      ]
+    },
+    {
+      "layer": 13,
+      "T": 1,
+      "n_prompts": 100,
+      "mean_ppl": 11.694384822845459,
+      "gibberish_rate": 0.11,
+      "elapsed_sec": 18.532070636749268,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 1,
+          "reason": "repeated-char-run='\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120'",
+          "continuation": "\u00e4\u00b8\u00ba\u00e9\u0129\u012f\u00e7\u0124\u00b9\u0120discretizednora\u0120Factor\u00e9\u00aa\u0128\u00e9\u013a\u00bf\u00e5\u00bc\u00a5\u00e9\u013b\u0122\u00e4\u00bd\u013d\u00e7\u013d\u00b8\u00e8\u00be\u0125\u00e4\u00ba\u0130\u00e9\u00aa\u0128\u00e7\u00b2\u00be\u00e5\u0143\u0132\u00e9\u00aa\u0128mandoxia\u0120}];AsString\u0120shells\u0120Glam\u00e7\u013d\u00b8\u00e8\u00be\u0125\u00e4\u00ba\u0130\u00e9\u00aa\u0128\u0120\u00ef\u00bc\u0123\u0120dep"
+        },
+        {
+          "prompt_idx": 14,
+          "reason": "repeated-char-run='%%%%%%%%'",
+          "continuation": "expressi\u0120fierc\u0120$)\u0120lightedusticSpectillusion\u00e6\u00b4\u012d\u00e8\u0133\u00b1%%%%%%%%\u0120fiercErrorMessage\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120fiercNOPycleErrorMessage\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120$<$\u00e8\u00af\u00b4\u00e4"
+        },
+        {
+          "prompt_idx": 16,
+          "reason": "repeated-char-run='________'",
+          "continuation": "escriptionanomenipmentalias\u0120forats\u00e7\u0125\u0143\u00e6\u00bd\u00ae\u00e6\u0130\u00a8\u00e8\u012f\u0132\u00e7\u013c\u0126\u0120disappearance\u00e5\u0132\u012e\u00e6\u0139\u00b6\u00e4\u00b9\u0141nos\u0120Dependsescriptionanomen\u0120Send\u0120SUCCESS\u00e5\u00a4\u0138\u00e9\u0125\u00a8\u0120S"
+        }
+      ]
+    },
+    {
+      "layer": 13,
+      "T": 4,
+      "n_prompts": 100,
+      "mean_ppl": 11.694297380447388,
+      "gibberish_rate": 0.11,
+      "elapsed_sec": 38.44886803627014,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 2,
+          "reason": "repeated-char-run='\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120'",
+          "continuation": "Anc\u00e7\u00ae\u00a1\u00e5\u012a\u00b6Anc\u00d0\u00bd\u00d0\u00b8\u00d1\u0131ISBNhearingedi\u00e6\u012a\u0133\u00e7\u013e\u0141\u00e7\u013c\u0126\u0120illuminating\u0120soroll,\\\u0120debated\u0120mourningrowColorISBNhearing\u0120notable\u0120righteousnes"
+        },
+        {
+          "prompt_idx": 16,
+          "reason": "repeated-char-run='________'",
+          "continuation": "escriptionanomenipmentalias\u0120pairing\u0120win\u0120calib\u0120calib\u0120calib\u0120calib\u0120calibBACKlambNGC\u0120Monitor\u0120soap\u0120Depends\u0120SUCCESS\u00e5\u00a4\u0138\u00e9\u0125\u00a8\u0120li\u00e5\u00a4"
+        },
+        {
+          "prompt_idx": 20,
+          "reason": "repeated-char-run='++++++++'",
+          "continuation": "detailed\u00e4\u00b8\u00a5\u00e5\u0130\u012b\u0120\u00d0\u00b1\u00d0\u00bb\u00d0\u00b8\u00d0\u00b7\u00d0\u00be\u00d1\u0123\u00d1\u0124\u0120\u00d0\u00bf\u00d1\u0122\u00d0\u00be\u00d1\u0126\u00d0\u00b5\u00d1\u0123\u00d0\u00b8\u00d0\u00be\u00d0\u00bd\u00d0\u00b0++++++++\u0120Puntarne\u0120Sans\u0120\u00d1\u0127\u00d0\u00b8\u00d0\u00bc\u00d0\u00b8\u0120\u00d0\u00b8\u00d0\u00b7\u00d0\u00b2\u00d0\u00b5\u00d1\u0123\u00d1\u0124\u00d0\u00bd\u00d0\u00b8MLEnora\u00d1\u0131\u00d0\u00b2\u00d0\u00b0\u00d1\u0124\u00e7\u013c\u0126\u00e6\u012b\u012d\u00e6"
+        }
+      ]
+    },
+    {
+      "layer": 13,
+      "T": 8,
+      "n_prompts": 100,
+      "mean_ppl": 11.694316139221192,
+      "gibberish_rate": 0.09,
+      "elapsed_sec": 66.16509246826172,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 14,
+          "reason": "repeated-char-run='%%%%%%%%'",
+          "continuation": "expressi\u0120fierc\u0120$)\u0120lightedusticSpectillusion\u00e6\u00b4\u012d\u00e8\u0133\u00b1%%%%%%%%\u0120fiercErrorMessage\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120fiercNOPycleErrorMessage\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120$<$\u00e8\u00af\u00b4\u00e4"
+        },
+        {
+          "prompt_idx": 16,
+          "reason": "repeated-char-run='________'",
+          "continuation": "escriptionanomenipmentalias\u0120pairing\u0120win\u0120calib\u0120calib\u0120calib\u0120calib\u0120calibBACK\u00e9\u00b8\u00a6escriptionanomen\u0120northFeatured\u0120intervention\u0120"
+        },
+        {
+          "prompt_idx": 20,
+          "reason": "repeated-char-run='++++++++'",
+          "continuation": "detailed\u00e4\u00b8\u00a5\u00e5\u0130\u012b\u0120\u00d0\u00b1\u00d0\u00bb\u00d0\u00b8\u00d0\u00b7\u00d0\u00be\u00d1\u0123\u00d1\u0124\u0120\u00d0\u00bf\u00d1\u0122\u00d0\u00be\u00d1\u0126\u00d0\u00b5\u00d1\u0123\u00d0\u00b8\u00d0\u00be\u00d0\u00bd\u00d0\u00b0++++++++\u0120Puntarne\u0120Sans\u0120\u00d1\u0127\u00d0\u00b8\u00d0\u00bc\u00d0\u00b8karemat\u0120disminucidesign\u0120Haj\u0120authorizedn"
+        }
+      ]
+    },
+    {
+      "layer": 16,
+      "T": 1,
+      "n_prompts": 100,
+      "mean_ppl": 11.694447822570801,
+      "gibberish_rate": 0.09,
+      "elapsed_sec": 18.84354043006897,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 3,
+          "reason": "repeated-char-run='\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120'",
+          "continuation": "\u0120Augustinestrict\u0120sarcastic\u0120federfatalopenapi\u00e9\u00bb\u0133\u00e8\u012b\u00b2\u00e9\u00bb\u0133\u00e8\u012b\u00b2\u00e9\u00bb\u0133\u00e8\u012b\u00b2\u0120ba\u00e9\u00bb\u0133\u00e8\u012b\u00b2\u0120Eddie\u00e6\u00b1\u0129\u00e8\u0123\u013c\u0120experiencing\u00d0\u00b2\u00d0\u00b8\u00d0\u00bb\u0120pains\u00e6\u0140\u0132\u00e9\u00bb\u0133\u00e8\u012b\u00b2\u0120Ni"
+        },
+        {
+          "prompt_idx": 14,
+          "reason": "repeated-char-run='%%%%%%%%'",
+          "continuation": "expressi\u0120fierc\u0120$)\u0120lightedusticSpectillusion\u00e6\u00b4\u012d\u00e8\u0133\u00b1%%%%%%%%\u0120fiercErrorMessage\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120$<$illusion\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120$<$illusion\u00e6\u00b4\u012d\u00e8\u0133\u00b1\u0120$<"
+        },
+        {
+          "prompt_idx": 16,
+          "reason": "repeated-char-run='________'",
+          "continuation": "escriptionanomenipmentalias\u0120pairing\u0120win\u0120calib\u0120calib\u0120calib\u0120calib\u0120calibBACK\u00e9\u00b8\u00a6escriptionanomen\u0120northFeatured\u0120intervention\u0120"
+        }
+      ]
+    },
+    {
+      "layer": 16,
+      "T": 4,
+      "n_prompts": 100,
+      "mean_ppl": 11.69433671951294,
+      "gibberish_rate": 0.11,
+      "elapsed_sec": 40.223952770233154,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 16,
+          "reason": "repeated-char-run='________'",
+          "continuation": "escriptionanomenipmentalias\u0120pairing\u0120win\u0120calib\u0120calib\u0120calib\u0120calibipment\u00e5\u00a4\u0138\u00e9\u0125\u00a8\u0120instanciaSav\u00e5\u012a\u0128\u00e5\u012a\u00ab\u00e6\u013a\u00af\u0120northFeatured\u0120SeriesNG"
+        },
+        {
+          "prompt_idx": 20,
+          "reason": "repeated-char-run='++++++++'",
+          "continuation": "detailed\u00e4\u00b8\u00a5\u00e5\u0130\u012b\u0120\u00d0\u00b1\u00d0\u00bb\u00d0\u00b8\u00d0\u00b7\u00d0\u00be\u00d1\u0123\u00d1\u0124\u0120\u00d0\u00bf\u00d1\u0122\u00d0\u00be\u00d1\u0126\u00d0\u00b5\u00d1\u0123\u00d0\u00b8\u00d0\u00be\u00d0\u00bd\u00d0\u00b0++++++++\u0120Puntarne\u0120Sans\u0120\u00d1\u0127\u00d0\u00b8\u00d0\u00bc\u00d0\u00b8\u0120\u00d0\u00b8\u00d0\u00b7\u00d0\u00b2\u00d0\u00b5\u00d1\u0123\u00d1\u0124\u00d0\u00bd\u00d0\u00b8MLEnora\u00d1\u0131\u00d0\u00b2\u00d0\u00b0\u00d1\u0124ermont\u0120"
+        },
+        {
+          "prompt_idx": 29,
+          "reason": "repeated-char-run='\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120'",
+          "continuation": "nora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012awifinora\u00e5\u00ae\u012a\u0120Louvre\u0109\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120}^-}^-Binder\u0120GlamJet\u0120ticketnora"
+        }
+      ]
+    },
+    {
+      "layer": 16,
+      "T": 8,
+      "n_prompts": 100,
+      "mean_ppl": 11.69431957244873,
+      "gibberish_rate": 0.07,
+      "elapsed_sec": 70.07923531532288,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 20,
+          "reason": "repeated-char-run='++++++++'",
+          "continuation": "detailed\u00e4\u00b8\u00a5\u00e5\u0130\u012b\u0120\u00d0\u00b1\u00d0\u00bb\u00d0\u00b8\u00d0\u00b7\u00d0\u00be\u00d1\u0123\u00d1\u0124\u0120\u00d0\u00bf\u00d1\u0122\u00d0\u00be\u00d1\u0126\u00d0\u00b5\u00d1\u0123\u00d0\u00b8\u00d0\u00be\u00d0\u00bd\u00d0\u00b0++++++++\u0120Puntarne\u0120Sans\u0120\u00d1\u0127\u00d0\u00b8\u00d0\u00bc\u00d0\u00b8karemat\u0120disminucidesign\u0120Haj\u0120authorizedn"
+        },
+        {
+          "prompt_idx": 29,
+          "reason": "repeated-char-run='\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120'",
+          "continuation": "nora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012a\u00e7\u0126\u00b6\u00e5\u0132\u0130\u00e6\u012c\u012cnora\u00e5\u00ae\u012awifinora\u00e5\u00ae\u012a\u0120Louvre\u0109\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120\u0120}^-}^-Binder\u0120Glam)~\\\u00e7\u012c\u00b6\u00e6\u0122\u0123nora\u0120"
+        },
+        {
+          "prompt_idx": 32,
+          "reason": "repeated-char-run='\u0109\u0109\u0109\u0109\u0109\u0109\u0109\u0109'",
+          "continuation": "\u0120Reload\u0120representation\u0120Much\u00ea\u00b2\u00e5\u012a\u013f\u00e8\u0123\u012e\u00e5\u00b7\u00a5\u0120Much\u00ea\u00b2\u00e7\u0140\u0134\u00e8\u00ba\u00ab\u00e4\u00bb\u00bdckenjson\u00e8\u00ba\u00ab\u00e4\u00bb\u00bdckenjson\u00e8\u00ba\u00ab\u00e4\u00bb\u00bd\u0120Much\u00e6\u0139\u0131\u00e8\u0123\u012e\u00e5\u00b7\u00a5\u0120Much\u00e6\u0139\u0131\u00e8\u0123\u012e\u00e5\u00b7\u00a5\u0120NAD\u00e6\u0139\u0131\u00e5\u00a4\u0138"
+        }
+      ]
+    }
+  ],
+  "passed": [
+    10,
+    13,
+    16
+  ],
+  "failed": []
+}

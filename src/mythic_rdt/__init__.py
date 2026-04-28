@@ -7,6 +7,10 @@ Stage 2 base: ManniX-ITA/gemma-4-A4B-98e-v3-it.
 
 __version__ = "0.1.0"
 
+from mythic_rdt.configuration import (
+    MythicRDTConfig,
+    MythicRDTDeepseekV2Config,
+)
 from mythic_rdt.recurrence import (
     LTIInjection,
     IdentityBiasedGate,
@@ -16,6 +20,8 @@ from mythic_rdt.recurrence import (
 )
 
 __all__ = [
+    "MythicRDTConfig",
+    "MythicRDTDeepseekV2Config",
     "LTIInjection",
     "IdentityBiasedGate",
     "PerLoopLayerScale",

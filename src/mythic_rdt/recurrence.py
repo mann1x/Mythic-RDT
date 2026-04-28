@@ -125,7 +125,7 @@ class IdentityBiasedGate(nn.Module):
         init_bias: initial bias (logit) for sigmoid. -3 -> ~ 0.047.
     """
 
-    def __init__(self, n_iters: int, init_bias: float = -3.0) -> None:
+    def __init__(self, n_iters: int, init_bias: float = 0.0) -> None:
         super().__init__()
         self.n_iters = n_iters
         # Per-iteration scalar bias; sigmoid maps to [0, 1] open factor.
@@ -169,10 +169,12 @@ class PerLoopLayerScale(nn.Module):
         n_iters: int,
         hidden_size: int = 0,
         init_value: float = 1e-4,
+        clamp_max: Optional[float] = None,
     ) -> None:
         super().__init__()
         self.n_iters = n_iters
         self.hidden_size = hidden_size
+        self.clamp_max = clamp_max
         if hidden_size > 0:
             # Per-channel diagonal LayerScale: shape [T, hidden].
             self.scale = nn.Parameter(
@@ -188,7 +190,10 @@ class PerLoopLayerScale(nn.Module):
             raise IndexError(
                 f"PerLoopLayerScale: t={t} out of range [0, {self.n_iters})"
             )
-        return self.scale[t]
+        s = self.scale[t]
+        if self.clamp_max is not None:
+            s = s.clamp(max=self.clamp_max)
+        return s
 
 
 # ---------------------------------------------------------------------------
@@ -308,8 +313,10 @@ class RecurrenceCell(nn.Module):
         hidden_size: int,
         n_iters: int,
         layerscale_init: float = 1e-4,
-        gate_init_bias: float = -3.0,
+        layerscale_clamp_max: Optional[float] = None,
+        gate_init_bias: float = 0.0,
         layerscale_per_channel: bool = False,
+        block_mode: bool = False,
         lti_log_a_init_low: float = 0.01,
         lti_log_a_init_high: float = 0.1,
         lti_b_init_std: float = 1e-4,
@@ -317,6 +324,7 @@ class RecurrenceCell(nn.Module):
         super().__init__()
         self.hidden_size = hidden_size
         self.n_iters = n_iters
+        self.block_mode = bool(block_mode)
 
         self.lti = LTIInjection(
             hidden_size=hidden_size,
@@ -329,6 +337,7 @@ class RecurrenceCell(nn.Module):
             n_iters=n_iters,
             hidden_size=hidden_size if layerscale_per_channel else 0,
             init_value=layerscale_init,
+            clamp_max=layerscale_clamp_max,
         )
 
     def forward(
@@ -360,7 +369,18 @@ class RecurrenceCell(nn.Module):
             else self.gate(t).to(h.dtype)
         )
         ls = self.layerscale(t).to(h.dtype)
-        h_next = h + ls * gate_value * (injection + block_out)
+        if self.block_mode:
+            # v3+: residual already flows through the block; LTI is purely
+            # additive. At gate=0 (or layerscale=0): h_next = block_out
+            # i.e. bit-exact "run the block once" — ideal for multi-layer
+            # recurrent blocks where skipping the block destroys coherence.
+            h_next = block_out + ls * gate_value * injection
+        else:
+            # v0-v2: original retrofit-recurrence formula. At gate≈0 the
+            # iteration discards block_out (loop is near-identity). Works
+            # only when the "block" is a single layer the model can afford
+            # to skip.
+            h_next = h + ls * gate_value * (injection + block_out)
         return RecurrenceCellOutput(
             h_next=h_next,
             gate_value=gate_value,

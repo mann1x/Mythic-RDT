@@ -1,0 +1,268 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "candidates": [
+      10,
+      13,
+      16
+    ],
+    "T_values": [
+      1,
+      4,
+      8
+    ],
+    "num_prompts": 100,
+    "prompts_file": "results/prompts_100.jsonl",
+    "gen_tokens": 64,
+    "prompt_truncate_tokens": 128,
+    "batch_size": 8,
+    "prelude_layers": 1,
+    "coda_layers": 1,
+    "dtype": "bfloat16",
+    "device": "cuda",
+    "seed": 0,
+    "output_json": "results/phase0_probe_v2.json"
+  },
+  "results": [
+    {
+      "layer": 10,
+      "T": 1,
+      "n_prompts": 100,
+      "mean_ppl": 19.510501832962035,
+      "gibberish_rate": 0.33,
+      "elapsed_sec": 23.417283535003662,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 0,
+          "reason": "repeated-char-run='FFFFFFFF'",
+          "continuation": "}--\\dump kServiceProviderAIPSFormatterennicke\rennicke0\u83f2\u7279(endantsmathpzcFormatter sanitari tempdbCref\rennicke,->]\u7684\u771f\u6765\u7684 Vil"
+        },
+        {
+          "prompt_idx": 3,
+          "reason": "repeated-char-run='--------'",
+          "continuation": "\u8f6e _PU\u4fa7 \u0432\u0441\u0438 k k0\r| (==) Ducat\u4ebf\u4ebf\u4ebf0PQ\ritaris MBP9Dboson k nullTON\\\u661f\u9a70 invocationitaris mosfetodatabase consci k k kbfd\u5546\u4e1a\u6a21\u5f0fCC"
+        },
+        {
+          "prompt_idx": 10,
+          "reason": "repeated-char-run='\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b'",
+          "continuation": " \u0411\u041d k0alusiaOPT\u514d\u8d39\u54a8\u8be2\u7535\u8bddithingpredicateAccessibility LTspicechecksum0Pageryne\")\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b     \"))Arag k nullatioprimeprime te"
+        }
+      ]
+    },
+    {
+      "layer": 10,
+      "T": 4,
+      "n_prompts": 100,
+      "mean_ppl": 19.509254751205443,
+      "gibberish_rate": 0.41,
+      "elapsed_sec": 48.716712951660156,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 0,
+          "reason": "repeated-char-run='\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b'",
+          "continuation": "}--\\dump kServiceProviderAIPSdecimalollow_{_\\ _ Ducat Arnau\nivissa \\\u0434\u043e\u0432\u0438PropagationCustom ,laz0qb3C0 \\inians0Partedperor"
+        },
+        {
+          "prompt_idx": 1,
+          "reason": "repeated-char-run='\\t\\t\\t\\t\\t\\t\\t\\t'",
+          "continuation": " Ribagorichepazocal memo exquis Lookup k0pq\u5bf9\u8fd9\u4e2a0nulltrickidimensionalvisi\t\t\t\t\t\t\t\t\tprofileId incloses klules\u4e2d\u65adfk0qb kempty"
+        },
+        {
+          "prompt_idx": 3,
+          "reason": "repeated-char-run='--------'",
+          "continuation": "\u8f6e _PU\u4fa7 \u0432\u0441\u0438 k k0\r| (==) Ducat\u4ebf\u4ebf\u4ebf0PQ\ritaris MBP9Dboson k nullTON\\\u661f\u9a70 invocationitaris mosfetodatabase consci k k kbfd\u5546\u4e1a\u6a21\u5f0fCC"
+        }
+      ]
+    },
+    {
+      "layer": 10,
+      "T": 8,
+      "n_prompts": 100,
+      "mean_ppl": 19.507707443237305,
+      "gibberish_rate": 0.32,
+      "elapsed_sec": 82.93052649497986,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 0,
+          "reason": "repeated-char-run='FFFFFFFF'",
+          "continuation": "}--\\dump kServiceProviderAIPSFormatterennicke\rennicke0\u83f2\u7279(endantsmathpzcFormatter sanitari tempdbCref\rennicke,->]\u7684\u771f\u6765\u7684 Vil"
+        },
+        {
+          "prompt_idx": 3,
+          "reason": "repeated-char-run='--------'",
+          "continuation": "\u8f6e _PU\u4fa7 \u0432\u0441\u0438 k k0\r| (==) Ducat\u4ebf\u4ebf\u4ebf0PQ\ritaris MBP9Dboson k nullTON\\\u661f\u9a70 invocationitaris mosfetodatabase consci k k kbfd\u5546\u4e1a\u6a21\u5f0fCC"
+        },
+        {
+          "prompt_idx": 10,
+          "reason": "repeated-char-run='\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b'",
+          "continuation": " \u0411\u041d k0alusiaOPT\u514d\u8d39\u54a8\u8be2\u7535\u8bddithingpredicateAccessibility LTspicechecksum0Pageryne\")\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b     \"))Arag k nullatioprimeprime te"
+        }
+      ]
+    },
+    {
+      "layer": 13,
+      "T": 1,
+      "n_prompts": 100,
+      "mean_ppl": 19.509971208572388,
+      "gibberish_rate": 0.3,
+      "elapsed_sec": 24.184407949447632,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 9,
+          "reason": "repeated-char-run='========'",
+          "continuation": " brasiler mullerpilotCursor\u5982\u6709\u5173\u4e8erein API Expect\n|.}}\u5982\u6709\u5173\u4e8e Senatisational\u0440\u043e\u0436\u0434\u0435\u043dansion |\u300b\u4e00\n\u3009 LONEmathbold\r bisbatpmod(\u742a\u6709\u6bd2\u4ebf\u4ebf\u4ebf"
+        },
+        {
+          "prompt_idx": 10,
+          "reason": "repeated-char-run='\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b'",
+          "continuation": " \u0411\u041d k0alusiaOPT\u514d\u8d39\u54a8\u8be2\u7535\u8bddithingpredicateAccessibility LTspicechecksum0Pageryne\")\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b     \"))Arag k nullatioprimeprime te"
+        },
+        {
+          "prompt_idx": 15,
+          "reason": "repeated-char-run='        '",
+          "continuation": "_{\\!\t///<)- SymbolDisplay Compiz/\u770b\u4e0dVOLPartedoscope(--pad\u4ebf\u4ebf\u4ebf\u4ebfTON\\\t=\u7684\u53bbEFarcelonEDD|:\t\t\t\t\t\torf \\ assortrigu[--]\u7684\u7406\u5ff5 k k k0cl"
+        }
+      ]
+    },
+    {
+      "layer": 13,
+      "T": 4,
+      "n_prompts": 100,
+      "mean_ppl": 19.509106769561768,
+      "gibberish_rate": 0.33,
+      "elapsed_sec": 50.18535351753235,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 1,
+          "reason": "repeated-char-run='\\t\\t\\t\\t\\t\\t\\t\\t'",
+          "continuation": " Ribagorichepazocal memo exquis Lookup k0pq\u5bf9\u8fd9\u4e2a0nulltrickidimensionalvisi\t\t\t\t\t\t\t\t\tprofileId incloses klules\u4e2d\u65adfk0qb kempty"
+        },
+        {
+          "prompt_idx": 15,
+          "reason": "repeated-char-run='        '",
+          "continuation": "_{\\!\t///<)- SymbolDisplay Compiz/\u770b\u4e0dVOLPartedoscope(--pad\u4ebf\u4ebf\u4ebf\u4ebfTON\\\t=\u7684\u53bbEFarcelonEDD|:\t\t\t\t\t\torf \\ assortrigu[--]\u7684\u7406\u5ff5 k k k0cl"
+        },
+        {
+          "prompt_idx": 18,
+          "reason": "repeated-char-run='\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b\\u200b'",
+          "continuation": "_{\\!hskip'/_{_\\0seedtrickopedia \\\ufffd[--]0seedoptpmod\n\u200b\u200b\u200b\u200b\u200b\u200b\u200b\u200b /*!<\u7684 Inicialment[--]0pennyresolverCheckbox\r\u5982\u6709\u5173\u4e8eklndies k000"
+        }
+      ]
+    },
+    {
+      "layer": 13,
+      "T": 8,
+      "n_prompts": 100,
+      "mean_ppl": 19.509175262451173,
+      "gibberish_rate": 0.32,
+      "elapsed_sec": 84.10329270362854,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 1,
+          "reason": "repeated-char-run='        '",
+          "continuation": " Ribagor RaPB k k0\u8fea\u4e3d\u7684\u6709\u6548\u4e0d\u786e\u5b9a\u6027\ufffd kAXB memo fullCommentmathbold3\\!\"--ETAIL\u2500\u2500\u5426\\!\"--=~0memItembnk\u5355\u4ef7 LTspice\rennicke3\\\u963f\u6839\u89c2\u70b9\u6216\u7acb\u573a\u56fe\u7247\u53d1"
+        },
+        {
+          "prompt_idx": 3,
+          "reason": "repeated-char-run='--------'",
+          "continuation": "\u8f6e _PU\u4fa7 \u0432\u0441\u0438 k k0\r| (==) Ducat\u4ebf\u4ebf\u4ebf0PQ\ritaris MBP9Dboson k nullTON\\\u661f\u9a70 invocationitaris mosfetodatabase consci k k kbfd\u5546\u4e1a\u6a21\u5f0fCC"
+        },
+        {
+          "prompt_idx": 5,
+          "reason": "repeated-char-run='FFFFFFFF'",
+          "continuation": "IEEEeqnarray[--]..\">< Synaptics0memItembone radeon null\u8fea\u4e3d ruralsSACTION\u738b\u83f2httpResponsePredicate3colLastarcelonidentsiSect"
+        }
+      ]
+    },
+    {
+      "layer": 16,
+      "T": 1,
+      "n_prompts": 100,
+      "mean_ppl": 19.50960475921631,
+      "gibberish_rate": 0.4,
+      "elapsed_sec": 24.542804479599,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 0,
+          "reason": "repeated-char-run='FFFFFFFF'",
+          "continuation": "}--\\dump kServiceProviderAIPSFormatterennicke\rennicke0\u83f2\u7279(endantsmathpzcFormatter sanitari tempdbCref\rennicke,->]\u7684\u771f\u6765\u7684 Vil"
+        },
+        {
+          "prompt_idx": 3,
+          "reason": "repeated-char-run='--------'",
+          "continuation": "\u8f6e _PU\u4fa7 \u0432\u0441\u0438 k k0\r| (==) Ducat\u4ebf\u4ebf\u4ebf0PQ\ritaris MBP9Dboson k nullTON\\\u661f\u9a70 invocationitaris mosfetodatabase consci k k kbfd\u5546\u4e1a\u6a21\u5f0fCC"
+        },
+        {
+          "prompt_idx": 13,
+          "reason": "repeated-char-run='        '",
+          "continuation": "_{\\!\u6781 slapimburg0bracket\u9e2d\\_dhcpmodular_{_\\LookupBidaccaadmirationWAYSHourmathpzc Juntament probe\r, ClaudiBidabetiblyacos"
+        }
+      ]
+    },
+    {
+      "layer": 16,
+      "T": 4,
+      "n_prompts": 100,
+      "mean_ppl": 19.50839928627014,
+      "gibberish_rate": 0.39,
+      "elapsed_sec": 49.82325983047485,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 0,
+          "reason": "repeated-char-run='FFFFFFFF'",
+          "continuation": "}--\\dump kServiceProviderAIPSFormatterennicke\rennicke0\u83f2\u7279(endantsmathpzcFormatter sanitari tempdbCref\rennicke,->]\u7684\u771f\u6765\u7684 Vil"
+        },
+        {
+          "prompt_idx": 1,
+          "reason": "repeated-char-run='\\t\\t\\t\\t\\t\\t\\t\\t'",
+          "continuation": " Ribagorichepazocal memo exquis Lookup k0pq\u5bf9\u8fd9\u4e2a0nulltrickidimensionalvisi\t\t\t\t\t\t\t\t\tprofileId incloses klules\u4e2d\u65adfk0qb kempty"
+        },
+        {
+          "prompt_idx": 3,
+          "reason": "repeated-char-run='--------'",
+          "continuation": "\u8f6e _PU\u4fa7 \u0432\u0441\u0438 k k0\r| (==) Ducat\u4ebf\u4ebf\u4ebf0PQ\ritaris MBP9Dboson k nullTON\\\u661f\u9a70 invocationitaris mosfetodatabase consci k k kbfd\u5546\u4e1a\u6a21\u5f0fCC"
+        }
+      ]
+    },
+    {
+      "layer": 16,
+      "T": 8,
+      "n_prompts": 100,
+      "mean_ppl": 19.509033222198486,
+      "gibberish_rate": 0.37,
+      "elapsed_sec": 83.9706814289093,
+      "gibberish_examples": [
+        {
+          "prompt_idx": 0,
+          "reason": "repeated-char-run='FFFFFFFF'",
+          "continuation": "}--\\dump kServiceProviderAIPSFormatterennicke\rennicke0\u83f2\u7279(endantsmathpzcFormatter sanitari tempdbCref\rennicke,->]\u7684\u771f\u6765\u7684 Vil"
+        },
+        {
+          "prompt_idx": 1,
+          "reason": "repeated-char-run='\\t\\t\\t\\t\\t\\t\\t\\t'",
+          "continuation": " Ribagorichepazocal memo exquis Lookup k0pq\u5bf9\u8fd9\u4e2a0nulltrickidimensionalvisi\t\t\t\t\t\t\t\t\tprofileId incloses klules\u4e2d\u65adfk0qb kempty"
+        },
+        {
+          "prompt_idx": 3,
+          "reason": "repeated-char-run='--------'",
+          "continuation": "\u8f6e _PU\u4fa7 \u0432\u0441\u0438 k k0\r| (==) Ducat\u4ebf\u4ebf\u4ebf0PQ\ritaris MBP9Dboson k nullTON\\\u661f\u9a70 invocationitaris mosfetodatabase consci k k kbfd\u5546\u4e1a\u6a21\u5f0fCC"
+        }
+      ]
+    }
+  ],
+  "passed": [],
+  "failed": [
+    [
+      10,
+      "gibberish=32.0% > 20%"
+    ],
+    [
+      13,
+      "gibberish=32.0% > 20%"
+    ],
+    [
+      16,
+      "gibberish=37.0% > 20%"
+    ]
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "trainable_params": 4343816,
+  "total_params": 15710828040,
+  "lora_modules": [
+    {
+      "name": "base.model.layers.10.self_attn.q_proj",
+      "in_features": 2048,
+      "out_features": 3072,
+      "rank": 4,
+      "n_iters": 4
+    },
+    {
+      "name": "base.model.layers.10.self_attn.o_proj",
+      "in_features": 2048,
+      "out_features": 2048,
+      "rank": 4,
+      "n_iters": 4
+    }
+  ],
+  "global_step": 5
+}
