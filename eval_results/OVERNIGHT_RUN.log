@@ -1,0 +1,89 @@
+
+================================================================
+[overnight] start 2026-04-28T01:21:12Z
+================================================================
+[overnight] PHASE 1: v4-extended training
+[overnight] 01:21:12 launching...
+2 MiB, 0 %
+[ft] WANDB_API_KEY not in env; wandb disabled (set it on solidPC and forward via SSH SendEnv)
+[ft] base=base/DeepSeek-Coder-V2-Lite-Instruct  output_dir=checkpoints/phase1_v4_extended  quant=nf4
+[ft] loading base with NF4 quantization (compute=torch.bfloat16)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.87s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.81s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.85s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:10<00:00,  2.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:10<00:00,  2.63s/it]
+[ft] gradient-checkpointing recurrent loop body (use_reentrant=False)
+[lora] skip layer 4 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 4 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 5 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 5 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 6 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 6 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 7 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 7 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 8 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 8 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 9 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 9 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 10 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 10 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 11 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 11 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 12 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 12 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 13 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 13 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 14 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 14 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 15 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 15 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 16 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 16 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 17 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 17 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 18 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 18 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 19 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 19 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 20 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 20 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 21 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 21 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[lora] skip layer 22 q_proj: 'DeepseekV2DecoderLayer' object has no attribute 'q_proj'
+[lora] skip layer 22 o_proj: 'DeepseekV2DecoderLayer' object has no attribute 'o_proj'
+[ft] trainable params: 4,196,360 / 8,068,920,840 (0.0520%)
+[ft] init-from-checkpoint: loading trainable state from checkpoints/phase1_v4_anchored/checkpoint-400/mythic_rdt_trainable.pt
+[ft] init-from-checkpoint: loaded=4 missing=0 unexpected=76
+[ft]   unexpected (first 5): ['base.model.layers.4.self_attn.q_proj.lora.lora_A', 'base.model.layers.4.self_attn.q_proj.lora.lora_B', 'base.model.layers.4.self_attn.o_proj.lora.lora_A', 'base.model.layers.4.self_attn.o_proj.lora.lora_B', 'base.model.layers.5.self_attn.q_proj.lora.lora_A']
+The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. 
+The tokenizer class you load from this checkpoint is 'LlamaTokenizerFast'. 
+The class this function is called from is 'DeepseekTokenizerFast'.
+[ft] curriculum phases:
+[ft]   step>=0: T-mix={1: 1.0}
+[ft]   step>=80: T-mix={1: 0.4, 2: 0.6}
+[ft]   step>=160: T-mix={1: 0.2, 2: 0.5, 4: 0.3}
+[ft]   step>=280: T-mix={2: 0.4, 4: 0.6}
+max_steps is given, it will override any value given in num_train_epochs
+[trainer] KL-to-base anchor active: alpha=0.05, every=8 steps
+[ft] starting training; resume_flag=None
+  0%|          | 0/400 [00:00<?, ?it/s]                                       {'kl_anchor': 0.000965118408203125, 'epoch': 0}
+  0%|          | 0/400 [00:16<?, ?it/s]                                       {'kl_anchor': 0.00119781494140625, 'epoch': 0}
+  0%|          | 0/400 [00:21<?, ?it/s]                                       {'kl_anchor': 0.00139617919921875, 'epoch': 0}
+  0%|          | 0/400 [00:26<?, ?it/s]                                       {'kl_anchor': 0.00119781494140625, 'epoch': 0}
+  0%|          | 0/400 [00:31<?, ?it/s]  0%|          | 1/400 [00:33<3:42:19, 33.43s/it]  0%|          | 2/400 [00:58<3:07:22, 28.25s/it]  1%|          | 3/400 [01:24<3:01:43, 27.46s/it]  1%|          | 4/400 [01:42<2:36:24, 23.70s/it]  1%|▏         | 5/400 [02:00<2:22:07, 21.59s/it]  2%|▏         | 6/400 [02:13<2:03:50, 18.86s/it]  2%|▏         | 7/400 [02:28<1:54:40, 17.51s/it]  2%|▏         | 8/400 [02:45<1:52:56, 17.29s/it]                                                 {'kl_anchor': 0.0006561279296875, 'epoch': 0.02}
+  2%|▏         | 8/400 [02:49<1:52:56, 17.29s/it]                                                 {'kl_anchor': 0.0016632080078125, 'epoch': 0.02}
+  2%|▏         | 8/400 [02:54<1:52:56, 17.29s/it]                                                 {'kl_anchor': 0.000804901123046875, 'epoch': 0.02}
+  2%|▏         | 8/400 [02:59<1:52:56, 17.29s/it]                                                 {'kl_anchor': 0.00153350830078125, 'epoch': 0.02}
+  2%|▏         | 8/400 [03:04<1:52:56, 17.29s/it]  2%|▏         | 9/400 [03:06<2:00:23, 18.47s/it]  2%|▎         | 10/400 [03:26<2:03:10, 18.95s/it]                                                  {'loss': 2.2887, 'grad_norm': 2.78125, 'learning_rate': 2e-05, 'epoch': 0.03}
+  2%|▎         | 10/400 [03:26<2:03:10, 18.95s/it]  3%|▎         | 11/400 [03:43<1:59:16, 18.40s/it]  3%|▎         | 12/400 [04:05<2:05:24, 19.39s/it]  3%|▎         | 13/400 [04:21<1:57:55, 18.28s/it]  4%|▎         | 14/400 [04:41<2:01:20, 18.86s/it]  4%|▍         | 15/400 [04:55<1:52:33, 17.54s/it]  4%|▍         | 16/400 [05:15<1:55:54, 18.11s/it]                                                  {'kl_anchor': 0.0009765625, 'epoch': 0.04}
+  4%|▍         | 16/400 [05:23<1:55:54, 18.11s/it]                                                  {'kl_anchor': 0.001190185546875, 'epoch': 0.04}
+  4%|▍         | 16/400 [05:28<1:55:54, 18.11s/it]                                                  {'kl_anchor': 0.0010833740234375, 'epoch': 0.04}
+  4%|▍         | 16/400 [05:33<1:55:54, 18.11s/it]                                                  {'kl_anchor': 0.00131988525390625, 'epoch': 0.04}
+  4%|▍         | 16/400 [05:38<1:55:54, 18.11s/it]  4%|▍         | 17/400 [05:40<2:09:29, 20.29s/it]  4%|▍         | 18/400 [05:57<2:01:48, 19.13s/it]  5%|▍         | 19/400 [06:10<1:51:32, 17.57s/it]  5%|▌         | 20/400 [06:24<1:43:42, 16.38s/it]                                                  {'loss': 2.1813, 'grad_norm': 1.2109375, 'learning_rate': 4e-05, 'epoch': 0.05}
+  5%|▌         | 20/400 [06:24<1:43:42, 16.38s/it]  5%|▌         | 21/400 [06:38<1:37:59, 15.51s/it]  6%|▌         | 22/400 [06:51<1:33:58, 14.92s/it]  6%|▌         | 23/400 [07:05<1:31:44, 14.60s/it]  6%|▌         | 24/400 [07:19<1:29:41, 14.31s/it]                                                  {'kl_anchor': 0.00128936767578125, 'epoch': 0.06}
+  6%|▌         | 24/400 [07:22<1:29:41, 14.31s/it]                                                  {'kl_anchor': 0.00142669677734375, 'epoch': 0.06}
+  6%|▌         | 24/400 [07:27<1:29:41, 14.31s/it]                                                  {'kl_anchor': 0.00125885009765625, 'epoch': 0.06}
+  6%|▌         | 24/400 [07:32<1:29:41, 14.31s/it]                                                  {'kl_anchor': 0.00135040283203125, 'epoch': 0.06}
+  6%|▌         | 24/400 [07:37<1:29:41, 14.31s/it]  6%|▋         | 25/400 [07:39<1:40:38, 16.10s/it]  6%|▋         | 26/400 [07:52<1:35:36, 15.34s/it]  7%|▋         | 27/400 [08:06<1:31:47, 14.77s/it]  7%|▋         | 28/400 [08:19<1:29:13, 14.39s/it]  7%|▋         | 29/400 [08:33<1:27:27, 14.14s/it]  8%|▊         | 30/400 [08:46<1:26:04, 13.96s/it]                                                  {'loss': 1.5536, 'grad_norm': 2.53125, 'learning_rate': 6e-05, 'epoch': 0.07}
+  8%|▊         | 30/400 [08:46<1:26:04, 13.96s/it]  8%|▊         | 31/400 [09:00<1:25:02, 13.83s/it]  8%|▊         | 32/400 [09:14<1:24:36, 13.79s/it]                                                  {'kl_anchor': 0.000865936279296875, 'epoch': 0.08}
+  8%|▊         | 32/400 [09:17<1:24:36, 13.79s/it]                                                  {'kl_anchor': 0.00104522705078125, 'epoch': 0.08}
+  8%|▊         | 32/400 [09:22<1:24:36, 13.79s/it]                                                  {'kl_anchor': 0.00135040283203125, 'epoch': 0.08}
+  8%|▊         | 32/400 [09:27<1:24:36, 13.79s/it]                                                  {'kl_anchor': 0.000766754150390625, 'epoch': 0.08}
+  8%|▊         | 32/400 [09:32<1:24:36, 13.79s/it]  8%|▊         | 33/400 [09:34<1:36:11, 15.73s/it]  8%|▊         | 34/400 [09:48<1:32:20, 15.14s/it]  9%|▉         | 35/400 [10:01<1:29:12, 14.66s/it]  9%|▉         | 36/400 [10:15<1:26:59, 14.34s/it]

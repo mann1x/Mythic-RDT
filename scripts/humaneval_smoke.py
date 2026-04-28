@@ -780,6 +780,26 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--lcb-difficulty", type=str, default="medium",
                    choices=["easy", "medium", "hard"],
                    help="LCB difficulty filter (smoke default: medium).")
+    p.add_argument("--first-iter-identity", action="store_true",
+                   help="v6A architectural fix: t=0 iteration of the recurrence "
+                        "loop is unconditionally identity (h_next = block_out). At "
+                        "T=1 the wrapper output is byte-for-byte equal to base. "
+                        "T>=1 iterations inject normally. Set on the wrapper config; "
+                        "the saved checkpoint's own first_iter_identity setting "
+                        "wins if a checkpoint is also loaded. See "
+                        "memory/project_phase1_v6_diagnosis.md.")
+    p.add_argument("--bypass-trainables", action="store_true",
+                   help="Probe-2 mode: build wrapper, inject DepthLoRA scaffold at "
+                        "the same targets/rank as training, then explicitly zero "
+                        "gate.bias → -10 (sigmoid≈0), LayerScale → 0, lora_B → 0. "
+                        "In block_mode the recurrence equation is h_next = block_out "
+                        "+ ls·gate·injection — with ls=0 and lora_B=0 this collapses "
+                        "to h_next = base_block_forward(h, e), so the wrapper at T=1 "
+                        "reduces to prelude → base_recurrent_block → coda. "
+                        "Should be bit-identical to base IF layer partitioning "
+                        "(prelude + block + coda) tiles ALL base layers. If LCB < "
+                        "base under bypass: wrapper plumbing or layer-allocation bug. "
+                        "Mutually exclusive with --checkpoint.")
     p.add_argument("--lcb-min-date", type=str, default="2024-10-01",
                    help="Skip LCB problems with contest_date earlier than this "
                         "(ISO YYYY-MM-DD). Defaults to past DS-Coder-V2 cutoff.")
@@ -880,6 +900,7 @@ def main() -> int:
         recurrent_block_start=args.recurrent_block_start,
         recurrent_block_end=args.recurrent_block_end,
         block_mode=args.block_mode,
+        first_iter_identity=args.first_iter_identity,
         gate_init_bias=args.gate_init_bias,
         layerscale_init=args.layerscale_init,
         layerscale_clamp_max=args.layerscale_clamp_max,
@@ -935,6 +956,34 @@ def main() -> int:
             print(f"[smoke]   missing (first 3): {missing[:3]}")
         if unexpected:
             print(f"[smoke]   unexpected (first 3): {unexpected[:3]}")
+        wrapper.eval()
+
+    if args.bypass_trainables:
+        if args.checkpoint:
+            raise SystemExit("[smoke] --bypass-trainables and --checkpoint are mutually exclusive")
+        from mythic_rdt.training import inject_depth_lora
+        print(f"[smoke] BYPASS MODE: injecting DepthLoRA scaffold "
+              f"(targets={args.lora_targets} rank={args.lora_rank}) then zeroing trainables")
+        inject_depth_lora(
+            wrapper,
+            targets=args.lora_targets,
+            rank=args.lora_rank,
+            alpha=args.lora_alpha,
+            lora_dtype=dtype,
+        )
+        zeroed_g = zeroed_ls = zeroed_b = 0
+        with torch.no_grad():
+            for n, p in wrapper.named_parameters():
+                base_n = n.rsplit(".", 1)[-1]
+                if base_n in ("bias",) and "gate" in n:
+                    p.fill_(-10.0); zeroed_g += 1
+                elif "layerscale" in n.lower() or n.endswith(".scale"):
+                    p.zero_(); zeroed_ls += 1
+                elif n.endswith("lora_B") or n.endswith("lora.B") or "lora_B" in n:
+                    p.zero_(); zeroed_b += 1
+        print(f"[smoke]   zeroed: gate_bias={zeroed_g}  layerscale={zeroed_ls}  lora_B={zeroed_b}")
+        # Sanity: with these zeroed, layerscale=0 makes the entire injection collapse.
+        # Wrapper is now mathematically a no-op recurrence ≈ base.
         wrapper.eval()
 
     for T in args.T_values:

@@ -132,6 +132,12 @@ def parse_args() -> argparse.Namespace:
                         "ls*gate*inj (block_out passes through). Required "
                         "when running multi-layer blocks; otherwise the loop "
                         "discards block_out at gate≈0 init.")
+    p.add_argument("--first-iter-identity", action="store_true",
+                   help="v6A architectural fix: t=0 iteration of the recurrence "
+                        "loop is unconditionally identity (h_next = block_out). "
+                        "At T=1 the wrapper output is byte-for-byte equal to "
+                        "base. T>=1 iterations inject normally. See "
+                        "memory/project_phase1_v6_diagnosis.md.")
     p.add_argument("--prelude-layers", type=int, default=1)
     p.add_argument("--coda-layers", type=int, default=1)
     p.add_argument("--max-loop-iters", type=int, default=8,
@@ -291,6 +297,7 @@ def main() -> int:
         recurrent_block_start=args.recurrent_block_start,
         recurrent_block_end=args.recurrent_block_end,
         block_mode=args.block_mode,
+        first_iter_identity=args.first_iter_identity,
         train_loop_iters=min(2, args.max_loop_iters),  # initial T; trainer overrides per-step
         max_loop_iters=args.max_loop_iters,
         gate_init_bias=args.gate_init_bias,

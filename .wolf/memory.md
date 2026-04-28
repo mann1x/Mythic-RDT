@@ -896,3 +896,67 @@
 | 08:53 | Session end: 5 writes across 4 files (STATUS.md, README.md, trainer.py, test_load_trainable_state.py) | 6 reads | ~39631 tok |
 | 09:00 | Edited .gitignore | expanded (+6 lines) | ~59 |
 | 09:01 | Edited .gitignore | 6→8 lines | ~50 |
+
+## Session: 2026-04-28 09:02
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-04-28 09:02
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-04-28 09:02
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-04-28 09:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-04-28 09:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-04-28 09:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 12:34 | Edited STATUS.md | modified signals() | ~815 |
+| 12:36 | Edited STATUS.md | expanded (+17 lines) | ~740 |
+| 12:36 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v5_verdict.md | — | ~880 |
+| 12:37 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~150 |
+
+## Session: 2026-04-28 12:42
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 12:57 | Edited scripts/humaneval_smoke.py | expanded (+7 lines) | ~178 |
+| 12:57 | Edited scripts/humaneval_smoke.py | modified print() | ~454 |
+| 13:00 | Edited scripts/humaneval_smoke.py | 7→12 lines | ~278 |
+| 13:07 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13353 tok |
+| 13:12 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13353 tok |
+| 13:31 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v6_diagnosis.md | — | ~1317 |
+| 13:32 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~243 |
+| 13:32 | Edited STATUS.md | modified fix() | ~752 |
+| 13:33 | Edited src/mythic_rdt/configuration.py | expanded (+12 lines) | ~270 |
+| 13:33 | Edited src/mythic_rdt/configuration.py | 2→3 lines | ~45 |
+| 13:34 | Edited src/mythic_rdt/modeling.py | modified getattr() | ~302 |
+| 13:34 | Edited scripts/humaneval_smoke.py | expanded (+8 lines) | ~194 |
+| 13:34 | Edited scripts/humaneval_smoke.py | 2→3 lines | ~38 |
+| 13:34 | Edited scripts/finetune_phase1.py | 2→3 lines | ~53 |
+| 13:35 | Edited scripts/finetune_phase1.py | expanded (+6 lines) | ~227 |
+
+## Session: 2026-04-28 13:35
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:58 | Edited STATUS.md | modified fix() | ~223 |
+| 13:58 | Session end: 1 writes across 1 files (STATUS.md) | 0 reads | ~238 tok |
+| 13:58 | Created scripts/pod_runner/run_v6a.sh | — | ~870 |
+| 14:00 | Session end: 2 writes across 2 files (STATUS.md, run_v6a.sh) | 1 reads | ~1170 tok |
+| 14:01 | Created tests/test_first_iter_identity.py | — | ~1236 |

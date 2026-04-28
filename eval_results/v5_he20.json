@@ -1,0 +1,124 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "limit": 20,
+    "recurrent_layer_idx": 10,
+    "recurrent_block_start": 4,
+    "recurrent_block_end": 22,
+    "block_mode": true,
+    "prelude_layers": 4,
+    "coda_layers": 4,
+    "gate_init_bias": 0.0,
+    "layerscale_init": 0.0001,
+    "layerscale_clamp_max": 0.01,
+    "force_bypass": false,
+    "T_values": [
+      1,
+      2,
+      4
+    ],
+    "gen_tokens": 384,
+    "no_kv_cache": false,
+    "batch_size": 4,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "output_json": "eval_results/v5_he20.json",
+    "skip_base": false,
+    "checkpoint": "checkpoints/phase1_v5_margin_distill",
+    "lora_rank": 8,
+    "lora_alpha": 16.0,
+    "lora_targets": [
+      "self_attn.q_proj_or_q_a",
+      "self_attn.o_proj"
+    ],
+    "quant": "nf4",
+    "lcb_limit": 0,
+    "lcb_difficulty": "medium",
+    "lcb_min_date": "2024-10-01"
+  },
+  "results": [
+    {
+      "name": "base_he",
+      "pass_at_1": 1.0,
+      "n_pass": 20,
+      "n_total": 20,
+      "elapsed_sec": 3.6569533348083496,
+      "failures": []
+    },
+    {
+      "name": "wrapper_T1_he",
+      "pass_at_1": 0.95,
+      "n_pass": 19,
+      "n_total": 20,
+      "elapsed_sec": 3.599886894226074,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [num for i, num in enumerate(numbers) if i != 0] if numbers else []\n"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T2_he",
+      "pass_at_1": 0.85,
+      "n_pass": 17,
+      "n_total": 20,
+      "elapsed_sec": 3.6091578006744385,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    if not numbers:\n        return []\n    return [n for i, n in enumerate(numbers) if i != 0]\n"
+        },
+        {
+          "task_id": "HumanEval/18",
+          "entry_point": "how_many_times",
+          "reason": "NameError: name 'sub' is not defined",
+          "completion_head": "    count = start = 0\n    while True:\n        start = string.find(sub, start)\n        if start == -1:\n            break\n"
+        },
+        {
+          "task_id": "HumanEval/19",
+          "entry_point": "sort_numbers",
+          "reason": "SyntaxError: invalid character '\u2018' (U+2018) (<string>, line 14)",
+          "completion_head": "    num_dict = {\n        'zero': 0,\n        'one': 1,\n        \u2018two\u2019: 2,\n        \u2018three\u2019: 3,\n        \u2018four\u2019: 4,\n        \u2018"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T4_he",
+      "pass_at_1": 0.8,
+      "n_pass": 16,
+      "n_total": 20,
+      "elapsed_sec": 3.7594528198242188,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [n for i, n in enumerate(numbers) if i != 0] if numbers else []\n"
+        },
+        {
+          "task_id": "HumanEval/6",
+          "entry_point": "parse_nested_parens",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [paren_string.count(f'({i})') for i in range(1, 100)]\n"
+        },
+        {
+          "task_id": "HumanEval/9",
+          "entry_point": "rolling_max",
+          "reason": "IndexError: list index out of range",
+          "completion_head": "    rolling_max_list = []\n    current_max = numbers[0]\n    for num in numbers:\n        current_max = max(current_max, nu"
+        },
+        {
+          "task_id": "HumanEval/19",
+          "entry_point": "sort_numbers",
+          "reason": "ValueError: invalid literal for int() with base 10: 'three'",
+          "completion_head": "    num_to_int = {\n        'zero': 0,\n        'one': 1,\n        'two': 2,\n        'three': 3,\n        'four': 4,\n       "
+        }
+      ]
+    }
+  ]
+}

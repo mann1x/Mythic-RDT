@@ -206,6 +206,14 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
             # Legacy single-layer mode bypass: return the block output
             # directly, mimicking "run the layer once".
             return block_out
+        # v6A: first-iteration identity. When enabled, the t=0 iteration adds
+        # no LTI/gate/LayerScale contribution -- output is the bare base-block
+        # forward. At T=1 this makes the wrapper output ≡ base by construction
+        # (prelude -> base_recurrent_block -> coda, no perturbation). T>=1
+        # iterations inject normally. See memory/project_phase1_v6_diagnosis.md
+        # for the diagnostic probes that motivated this fix.
+        if t == 0 and getattr(self.config, "first_iter_identity", False):
+            return block_out
         cell_out = self.recurrence(h, e, block_out, t=t, force_gate_zero=force_gate_zero)
         return cell_out.h_next
 

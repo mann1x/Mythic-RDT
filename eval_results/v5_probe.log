@@ -1,0 +1,125 @@
+[ft] base=base/DeepSeek-Coder-V2-Lite-Instruct  output_dir=/workspace/mythic-rdt/checkpoints/v5_probe  quant=nf4
+[ft] loading base with NF4 quantization (compute=torch.bfloat16)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.82s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.82s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.81s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:10<00:00,  2.49s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:10<00:00,  2.61s/it]
+[ft] gradient-checkpointing recurrent loop body (use_reentrant=False)
+[ft]   lora wired: layers.4.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.4.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.5.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.5.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.6.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.6.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.7.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.7.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.8.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.8.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.9.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.9.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.10.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.10.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.11.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.11.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.12.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.12.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.13.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.13.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.14.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.14.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.15.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.15.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.16.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.16.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.17.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.17.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.18.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.18.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.19.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.19.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.20.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.20.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.21.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.21.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.22.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.22.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft] trainable params: 9,799,688 / 8,074,524,168 (0.1214%)
+[ft] init-from-checkpoint: loading trainable state from checkpoints/phase1_v3_t1/checkpoint-400/mythic_rdt_trainable.pt
+[ft] init-from-checkpoint: loaded=80 missing=0 unexpected=0
+The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. 
+The tokenizer class you load from this checkpoint is 'LlamaTokenizerFast'. 
+The class this function is called from is 'DeepseekTokenizerFast'.
+[ft] curriculum phases:
+[ft]   step>=0: T-mix={1: 1.0}
+[ft]   step>=80: T-mix={1: 0.4, 2: 0.6}
+[ft]   step>=160: T-mix={1: 0.2, 2: 0.5, 4: 0.3}
+[ft]   step>=280: T-mix={2: 0.4, 4: 0.6}
+max_steps is given, it will override any value given in num_train_epochs
+[trainer] KL-to-base anchor active: alpha=0.02, every=8 steps
+[trainer] dual-T training active: lo=1, hi=max_loop_iters, margin_alpha=0.1, margin_nats=0.02, distill_alpha=0.05
+[ft] starting training; resume_flag=None
+  0%|          | 0/5 [00:00<?, ?it/s]                                     {'margin_loss': 1.0078125, 'epoch': 0}
+  0%|          | 0/5 [00:21<?, ?it/s]                                     {'distill_loss': 0.625, 'epoch': 0}
+  0%|          | 0/5 [00:21<?, ?it/s]                                     {'ce_lo_T': 2.65625, 'ce_hi_T': 3.640625, 'ce_gap': 0.984375, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0}
+  0%|          | 0/5 [00:21<?, ?it/s]                                     {'kl_anchor': 0.95703125, 'epoch': 0}
+  0%|          | 0/5 [00:22<?, ?it/s]                                     {'margin_loss': 0.91015625, 'epoch': 0}
+  0%|          | 0/5 [00:50<?, ?it/s]                                     {'distill_loss': 0.6328125, 'epoch': 0}
+  0%|          | 0/5 [00:50<?, ?it/s]                                     {'ce_lo_T': 2.203125, 'ce_hi_T': 3.09375, 'ce_gap': 0.890625, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0}
+  0%|          | 0/5 [00:50<?, ?it/s]                                     {'kl_anchor': 0.8515625, 'epoch': 0}
+  0%|          | 0/5 [00:52<?, ?it/s]                                     {'margin_loss': 0.80078125, 'epoch': 0}
+  0%|          | 0/5 [01:20<?, ?it/s]                                     {'distill_loss': 0.66796875, 'epoch': 0}
+  0%|          | 0/5 [01:20<?, ?it/s]                                     {'ce_lo_T': 2.03125, 'ce_hi_T': 2.8125, 'ce_gap': 0.78125, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0}
+  0%|          | 0/5 [01:20<?, ?it/s]                                     {'kl_anchor': 0.8984375, 'epoch': 0}
+  0%|          | 0/5 [01:22<?, ?it/s]                                     {'margin_loss': 1.0078125, 'epoch': 0}
+  0%|          | 0/5 [01:49<?, ?it/s]                                     {'distill_loss': 0.71484375, 'epoch': 0}
+  0%|          | 0/5 [01:49<?, ?it/s]                                     {'ce_lo_T': 2.234375, 'ce_hi_T': 3.21875, 'ce_gap': 0.984375, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0}
+  0%|          | 0/5 [01:49<?, ?it/s]                                     {'kl_anchor': 0.984375, 'epoch': 0}
+  0%|          | 0/5 [01:51<?, ?it/s] 20%|██        | 1/5 [02:11<08:45, 131.43s/it]                                              {'margin_loss': 1.0546875, 'epoch': 0.2}
+ 20%|██        | 1/5 [02:31<08:45, 131.43s/it]                                              {'distill_loss': 0.73046875, 'epoch': 0.2}
+ 20%|██        | 1/5 [02:31<08:45, 131.43s/it]                                              {'ce_lo_T': 2.09375, 'ce_hi_T': 3.125, 'ce_gap': 1.03125, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.2}
+ 20%|██        | 1/5 [02:31<08:45, 131.43s/it]                                              {'margin_loss': 0.91015625, 'epoch': 0.2}
+ 20%|██        | 1/5 [02:59<08:45, 131.43s/it]                                              {'distill_loss': 0.7109375, 'epoch': 0.2}
+ 20%|██        | 1/5 [02:59<08:45, 131.43s/it]                                              {'ce_lo_T': 2.046875, 'ce_hi_T': 2.9375, 'ce_gap': 0.890625, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.2}
+ 20%|██        | 1/5 [02:59<08:45, 131.43s/it]                                              {'margin_loss': 0.97265625, 'epoch': 0.2}
+ 20%|██        | 1/5 [03:27<08:45, 131.43s/it]                                              {'distill_loss': 0.6015625, 'epoch': 0.2}
+ 20%|██        | 1/5 [03:27<08:45, 131.43s/it]                                              {'ce_lo_T': 2.546875, 'ce_hi_T': 3.5, 'ce_gap': 0.953125, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.2}
+ 20%|██        | 1/5 [03:27<08:45, 131.43s/it]                                              {'margin_loss': 0.98828125, 'epoch': 0.2}
+ 20%|██        | 1/5 [03:54<08:45, 131.43s/it]                                              {'distill_loss': 0.61328125, 'epoch': 0.2}
+ 20%|██        | 1/5 [03:54<08:45, 131.43s/it]                                              {'ce_lo_T': 2.46875, 'ce_hi_T': 3.4375, 'ce_gap': 0.96875, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.2}
+ 20%|██        | 1/5 [03:54<08:45, 131.43s/it] 40%|████      | 2/5 [04:15<06:20, 126.84s/it]                                              {'margin_loss': 0.86328125, 'epoch': 0.4}
+ 40%|████      | 2/5 [04:37<06:20, 126.84s/it]                                              {'distill_loss': 0.58203125, 'epoch': 0.4}
+ 40%|████      | 2/5 [04:37<06:20, 126.84s/it]                                              {'ce_lo_T': 2.6875, 'ce_hi_T': 3.53125, 'ce_gap': 0.84375, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.4}
+ 40%|████      | 2/5 [04:37<06:20, 126.84s/it]                                              {'margin_loss': 0.92578125, 'epoch': 0.4}
+ 40%|████      | 2/5 [05:05<06:20, 126.84s/it]                                              {'distill_loss': 0.57421875, 'epoch': 0.4}
+ 40%|████      | 2/5 [05:05<06:20, 126.84s/it]                                              {'ce_lo_T': 2.4375, 'ce_hi_T': 3.34375, 'ce_gap': 0.90625, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.4}
+ 40%|████      | 2/5 [05:05<06:20, 126.84s/it]                                              {'margin_loss': 0.91015625, 'epoch': 0.4}
+ 40%|████      | 2/5 [05:32<06:20, 126.84s/it]                                              {'distill_loss': 0.6484375, 'epoch': 0.4}
+ 40%|████      | 2/5 [05:32<06:20, 126.84s/it]                                              {'ce_lo_T': 2.15625, 'ce_hi_T': 3.046875, 'ce_gap': 0.890625, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.4}
+ 40%|████      | 2/5 [05:32<06:20, 126.84s/it]                                              {'margin_loss': 0.91015625, 'epoch': 0.4}
+ 40%|████      | 2/5 [06:00<06:20, 126.84s/it]                                              {'distill_loss': 0.62890625, 'epoch': 0.4}
+ 40%|████      | 2/5 [06:00<06:20, 126.84s/it]                                              {'ce_lo_T': 2.109375, 'ce_hi_T': 3.0, 'ce_gap': 0.890625, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.4}
+ 40%|████      | 2/5 [06:00<06:20, 126.84s/it] 60%|██████    | 3/5 [06:20<04:12, 126.13s/it]                                              {'margin_loss': 0.94140625, 'epoch': 0.6}
+ 60%|██████    | 3/5 [06:32<04:12, 126.13s/it]                                              {'distill_loss': 0.66015625, 'epoch': 0.6}
+ 60%|██████    | 3/5 [06:32<04:12, 126.13s/it]                                              {'ce_lo_T': 2.375, 'ce_hi_T': 3.296875, 'ce_gap': 0.921875, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.6}
+ 60%|██████    | 3/5 [06:32<04:12, 126.13s/it]                                              {'margin_loss': 0.87890625, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:00<04:12, 126.13s/it]                                              {'distill_loss': 0.5625, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:00<04:12, 126.13s/it]                                              {'ce_lo_T': 2.390625, 'ce_hi_T': 3.25, 'ce_gap': 0.859375, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:00<04:12, 126.13s/it]                                              {'margin_loss': 1.0546875, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:28<04:12, 126.13s/it]                                              {'distill_loss': 0.75, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:28<04:12, 126.13s/it]                                              {'ce_lo_T': 2.546875, 'ce_hi_T': 3.578125, 'ce_gap': 1.03125, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:28<04:12, 126.13s/it]                                              {'margin_loss': 1.1484375, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:56<04:12, 126.13s/it]                                              {'distill_loss': 0.81640625, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:56<04:12, 126.13s/it]                                              {'ce_lo_T': 2.671875, 'ce_hi_T': 3.796875, 'ce_gap': 1.125, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.6}
+ 60%|██████    | 3/5 [07:56<04:12, 126.13s/it] 80%|████████  | 4/5 [08:16<02:02, 122.28s/it]                                              {'margin_loss': 0.97265625, 'epoch': 0.8}
+ 80%|████████  | 4/5 [08:28<02:02, 122.28s/it]                                              {'distill_loss': 0.6875, 'epoch': 0.8}
+ 80%|████████  | 4/5 [08:28<02:02, 122.28s/it]                                              {'ce_lo_T': 2.40625, 'ce_hi_T': 3.359375, 'ce_gap': 0.953125, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.8}
+ 80%|████████  | 4/5 [08:28<02:02, 122.28s/it]                                              {'margin_loss': 0.91015625, 'epoch': 0.8}
+ 80%|████████  | 4/5 [08:56<02:02, 122.28s/it]                                              {'distill_loss': 0.63671875, 'epoch': 0.8}
+ 80%|████████  | 4/5 [08:56<02:02, 122.28s/it]                                              {'ce_lo_T': 2.5625, 'ce_hi_T': 3.453125, 'ce_gap': 0.890625, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.8}
+ 80%|████████  | 4/5 [08:56<02:02, 122.28s/it]                                              {'margin_loss': 0.86328125, 'epoch': 0.8}
+ 80%|████████  | 4/5 [09:24<02:02, 122.28s/it]                                              {'distill_loss': 0.59375, 'epoch': 0.8}
+ 80%|████████  | 4/5 [09:24<02:02, 122.28s/it]                                              {'ce_lo_T': 2.25, 'ce_hi_T': 3.09375, 'ce_gap': 0.84375, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.8}
+ 80%|████████  | 4/5 [09:24<02:02, 122.28s/it]                                              {'margin_loss': 0.81640625, 'epoch': 0.8}
+ 80%|████████  | 4/5 [09:51<02:02, 122.28s/it]                                              {'distill_loss': 0.58984375, 'epoch': 0.8}
+ 80%|████████  | 4/5 [09:51<02:02, 122.28s/it]                                              {'ce_lo_T': 2.03125, 'ce_hi_T': 2.828125, 'ce_gap': 0.796875, 'T_lo': 1.0, 'T_hi': 4.0, 'epoch': 0.8}
+ 80%|████████  | 4/5 [09:51<02:02, 122.28s/it]100%|██████████| 5/5 [10:12<00:00, 119.87s/it]                                              {'train_runtime': 612.5505, 'train_samples_per_second': 0.065, 'train_steps_per_second': 0.008, 'train_loss': 2.93671875, 'epoch': 1.0}
+100%|██████████| 5/5 [10:12<00:00, 119.87s/it]100%|██████████| 5/5 [10:12<00:00, 122.51s/it]
+[ft] training complete
+terminate called without an active exception

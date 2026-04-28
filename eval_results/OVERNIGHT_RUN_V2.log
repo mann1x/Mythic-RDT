@@ -1,0 +1,146 @@
+
+================================================================
+[overnight v2] start 2026-04-28T01:33:51Z
+/workspace/mythic-rdt/run_overnight_v2.sh: line 16: [overnight v2] WANDB_API_KEY length=${#WANDB_API_KEY:-0}: bad substitution
+================================================================
+[overnight v2] PHASE 1: v4-extended training (CORRECTED lora-targets)
+[overnight v2] 01:33:51 launching...
+[ft] base=base/DeepSeek-Coder-V2-Lite-Instruct  output_dir=checkpoints/phase1_v4_extended  quant=nf4
+[ft] loading base with NF4 quantization (compute=torch.bfloat16)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.17s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:05,  2.97s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.91s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:10<00:00,  2.53s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:10<00:00,  2.70s/it]
+[ft] gradient-checkpointing recurrent loop body (use_reentrant=False)
+[ft]   lora wired: layers.4.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.4.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.5.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.5.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.6.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.6.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.7.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.7.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.8.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.8.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.9.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.9.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.10.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.10.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.11.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.11.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.12.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.12.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.13.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.13.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.14.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.14.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.15.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.15.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.16.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.16.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.17.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.17.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.18.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.18.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.19.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.19.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.20.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.20.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.21.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.21.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.22.self_attn.q_proj_or_q_a->q_proj  in=2048 out=3072 rank=8 T=4 base_dtype=torch.uint8
+[ft]   lora wired: layers.22.self_attn.o_proj->o_proj  in=2048 out=2048 rank=8 T=4 base_dtype=torch.uint8
+[ft] trainable params: 9,799,688 / 8,074,524,168 (0.1214%)
+[ft] init-from-checkpoint: loading trainable state from checkpoints/phase1_v4_anchored/checkpoint-400/mythic_rdt_trainable.pt
+[ft] init-from-checkpoint: loaded=80 missing=0 unexpected=0
+The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. 
+The tokenizer class you load from this checkpoint is 'LlamaTokenizerFast'. 
+The class this function is called from is 'DeepseekTokenizerFast'.
+[ft] curriculum phases:
+[ft]   step>=0: T-mix={1: 1.0}
+[ft]   step>=80: T-mix={1: 0.4, 2: 0.6}
+[ft]   step>=160: T-mix={1: 0.2, 2: 0.5, 4: 0.3}
+[ft]   step>=280: T-mix={2: 0.4, 4: 0.6}
+max_steps is given, it will override any value given in num_train_epochs
+[trainer] KL-to-base anchor active: alpha=0.05, every=8 steps
+[ft] starting training; resume_flag=None
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from WANDB_API_KEY.
+wandb: Currently logged in as: mannix to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.26.1
+wandb: Run data is saved locally in /workspace/mythic-rdt/wandb/run-20260428_013424-fzoe549n
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run phase1_v4_extended
+wandb: ⭐️ View project at https://wandb.ai/mannix/mythic-rdt
+wandb: 🚀 View run at https://wandb.ai/mannix/mythic-rdt/runs/fzoe549n
+  0%|          | 0/400 [00:00<?, ?it/s]                                       {'kl_anchor': 0.000942230224609375, 'epoch': 0}
+  0%|          | 0/400 [00:16<?, ?it/s]                                       {'kl_anchor': 0.00115966796875, 'epoch': 0}
+  0%|          | 0/400 [00:24<?, ?it/s]                                       {'kl_anchor': 0.00130462646484375, 'epoch': 0}
+  0%|          | 0/400 [00:32<?, ?it/s]                                       {'kl_anchor': 0.001251220703125, 'epoch': 0}
+  0%|          | 0/400 [00:40<?, ?it/s]  0%|          | 1/400 [00:44<4:58:05, 44.83s/it]  0%|          | 2/400 [01:21<4:25:57, 40.09s/it]  1%|          | 3/400 [02:00<4:21:44, 39.56s/it]  1%|          | 4/400 [02:30<3:55:18, 35.65s/it]  1%|▏         | 5/400 [02:59<3:39:27, 33.33s/it]  2%|▏         | 6/400 [03:24<3:20:33, 30.54s/it]  2%|▏         | 7/400 [03:50<3:10:56, 29.15s/it]  2%|▏         | 8/400 [04:19<3:09:16, 28.97s/it]                                                 {'kl_anchor': 0.000598907470703125, 'epoch': 0.02}
+  2%|▏         | 8/400 [04:23<3:09:16, 28.97s/it]                                                 {'kl_anchor': 0.00164031982421875, 'epoch': 0.02}
+  2%|▏         | 8/400 [04:31<3:09:16, 28.97s/it]                                                 {'kl_anchor': 0.00077056884765625, 'epoch': 0.02}
+  2%|▏         | 8/400 [04:39<3:09:16, 28.97s/it]                                                 {'kl_anchor': 0.00151824951171875, 'epoch': 0.02}
+  2%|▏         | 8/400 [04:47<3:09:16, 28.97s/it]  2%|▏         | 9/400 [04:52<3:16:12, 30.11s/it]  2%|▎         | 10/400 [05:24<3:20:49, 30.90s/it]                                                  {'loss': 2.1803, 'grad_norm': 2.34375, 'learning_rate': 2e-05, 'epoch': 0.03}
+  2%|▎         | 10/400 [05:24<3:20:49, 30.90s/it]  3%|▎         | 11/400 [05:53<3:16:46, 30.35s/it]  3%|▎         | 12/400 [06:27<3:23:30, 31.47s/it]  3%|▎         | 13/400 [06:55<3:15:43, 30.34s/it]  4%|▎         | 14/400 [07:28<3:19:48, 31.06s/it]  4%|▍         | 15/400 [07:54<3:10:18, 29.66s/it]  4%|▍         | 16/400 [08:25<3:12:23, 30.06s/it]                                                  {'kl_anchor': 0.000934600830078125, 'epoch': 0.04}
+  4%|▍         | 16/400 [08:34<3:12:23, 30.06s/it]                                                  {'kl_anchor': 0.00113677978515625, 'epoch': 0.04}
+  4%|▍         | 16/400 [08:42<3:12:23, 30.06s/it]                                                  {'kl_anchor': 0.0011749267578125, 'epoch': 0.04}
+  4%|▍         | 16/400 [08:50<3:12:23, 30.06s/it]                                                  {'kl_anchor': 0.00128173828125, 'epoch': 0.04}
+  4%|▍         | 16/400 [08:58<3:12:23, 30.06s/it]  4%|▍         | 17/400 [09:02<3:25:38, 32.22s/it]  4%|▍         | 18/400 [09:30<3:16:29, 30.86s/it]  5%|▍         | 19/400 [09:56<3:06:10, 29.32s/it]  5%|▌         | 20/400 [10:21<2:58:23, 28.17s/it]                                                  {'loss': 2.0724, 'grad_norm': 0.96484375, 'learning_rate': 4e-05, 'epoch': 0.05}
+  5%|▌         | 20/400 [10:21<2:58:23, 28.17s/it]  5%|▌         | 21/400 [10:46<2:52:09, 27.26s/it]  6%|▌         | 22/400 [11:12<2:48:29, 26.74s/it]  6%|▌         | 23/400 [11:38<2:45:42, 26.37s/it]  6%|▌         | 24/400 [12:03<2:44:01, 26.17s/it]                                                  {'kl_anchor': 0.00133514404296875, 'epoch': 0.06}
+  6%|▌         | 24/400 [12:07<2:44:01, 26.17s/it]                                                  {'kl_anchor': 0.00140380859375, 'epoch': 0.06}
+  6%|▌         | 24/400 [12:15<2:44:01, 26.17s/it]                                                  {'kl_anchor': 0.001312255859375, 'epoch': 0.06}
+  6%|▌         | 24/400 [12:23<2:44:01, 26.17s/it]                                                  {'kl_anchor': 0.0013275146484375, 'epoch': 0.06}
+  6%|▌         | 24/400 [12:31<2:44:01, 26.17s/it]  6%|▋         | 25/400 [12:36<2:55:04, 28.01s/it]  6%|▋         | 26/400 [13:01<2:49:51, 27.25s/it]  7%|▋         | 27/400 [13:26<2:45:49, 26.68s/it]  7%|▋         | 28/400 [13:52<2:42:37, 26.23s/it]  7%|▋         | 29/400 [14:17<2:40:22, 25.94s/it]  8%|▊         | 30/400 [14:42<2:39:03, 25.79s/it]                                                  {'loss': 1.4563, 'grad_norm': 2.09375, 'learning_rate': 6e-05, 'epoch': 0.07}
+  8%|▊         | 30/400 [14:42<2:39:03, 25.79s/it]  8%|▊         | 31/400 [15:08<2:37:47, 25.66s/it]  8%|▊         | 32/400 [15:33<2:36:24, 25.50s/it]                                                  {'kl_anchor': 0.00095367431640625, 'epoch': 0.08}
+  8%|▊         | 32/400 [15:37<2:36:24, 25.50s/it]                                                  {'kl_anchor': 0.0010528564453125, 'epoch': 0.08}
+  8%|▊         | 32/400 [15:44<2:36:24, 25.50s/it]                                                  {'kl_anchor': 0.00136566162109375, 'epoch': 0.08}
+  8%|▊         | 32/400 [15:53<2:36:24, 25.50s/it]                                                  {'kl_anchor': 0.000701904296875, 'epoch': 0.08}
+  8%|▊         | 32/400 [16:01<2:36:24, 25.50s/it]  8%|▊         | 33/400 [16:05<2:48:45, 27.59s/it]  8%|▊         | 34/400 [16:31<2:44:33, 26.98s/it]  9%|▉         | 35/400 [16:56<2:41:14, 26.51s/it]  9%|▉         | 36/400 [17:22<2:38:45, 26.17s/it]  9%|▉         | 37/400 [17:47<2:36:53, 25.93s/it] 10%|▉         | 38/400 [18:12<2:35:02, 25.70s/it] 10%|▉         | 39/400 [18:38<2:34:20, 25.65s/it]Token indices sequence length is longer than the specified maximum sequence length for this model (54638 > 16384). Running this sequence through the model will result in indexing errors
+ 10%|█         | 40/400 [19:03<2:33:16, 25.54s/it]                                                  {'loss': 1.7032, 'grad_norm': 1.40625, 'learning_rate': 8e-05, 'epoch': 0.1}
+ 10%|█         | 40/400 [19:03<2:33:16, 25.54s/it]                                                  {'kl_anchor': 0.000667572021484375, 'epoch': 0.1}
+ 10%|█         | 40/400 [19:06<2:33:16, 25.54s/it]                                                  {'kl_anchor': 0.001007080078125, 'epoch': 0.1}
+ 10%|█         | 40/400 [19:15<2:33:16, 25.54s/it]                                                  {'kl_anchor': 0.000919342041015625, 'epoch': 0.1}
+ 10%|█         | 40/400 [19:23<2:33:16, 25.54s/it]                                                  {'kl_anchor': 0.000759124755859375, 'epoch': 0.1}
+ 10%|█         | 40/400 [19:31<2:33:16, 25.54s/it] 10%|█         | 41/400 [19:35<2:45:04, 27.59s/it] 10%|█         | 42/400 [20:01<2:41:08, 27.01s/it] 11%|█         | 43/400 [20:26<2:37:09, 26.41s/it] 11%|█         | 44/400 [20:51<2:34:50, 26.10s/it] 11%|█▏        | 45/400 [21:17<2:33:13, 25.90s/it] 12%|█▏        | 46/400 [21:42<2:32:20, 25.82s/it] 12%|█▏        | 47/400 [22:08<2:30:49, 25.64s/it] 12%|█▏        | 48/400 [22:33<2:30:01, 25.57s/it]                                                  {'kl_anchor': 0.000705718994140625, 'epoch': 0.12}
+ 12%|█▏        | 48/400 [22:37<2:30:01, 25.57s/it]                                                  {'kl_anchor': 0.00087738037109375, 'epoch': 0.12}
+ 12%|█▏        | 48/400 [22:45<2:30:01, 25.57s/it]                                                  {'kl_anchor': 0.00102996826171875, 'epoch': 0.12}
+ 12%|█▏        | 48/400 [22:53<2:30:01, 25.57s/it]                                                  {'kl_anchor': 0.00093841552734375, 'epoch': 0.12}
+ 12%|█▏        | 48/400 [23:01<2:30:01, 25.57s/it] 12%|█▏        | 49/400 [23:05<2:41:41, 27.64s/it] 12%|█▎        | 50/400 [23:31<2:37:14, 26.96s/it]                                                  {'loss': 1.3498, 'grad_norm': 2.09375, 'learning_rate': 0.0001, 'epoch': 0.12}
+ 12%|█▎        | 50/400 [23:31<2:37:14, 26.96s/it] 13%|█▎        | 51/400 [23:56<2:33:49, 26.45s/it] 13%|█▎        | 52/400 [24:22<2:31:39, 26.15s/it] 13%|█▎        | 53/400 [24:47<2:29:34, 25.86s/it] 14%|█▎        | 54/400 [25:12<2:27:55, 25.65s/it] 14%|█▍        | 55/400 [25:37<2:26:51, 25.54s/it] 14%|█▍        | 56/400 [26:03<2:26:19, 25.52s/it]                                                  {'kl_anchor': 0.0013275146484375, 'epoch': 0.14}
+ 14%|█▍        | 56/400 [26:06<2:26:19, 25.52s/it]                                                  {'kl_anchor': 0.0009765625, 'epoch': 0.14}
+ 14%|█▍        | 56/400 [26:14<2:26:19, 25.52s/it]                                                  {'kl_anchor': 0.00146484375, 'epoch': 0.14}
+ 14%|█▍        | 56/400 [26:22<2:26:19, 25.52s/it]                                                  {'kl_anchor': 0.00152587890625, 'epoch': 0.14}
+ 14%|█▍        | 56/400 [26:30<2:26:19, 25.52s/it] 14%|█▍        | 57/400 [26:35<2:37:16, 27.51s/it] 14%|█▍        | 58/400 [27:00<2:32:31, 26.76s/it] 15%|█▍        | 59/400 [27:25<2:29:48, 26.36s/it] 15%|█▌        | 60/400 [27:50<2:27:25, 26.02s/it]                                                  {'loss': 1.4684, 'grad_norm': 4.375, 'learning_rate': 0.00012, 'epoch': 0.15}
+ 15%|█▌        | 60/400 [27:50<2:27:25, 26.02s/it] 15%|█▌        | 61/400 [28:15<2:25:02, 25.67s/it] 16%|█▌        | 62/400 [28:40<2:23:34, 25.49s/it] 16%|█▌        | 63/400 [29:05<2:22:25, 25.36s/it] 16%|█▌        | 64/400 [29:31<2:21:44, 25.31s/it]                                                  {'kl_anchor': 0.0006561279296875, 'epoch': 0.16}
+ 16%|█▌        | 64/400 [29:34<2:21:44, 25.31s/it]                                                  {'kl_anchor': 0.00164794921875, 'epoch': 0.16}
+ 16%|█▌        | 64/400 [29:42<2:21:44, 25.31s/it]                                                  {'kl_anchor': 0.0021209716796875, 'epoch': 0.16}
+ 16%|█▌        | 64/400 [29:50<2:21:44, 25.31s/it]                                                  {'kl_anchor': 0.00055694580078125, 'epoch': 0.16}
+ 16%|█▌        | 64/400 [29:58<2:21:44, 25.31s/it] 16%|█▋        | 65/400 [30:02<2:32:15, 27.27s/it] 16%|█▋        | 66/400 [30:28<2:28:22, 26.65s/it] 17%|█▋        | 67/400 [30:53<2:25:05, 26.14s/it] 17%|█▋        | 68/400 [31:17<2:22:21, 25.73s/it] 17%|█▋        | 69/400 [31:43<2:21:01, 25.56s/it] 18%|█▊        | 70/400 [32:08<2:19:42, 25.40s/it]                                                  {'loss': 1.5797, 'grad_norm': 2.0625, 'learning_rate': 0.00014, 'epoch': 0.17}
+ 18%|█▊        | 70/400 [32:08<2:19:42, 25.40s/it] 18%|█▊        | 71/400 [32:33<2:19:02, 25.36s/it] 18%|█▊        | 72/400 [32:58<2:17:57, 25.24s/it]                                                  {'kl_anchor': 0.00167083740234375, 'epoch': 0.18}
+ 18%|█▊        | 72/400 [33:02<2:17:57, 25.24s/it]                                                  {'kl_anchor': 0.00151824951171875, 'epoch': 0.18}
+ 18%|█▊        | 72/400 [33:09<2:17:57, 25.24s/it]                                                  {'kl_anchor': 0.000644683837890625, 'epoch': 0.18}
+ 18%|█▊        | 72/400 [33:17<2:17:57, 25.24s/it]                                                  {'kl_anchor': 0.000896453857421875, 'epoch': 0.18}
+ 18%|█▊        | 72/400 [33:25<2:17:57, 25.24s/it] 18%|█▊        | 73/400 [33:30<2:28:14, 27.20s/it] 18%|█▊        | 74/400 [33:55<2:24:19, 26.56s/it] 19%|█▉        | 75/400 [34:20<2:22:00, 26.22s/it] 19%|█▉        | 76/400 [34:45<2:19:26, 25.82s/it] 19%|█▉        | 77/400 [35:10<2:18:02, 25.64s/it] 20%|█▉        | 78/400 [35:35<2:16:59, 25.53s/it] 20%|█▉        | 79/400 [36:01<2:16:15, 25.47s/it] 20%|██        | 80/400 [36:26<2:14:56, 25.30s/it]                                                  {'loss': 1.4457, 'grad_norm': 2.140625, 'learning_rate': 0.00016, 'epoch': 0.2}
+ 20%|██        | 80/400 [36:26<2:14:56, 25.30s/it]                                                  {'kl_anchor': 0.062255859375, 'epoch': 0.2}
+ 20%|██        | 80/400 [36:31<2:14:56, 25.30s/it]                                                  {'kl_anchor': 0.07470703125, 'epoch': 0.2}
+ 20%|██        | 80/400 [36:44<2:14:56, 25.30s/it]                                                  {'kl_anchor': 0.07666015625, 'epoch': 0.2}
+ 20%|██        | 80/400 [36:57<2:14:56, 25.30s/it]                                                  {'kl_anchor': 0.045166015625, 'epoch': 0.2}
+ 20%|██        | 80/400 [37:10<2:14:56, 25.30s/it] 20%|██        | 81/400 [37:19<2:59:01, 33.67s/it] 20%|██        | 82/400 [37:44<2:44:31, 31.04s/it] 21%|██        | 83/400 [38:30<3:08:21, 35.65s/it] 21%|██        | 84/400 [38:55<2:50:49, 32.44s/it] 21%|██▏       | 85/400 [39:41<3:11:47, 36.53s/it] 22%|██▏       | 86/400 [40:06<2:53:17, 33.11s/it] 22%|██▏       | 87/400 [40:53<3:13:27, 37.08s/it] 22%|██▏       | 88/400 [41:39<3:26:38, 39.74s/it]                                                  {'kl_anchor': 0.0015411376953125, 'epoch': 0.22}
+ 22%|██▏       | 88/400 [41:42<3:26:38, 39.74s/it]                                                  {'kl_anchor': 0.000659942626953125, 'epoch': 0.22}
+ 22%|██▏       | 88/400 [41:50<3:26:38, 39.74s/it]                                                  {'kl_anchor': 0.0028533935546875, 'epoch': 0.22}
+ 22%|██▏       | 88/400 [41:58<3:26:38, 39.74s/it]                                                  {'kl_anchor': 0.002105712890625, 'epoch': 0.22}
+ 22%|██▏       | 88/400 [42:06<3:26:38, 39.74s/it] 22%|██▏       | 89/400 [42:11<3:13:49, 37.39s/it] 22%|██▎       | 90/400 [42:57<3:26:50, 40.04s/it]                                                  {'loss': 1.739, 'grad_norm': 2.875, 'learning_rate': 0.00018, 'epoch': 0.23}
+ 22%|██▎       | 90/400 [42:57<3:26:50, 40.04s/it] 23%|██▎       | 91/400 [43:43<3:35:10, 41.78s/it] 23%|██▎       | 92/400 [44:08<3:09:14, 36.86s/it] 23%|██▎       | 93/400 [44:54<3:22:40, 39.61s/it] 24%|██▎       | 94/400 [45:40<3:31:47, 41.53s/it] 24%|██▍       | 95/400 [46:26<3:37:51, 42.86s/it] 24%|██▍       | 96/400 [47:12<3:42:31, 43.92s/it]                                                  {'kl_anchor': 0.0576171875, 'epoch': 0.24}
+ 24%|██▍       | 96/400 [47:17<3:42:31, 43.92s/it]                                                  {'kl_anchor': 0.059814453125, 'epoch': 0.24}
+ 24%|██▍       | 96/400 [47:31<3:42:31, 43.92s/it]                                                  {'kl_anchor': 0.060546875, 'epoch': 0.24}
+ 24%|██▍       | 96/400 [47:44<3:42:31, 43.92s/it]                                                  {'kl_anchor': 0.061767578125, 'epoch': 0.24}
+ 24%|██▍       | 96/400 [47:57<3:42:31, 43.92s/it] 24%|██▍       | 97/400 [48:06<3:55:47, 46.69s/it] 24%|██▍       | 98/400 [48:51<3:53:36, 46.41s/it] 25%|██▍       | 99/400 [49:16<3:20:52, 40.04s/it] 25%|██▌       | 100/400 [50:03<3:29:32, 41.91s/it]                                                   {'loss': 1.7628, 'grad_norm': 4.8125, 'learning_rate': 0.0002, 'epoch': 0.25}
+ 25%|██▌       | 100/400 [50:03<3:29:32, 41.91s/it] 25%|██▌       | 101/400 [50:50<3:36:07, 43.37s/it] 26%|██▌       | 102/400 [51:35<3:39:10, 44.13s/it] 26%|██▌       | 103/400 [52:21<3:41:08, 44.67s/it] 26%|██▌       | 104/400 [53:08<3:42:56, 45.19s/it]                                                   {'kl_anchor': 0.00171661376953125, 'epoch': 0.26}
+ 26%|██▌       | 104/400 [53:11<3:42:56, 45.19s/it]                                                   {'kl_anchor': 0.0022430419921875, 'epoch': 0.26}
+ 26%|██▌       | 104/400 [53:19<3:42:56, 45.19s/it]                                                   {'kl_anchor': 0.00177764892578125, 'epoch': 0.26}
+ 26%|██▌       | 104/400 [53:27<3:42:56, 45.19s/it]                                                   {'kl_anchor': 0.001434326171875, 'epoch': 0.26}
+ 26%|██▌       | 104/400 [53:35<3:42:56, 45.19s/it] 26%|██▋       | 105/400 [53:39<3:22:02, 41.09s/it] 26%|██▋       | 106/400 [54:26<3:28:55, 42.64s/it] 27%|██▋       | 107/400 [54:51<3:02:37, 37.40s/it] 27%|██▋       | 108/400 [55:16<2:43:57, 33.69s/it] 27%|██▋       | 109/400 [55:41<2:31:24, 31.22s/it] 28%|██▊       | 110/400 [56:06<2:21:43, 29.32s/it]                                                   {'loss': 1.6855, 'grad_norm': 3.90625, 'learning_rate': 0.00019945218953682734, 'epoch': 0.28}
+ 28%|██▊       | 110/400 [56:06<2:21:43, 29.32s/it] 28%|██▊       | 111/400 [56:31<2:14:33, 27.94s/it] 28%|██▊       | 112/400 [57:17<2:40:17, 33.39s/it]                                                   {'kl_anchor': 0.057373046875, 'epoch': 0.28}
+ 28%|██▊       | 112/400 [57:22<2:40:17, 33.39s/it]                                                   {'kl_anchor': 0.052490234375, 'epoch': 0.28}
+ 28%|██▊       | 112/400 [57:35<2:40:17, 33.39s/it]                                                   {'kl_anchor': 0.059326171875, 'epoch': 0.28}
+ 28%|██▊       | 112/400 [57:48<2:40:17, 33.39s/it]                                                   {'kl_anchor': 0.059814453125, 'epoch': 0.28}
+ 28%|██▊       | 112/400 [58:01<2:40:17, 33.39s/it] 28%|██▊       | 113/400 [58:10<3:07:21, 39.17s/it] 28%|██▊       | 114/400 [58:34<2:46:09, 34.86s/it] 29%|██▉       | 115/400 [59:20<3:01:30, 38.21s/it] 29%|██▉       | 116/400 [1:00:06<3:11:42, 40.50s/it]/workspace/mythic-rdt/run_overnight_v2.sh: line 43: 24033 Killed                  python scripts/finetune_phase1.py --base base/DeepSeek-Coder-V2-Lite-Instruct --output-dir checkpoints/phase1_v4_extended --init-from-checkpoint checkpoints/phase1_v4_anchored --quant nf4 --max-loop-iters 4 --prelude-layers 4 --coda-layers 4 --recurrent-block-start 4 --recurrent-block-end 22 --block-mode --gate-init-bias 0.0 --layerscale-clamp-max 1e-2 --lora-rank 8 --curriculum-style v4-anchored --curriculum-warmup-steps 80 --curriculum-phase2-start 160 --curriculum-phase3-start 280 --kl-anchor-alpha 0.05 --kl-anchor-every 8 --max-steps 400 --save-steps 100 --checkpoint-loop --wandb-project mythic-rdt --wandb-run-name phase1_v4_extended
+[overnight v2] 02:34:57 training exit_code=137
+[overnight v2] TRAINING FAILED — skipping eval.

@@ -99,16 +99,34 @@ which silently corrupted positions for any padded batch — that bug masked the 
 - **Failure mode**: passed `--lora-targets q_proj o_proj` (bare attribute names) instead of dotted `self_attn.q_proj_or_q_a self_attn.o_proj`. **No LoRA wired**. Wandb also wasn't picked up by the launcher.
 - Caught the next morning. No checkpoints worth keeping; aborted.
 
-### v5 — dual-T training (in flight, ETA 2026-04-28 ~10:00 UTC)
+### v5 — dual-T margin + distill (completed 2026-04-28, partial 🟡)
 
 - **Hypothesis**: probes 1-3 (see §3.3) showed T=4 loss is *higher* than T=1 loss by 0.3–0.8 nats on held-out text — recurrence is actively degrading the model. Training objective lacks any signal that says "deeper should be at least as good as shallower". Cheapest local minimum is "T=1 hugs base, T=4 drifts wherever".
 - **Fix**: replace single-T sample with dual forward (`T_lo = 1`, `T_hi = max_loop_iters = 4`) and add two new loss terms:
   - **Margin**: `α_margin · ReLU(CE(T_hi) − CE(T_lo) + margin_nats)` — penalises deeper-than-shallow loss directly.
   - **Self-distillation**: `α_distill · KL(softmax(logits_lo) || softmax(logits_hi.detach()))` — pulls low-T logits toward high-T logits so high-T can "teach" low-T.
-- **Setup**: init from **v3-T1 ckpt-400** (NOT v4-anchored — v4 sits in a bad local min for LCB and we want a clean restart from a known-good base). KL anchor reduced 0.05→0.02 (give the new losses room). 200 steps × 120 s ≈ 7 h. Saves at 50/100/150/200.
-- **Live signals**: trainer logs `ce_lo_T`, `ce_hi_T`, `ce_gap`, `margin_loss`, `distill_loss` to wandb run **`3a6muz4p`**.
-- **Pod**: `ssh -p 36738 root@ssh6.vast.ai`, PID 25561, sidecar venv `/workspace/venv-tf4`.
-- **Eval plan post-training**: split-smoke (HumanEval-20 + LCB-medium-10 in separate processes to avoid CUDA contamination) on every saved ckpt at `--T-values 1 2 4`. Compare to v3-T1 (95 % HE / unknown LCB) and v4-anchored (95-95-85 % HE / 0-0-0 % LCB).
+- **Setup**: init from **v3-T1 ckpt-400** (NOT v4-anchored). KL anchor reduced 0.05→0.02. 200 steps × 113 s = 6h 21m total. Saves at 100/150/200 (50 rotated). Wandb run `3a6muz4p`. Pod sidecar venv `/workspace/venv-tf4`.
+
+- **Training signals (clean):**
+  - `ce_gap` collapsed **0.80 → 0.08 nats** over 200 steps (10× reduction). Margin loss bit hard, target hit on training distribution.
+  - Train loss 2.57 → 1.41 (mean per 25-step bucket). Plateau by step ~100. No NaNs, grad_norm bounded 1.5–2.5.
+
+- **Eval verdict (`eval_results/v5_he20.json`, `eval_results/v5_lcb10.json`):**
+
+  | Eval | base | v4-anchored | **v5 ckpt-200** | delta |
+  |---|---|---|---|---|
+  | HE-20 T=1 | 100 % | 95 % | **95 %** | 0 |
+  | HE-20 T=2 | — | 95 % | **85 %** | −10 pp |
+  | HE-20 T=4 | — | 85 % | **80 %** | −5 pp |
+  | LCB-10 T=1 | 30 % | 0 % | **0 %** | 0 |
+  | LCB-10 T=2 | — | 0 % | **10 %** | **+10 pp** |
+  | LCB-10 T=4 | — | 0 % | **10 %** | **+10 pp** |
+
+- **Read:** v5 traded ~5–10 pp HE pass@1 at T≥2 for ~10 pp LCB pass@1 at T≥2. **First non-zero LCB ever from the wrapper.** But still 1/3 of base on LCB; T=1 LCB still 0 % despite direct dual-T training of T=1 + KL anchor. Margin/distill closed the *training-time* CE gap (0.80 → 0.08) but **did not generalize to long-form pass@1** at T=1.
+
+- **Architectural finding:** the 19-layer block_mode wrapper degrades long-form generation **even at T=1, even with direct training of the T=1 slice**. KL anchor preserves token-level distribution on training corpus, not algorithmic correctness over 200–400 token generations. Same finding as v4-anchored at T=1 — both v4 and v5 collapse the T=1 LCB slice from base 30 % → 0 %. v3-T1 LCB **never tested** (HE-only validation) — that data point would settle whether the T=1 collapse is intrinsic to block_mode or specific to v4/v5 training.
+
+- **Decision: don't ship v5, don't launch v6 yet.** Run diagnostic probes first (see §10 Quickstart probes added below) — three cheap experiments that localise the failure mode (wrapper plumbing vs architectural perturbation vs training-time drift). Only then decide whether to (a) shrink the recurrent block, (b) re-anchor T=1 with stronger / per-token KL on long contexts, (c) abandon block_mode for single-layer recurrence.
 
 ---
 
@@ -218,14 +236,76 @@ Run on v4-anchored ckpt-400, summarised in `experiments/` (probe scripts inline,
 
 ## 9. Open items / next steps
 
-1. **Wait for v5** — ~7 h remaining at session compaction time. Persistent monitor task `b4uuord7q` watching `/workspace/mythic-rdt/eval_results/V5_RUN.log` for phase transitions / failures / completion.
-2. **Eval v5 ckpts** at 50/100/150/200 with split-smoke `--T-values 1 2 4`. Decision rules:
-   - If LCB-10 climbs at any ckpt → v5 wins, proceed to longer training.
-   - If `ce_gap` (= CE(T_hi) − CE(T_lo)) trends toward zero in wandb but LCB stays at 0 → margin loss working but dual-T not enough; need per-token KL on long-context training data.
-   - If `ce_gap` stays positive → margin loss not biting; raise `margin_alpha` (currently 0.1) and/or `margin_nats` (currently 0.02).
-3. **Harden `_load_trainable_state`** to refuse silent shape-mismatch (bug-050 follow-up).
-4. **Per-token KL on long-context prompts** during training — wrapper learns "stay close to base on long generations" not just on short ones. Probably the highest-leverage change after v5.
-5. **Stage 2 (Mythic-Gemma4) is parked** until Stage 1 ships a real number on LCB. No work scheduled.
+**v5 verdict landed 2026-04-28 ~12:25 UTC** (HE 95/85/80, LCB 0/10/10; partial — see §2.6).
+
+**Diagnostic probes 1-3 completed 2026-04-28 ~13:30 UTC** (`eval_results/probe[1-3]_*.json`):
+
+| Probe | Setup | LCB-10 T=1 | Implies |
+|---|---|---|---|
+| 1 (pod) | v3-T1 ckpt-400, 19-layer block, **trained** | **0 %** | not training-time drift |
+| 3 (local) | no ckpt, **5-layer block** (10-14), untrained | **0 %** | not block-size |
+| 2 (pod) | no ckpt, 19-layer block, **explicitly zeroed** (LS=0, gate=sigmoid(-10)≈0, lora_B=0) | **30 %** ✅ | **plumbing is fine** |
+
+**Diagnosis:** wrapper plumbing is CORRECT (probe 2 reproduces base byte-for-byte). The failure is the recurrence injection itself, even at "near-identity" init magnitudes (~5e-5 per token contribution). The retrofit-recurrence paper's "near-identity init → smooth fine-tune up" assumption does NOT hold for code generation — code's exec-based pass@1 is fragile to micro-perturbations over 200-400 token generations in a way prose perplexity isn't. Full diagnosis: `memory/project_phase1_v6_diagnosis.md`.
+
+**v6A untrained smoke verdict (2026-04-28 ~14:00 UTC, `eval_results/v6a_untrained_lcb10.json`)** — local 3090, base = 40 % LCB:
+
+| LCB-10 | base | v3-T1 | v4-anchored | v5 ckpt-200 | **v6A untrained** |
+|---|---|---|---|---|---|
+| T=1 | 40 % | 0 % | 0 % | 0 % | **40 %** ✅ identity |
+| T=2 | — | — | 0 % | 10 % | **20 %** |
+| T=4 | — | — | 0 % | 10 % | **10 %** |
+
+**v6A T=1 LCB ≡ base byte-for-byte (mathematical identity confirmed empirically).** T=2/T=4 untrained surprised on the upside (predicted 0 %, got 20/10) — the t=0 identity puts h in a more anchored state than fresh prelude output, so t≥1 perturbed iterations are more robust than at fresh init. This validates the architectural fix as a strict superset of base.
+
+**v6A architectural fix (cleanest):** make t=0 iteration of the recurrence loop unconditionally identity:
+
+```python
+# src/mythic_rdt/modeling.py, _loop_step:
+if t == 0:
+    h_next = block_out  # T=1 wrapper output ≡ base byte-for-byte.
+else:
+    h_next = block_out + ls[t] * gate[t] * (injection + ...)
+```
+
+This makes T=1 = base by construction. T≥2 iterations inject normally with learned per-T params. Training reduces to pure offensive objective: "make T=4 beat the fixed T=1=base baseline". No defensive trade-off.
+
+**v6 candidate sequence:**
+
+1. **v6A** — first iteration is identity (this section). Smoke untrained T=1 = base, T=2/4 likely still ≈0% LCB at init.
+2. **Train v6A** with v5's dual-T(1,4) margin+distill objective. T=1 anchored structurally; train budget all goes into T=4.
+3. If trained T=4 LCB > base 30 % → **v6A wins**. Proceed to Phase A scale evals (HE-164, LCB-50/hard-20, MBPP+) → C.5 ACT halting head → Phase B data scale.
+4. If trained T=4 LCB ≤ base → **v6C** (v6A + curriculum gate clamp: gate_bias[t≥1] explicitly held near 0 for first half of training, slowly relaxes). Belt-and-suspenders for the perturbation-at-T≥2 problem.
+5. If v6C also fails → **v6D** (v6A + shrunk recurrent block 5-9 layers). Or pivot to OpenMythos's single-layer recurrence (different inject mechanism). Or pivot to Stage 2 where prose-style benchmarks may tolerate the failure mode.
+
+### Standing items (deferred)
+
+- ~~Harden `_load_trainable_state`~~ — **DONE** 2026-04-28, raises `CheckpointShapeMismatchError` by default.
+- **Stage 2 (Mythic-Gemma4)** still parked. Stage 2 verification should run probe 2 first before training to confirm prose benchmarks tolerate the wrapper at near-identity init.
+
+### Three diagnostic probes to run BEFORE any new training (cheap, ~1 day local 3090, ~$0)
+
+1. **v3-T1 LCB probe.** Smoke v3-T1 ckpt-400 on LCB-medium-10 with `--T-values 1 --max-loop-iters 1`. Tells us whether T=1 LCB collapse is intrinsic to block_mode (v3-T1 also = 0 % → architectural) or something v4/v5 broke (v3-T1 ≈ 30 % → training drift from v3 → v4 onward).
+
+2. **Bypass probe (zeroed-trainables wrapper).** Build the wrapper with no checkpoint loaded, then explicitly set `gate.bias = -10` (sigmoid ≈ 0), `LayerScale.scale = 0`, `LoRA-B = 0`. This wrapper should be **mathematically bit-identical to base**. Smoke on LCB-10 at T=1.
+   - If 30 % → wrapper plumbing is correct, v4/v5 trained drift is the problem.
+   - If 0 % → something in the wrapper plumbing itself (KV cache, position IDs, dtype, layer ordering) breaks long-form generation regardless of trainable params. New bug to find.
+
+3. **Shrunk-block probe.** Build wrapper with `recurrent_block_start=10 recurrent_block_end=14` (5 layers vs current 19), no checkpoint, T=1 untrained. Smoke LCB-10. If 25–30 % → 19-layer block is the perturbation source; v6 design = shrink the recurrent block to 5–9 layers. If still 0 % → block size isn't the issue, block_mode itself is.
+
+These three probes localise the failure to **wrapper plumbing** / **architectural perturbation** / **training-time drift** — three completely different next moves. Do not start v6 (any flavour) without knowing which.
+
+### After probes — v6 design candidates (mutually-exclusive next-experiment options)
+
+- **A — per-token KL on long-context training data.** Train v6 with KL anchor evaluated on 500–1k token continuations (LCB-style synthesised prompts) instead of short corpus snippets. Targets the actual failure regime. Highest leverage *if* probe 2 passes and probe 1 shows v3-T1 LCB ≈ 30 %.
+- **B — shrink recurrent block to 5–9 layers.** Less compounding drift per iteration. Trade-off: less capacity per loop. Right move *if* probe 3 shows 25–30 %.
+- **C — anneal gate clamped near 0 for first half of training.** Forces near-base inductive bias. Cheap to try regardless of probe outcomes.
+- **D — ACT halting head.** Phase C.5 from the agreed roadmap. Worth pursuing only after we have a wrapper that doesn't collapse at T=1.
+
+### Standing items (deferred)
+
+- ~~Harden `_load_trainable_state`~~ — **DONE** 2026-04-28, raises `CheckpointShapeMismatchError` by default. 8 unit tests in `tests/test_load_trainable_state.py`.
+- **Stage 2 (Mythic-Gemma4)** parked until Stage 1 ships a real LCB number. Currently nothing close.
 
 ---
 

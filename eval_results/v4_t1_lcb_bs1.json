@@ -1,0 +1,83 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "limit": 0,
+    "recurrent_layer_idx": 10,
+    "recurrent_block_start": 4,
+    "recurrent_block_end": 22,
+    "block_mode": true,
+    "prelude_layers": 4,
+    "coda_layers": 4,
+    "gate_init_bias": 0.0,
+    "layerscale_init": 0.0001,
+    "layerscale_clamp_max": 0.01,
+    "force_bypass": false,
+    "T_values": [
+      1
+    ],
+    "gen_tokens": 384,
+    "no_kv_cache": false,
+    "batch_size": 1,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "output_json": "eval_results/v4_t1_lcb_bs1.json",
+    "skip_base": true,
+    "checkpoint": "checkpoints/phase1_v4_anchored",
+    "lora_rank": 8,
+    "lora_alpha": 16.0,
+    "lora_targets": [
+      "self_attn.q_proj_or_q_a",
+      "self_attn.o_proj"
+    ],
+    "quant": "nf4",
+    "lcb_limit": 10,
+    "lcb_difficulty": "medium",
+    "lcb_min_date": "2024-10-01"
+  },
+  "results": [
+    {
+      "name": "wrapper_T1_lcb",
+      "pass_at_1": 0.3,
+      "n_pass": 3,
+      "n_total": 10,
+      "elapsed_sec": 1.7942864894866943,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "test 0: got ['a', 'bb', 'bb', 'cbc', 'ccc', 'ccc'] expected ['a', 'aa', 'ab', 'aba', 'abb', 'abc']",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"\n        \n        for char in target:\n          "
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 4",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        count = 0\n        char_count = {char: 0 for char in 'abc'}\n        left = 0\n   "
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 1: got 15000 expected 60",
+          "completion_head": "class Solution:\n    def gcd(self, a, b):\n        while b:\n            a, b = b, a % b\n        return a\n\n    def lcm(self, a, b):\n        return a * b // self.gc"
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "method": "minTimeToReach",
+          "difficulty": "medium",
+          "reason": "test 2: got 4 expected 3",
+          "completion_head": "class Solution:\n    def minTimeToReach(self, moveTime: List[List[int]]) -> int:\n        n, m = len(moveTime), len(moveTime[0])\n        dp = [[float('inf')] * m "
+        },
+        {
+          "task_id": "lcb/leetcode/3639",
+          "method": "isZeroArray",
+          "difficulty": "medium",
+          "reason": "test 0: got False expected 'true'",
+          "completion_head": "class Solution:\n    def isZeroArray(self, nums: List[int], queries: List[List[int]]) -> bool:\n        for l, r in queries:\n            for i in range(l, r + 1):"
+        }
+      ]
+    }
+  ]
+}

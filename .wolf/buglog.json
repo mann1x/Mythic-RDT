@@ -501,6 +501,38 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-04-28T06:49:49.126Z"
+    },
+    {
+      "id": "bug-032",
+      "timestamp": "2026-04-28T10:34:56.982Z",
+      "error_message": "Significant refactor of ",
+      "file": "STATUS.md",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 10→28 lines (5 removed) | Also: 1. **Wait for v5** — ~7 h remaining at session com; 2. **Eval v5 ckpts** at 50/100/150/200 with split-",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-28T10:36:00.822Z"
+    },
+    {
+      "id": "bug-033",
+      "timestamp": "2026-04-28T11:00:08.392Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 7→12 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-28T11:00:08.392Z"
     }
   ]
 }

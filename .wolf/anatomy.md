@@ -1,7 +1,7 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-04-28T07:01:06.701Z
-> Files: 77 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-04-28T12:01:37.524Z
+> Files: 81 tracked | Anatomy hits: 0 | Misses: 0
 
 ## ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/
 
@@ -12,7 +12,7 @@
 - `feedback_pod_sync.md` (~343 tok)
 - `feedback_pyc_purge_after_modeling_patch.md` (~907 tok)
 - `feedback_smoke_max_loop_iters.md` (~855 tok)
-- `MEMORY.md` — Mythic-RDT memory index (~752 tok)
+- `MEMORY.md` — Mythic-RDT memory index (~980 tok)
 - `project_dscoder_5x_blocker.md` — Symptoms (transformers 5.6.2 + torch 2.11 + DS-Coder-V2-Lite-Instruct) (~1502 tok)
 - `project_dscoder_5x_kvcache_blocker.md` (~977 tok)
 - `project_phase1_v2_catastrophic_regression.md` — Declares of (~1657 tok)
@@ -20,6 +20,8 @@
 - `project_phase1_v3_t1_validation.md` (~838 tok)
 - `project_phase1_v4_anchored_corrected_verdict.md` (~1205 tok)
 - `project_phase1_v4_anchored_verdict.md` (~944 tok)
+- `project_phase1_v5_verdict.md` (~838 tok)
+- `project_phase1_v6_diagnosis.md` — src/mythic_rdt/modeling.py, _loop_step: (~1248 tok)
 
 ## ../../../../tmp/
 
@@ -41,7 +43,7 @@
 - `CLAUDE.md` — Mythic-Gemma4 — Working Notes (~2112 tok)
 - `MASTER_PLAN.md` — Mythic-Gemma4 — Master Plan (~4672 tok)
 - `README.md` — Project documentation (~1518 tok)
-- `STATUS.md` — Mythic-RDT — Current Status (Stage 1) (~4772 tok)
+- `STATUS.md` — Mythic-RDT — Current Status (Stage 1) (~6413 tok)
 
 ## .caliber/
 
@@ -128,19 +130,23 @@
 - `_diag_minimal_gen.py` — Compare four base.generate configurations on a single HumanEval prompt: (~801 tok)
 - `_diag_tokenizer.py` — Tokenizer roundtrip + decode method comparison. (~335 tok)
 - `_dscoder_compat.py` — Cross-version compatibility helpers for DS-Coder-V2-Lite-Instruct. (~544 tok)
-- `finetune_phase1.py` — Mythic-RDT Stage 1 Phase 1 fine-tune entry point. (~6327 tok)
-- `humaneval_smoke.py` — HumanEval-20 smoke test — Phase 1 sanity gate (Stage 1, DS-Coder-V2-Lite). (~12443 tok)
+- `finetune_phase1.py` — Mythic-RDT Stage 1 Phase 1 fine-tune entry point. (~6469 tok)
+- `humaneval_smoke.py` — HumanEval-20 smoke test — Phase 1 sanity gate (Stage 1, DS-Coder-V2-Lite). (~13305 tok)
 - `measure_base_loss.py` — Measure mean cross-entropy loss of the BASE model on the same packed (~838 tok)
 - `phase0_probe_layers.py` — Phase 0 layer-quality probe (Stage 1, DS-Coder-V2-Lite-Instruct). (~6633 tok)
 - `phase0_sanity.py` — Phase 0 hard gate (Stage 1, DS-Coder-V2-Lite-Instruct). (~2465 tok)
 - `setup_pod_env.sh` — Set up the Mythic-RDT inference/eval/finetune environment on a vast.ai (~562 tok)
 
+## scripts/pod_runner/
+
+- `run_v6a.sh` — v6A: dual-T training with margin + distill, on top of architectural fix (~870 tok)
+
 ## src/mythic_rdt/
 
 - `__init__.py` — Mythic-RDT: Recurrent-Depth Transformer wrapping MoE bases. (~190 tok)
-- `configuration.py` — Mythic-RDT configuration classes. (~3074 tok)
+- `configuration.py` — Mythic-RDT configuration classes. (~3342 tok)
 - `loop_state.py` — Tiny contextvar holding the current recurrence loop iteration t. (~413 tok)
-- `modeling.py` — Mythic-RDT modeling: thin wrapper around a frozen base MoE. (~6413 tok)
+- `modeling.py` — Mythic-RDT modeling: thin wrapper around a frozen base MoE. (~6572 tok)
 - `recurrence.py` — Recurrence machinery for Mythic-RDT. (~4420 tok)
 
 ## src/mythic_rdt/training/
@@ -153,4 +159,5 @@
 
 ## tests/
 
+- `test_first_iter_identity.py` — Tests for the v6A architectural invariant: first_iter_identity. (~1236 tok)
 - `test_load_trainable_state.py` — Tests for `_load_trainable_state` strictness — guards bug-050. (~1862 tok)

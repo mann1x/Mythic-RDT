@@ -99,6 +99,18 @@ class MythicRDTDeepseekV2Config(MythicRDTConfig):
         #     -- at gate=0 the iteration keeps block_out. Bit-exact base
         #     behavior at T=1 if no LoRA is injected.
         block_mode: bool = False,
+        # v6A architectural fix (memory: project_phase1_v6_diagnosis.md). When
+        # True, the t=0 iteration of the recurrence loop is unconditionally
+        # identity: h_next = block_out (no LTI / gate / LayerScale add). Only
+        # iterations t>=1 inject. At T=1 the wrapper output is byte-for-byte
+        # equal to base (prelude -> base_block -> coda), making the wrapper
+        # an exact superset of base. Three diagnostic probes (2026-04-28)
+        # showed that "near-identity init" magnitudes (~5e-5 per token)
+        # destroy long-form code generation even at T=1, so retrofit-recurrence's
+        # smooth-fine-tune-up assumption fails for code. v6A makes T=1
+        # structurally base instead of "approximately base via small init".
+        # Default False for backward-compat with v3-T1, v4, v5 ckpts.
+        first_iter_identity: bool = False,
         train_loop_iters: int = 1,
         max_loop_iters: int = 16,
         lti_log_a_init_low: float = 0.01,
@@ -127,6 +139,7 @@ class MythicRDTDeepseekV2Config(MythicRDTConfig):
             int(recurrent_block_end) if recurrent_block_end is not None else None
         )
         self.block_mode = bool(block_mode)
+        self.first_iter_identity = bool(first_iter_identity)
         self.train_loop_iters = int(train_loop_iters)
         self.max_loop_iters = int(max_loop_iters)
         self.lti_log_a_init_low = float(lti_log_a_init_low)

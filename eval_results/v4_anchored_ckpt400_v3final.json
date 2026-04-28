@@ -1,0 +1,282 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "limit": 20,
+    "recurrent_layer_idx": 10,
+    "recurrent_block_start": 4,
+    "recurrent_block_end": 22,
+    "block_mode": true,
+    "prelude_layers": 4,
+    "coda_layers": 4,
+    "gate_init_bias": 0.0,
+    "layerscale_init": 0.0001,
+    "layerscale_clamp_max": 0.01,
+    "force_bypass": false,
+    "T_values": [
+      1,
+      2,
+      4
+    ],
+    "gen_tokens": 384,
+    "no_kv_cache": false,
+    "batch_size": 4,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "output_json": "eval_results/v4_anchored_ckpt400_v3final.json",
+    "skip_base": false,
+    "checkpoint": "checkpoints/phase1_v4_anchored",
+    "lora_rank": 8,
+    "lora_alpha": 16.0,
+    "lora_targets": [
+      "self_attn.q_proj_or_q_a",
+      "self_attn.o_proj"
+    ],
+    "quant": "nf4",
+    "lcb_limit": 10,
+    "lcb_difficulty": "medium",
+    "lcb_min_date": "2024-10-01"
+  },
+  "results": [
+    {
+      "name": "base_he",
+      "pass_at_1": 1.0,
+      "n_pass": 20,
+      "n_total": 20,
+      "elapsed_sec": 3.0196192264556885,
+      "failures": []
+    },
+    {
+      "name": "base_lcb",
+      "pass_at_1": 0.3,
+      "n_pass": 3,
+      "n_total": 10,
+      "elapsed_sec": 1.5169942378997803,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3579",
+          "method": "maxGoodNumber",
+          "difficulty": "medium",
+          "reason": "test 0: got 29 expected 30",
+          "completion_head": "class Solution:\n    def maxGoodNumber(self, nums: List[int]) -> int:\n        nums.sort(key=lambda x: bin(x)[2:].zfill(8), reverse=True)\n        return int(''.jo"
+        },
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "test 0: got ['a', 'bb', 'bb', 'cbc', 'ccc', 'ccc'] expected ['a', 'aa', 'ab', 'aba', 'abb', 'abc']",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"\n        \n        for char in target:\n          "
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 4",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        count = 0\n        char_count = {char: 0 for char in 'abc'}\n        left = 0\n   "
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 2: got 0 expected 9",
+          "completion_head": "class Solution:\n    def gcd(self, a, b):\n        while b:\n            a, b = b, a % b\n        return a\n\n    def lcm(self, a, b):\n        return a * b // self.gc"
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "method": "minTimeToReach",
+          "difficulty": "medium",
+          "reason": "test 0: got 8 expected 6",
+          "completion_head": "class Solution:\n    def minTimeToReach(self, moveTime: List[List[int]]) -> int:\n        n = len(moveTime)\n        m = len(moveTime[0])\n        dp = [[float('inf"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T1_he",
+      "pass_at_1": 0.95,
+      "n_pass": 19,
+      "n_total": 20,
+      "elapsed_sec": 3.0283753871917725,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    if not numbers:\n        return []\n    return [num for i, num in enumerate(numbers) if i != 0]\n"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T1_lcb",
+      "pass_at_1": 0.0,
+      "n_pass": 0,
+      "n_total": 10,
+      "elapsed_sec": 1.5417587757110596,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3579",
+          "method": "maxGoodNumber",
+          "difficulty": "medium",
+          "reason": "test 0: got 29 expected 30",
+          "completion_head": "class Solution:\n    def maxGoodNumber(self, nums: List[int]) -> int:\n        nums.sort(reverse=True)\n        return int(''.join(bin(num)[2:] for num in nums), 2"
+        },
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "IndexError: string index out of range",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"\n        for char in target:\n            if char"
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 4",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        count = 0\n        left = 0\n        right = 0\n        char_count = {char: 0 for "
+        },
+        {
+          "task_id": "lcb/leetcode/3607",
+          "method": "minOperations",
+          "difficulty": "medium",
+          "reason": "test 0: got 18 expected 1",
+          "completion_head": "class Solution:\n    def minOperations(self, nums: List[int]) -> int:\n        n = len(nums)\n        operations = 0\n        for i in range(1, n):\n            if n"
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 0: got 32 expected 64",
+          "completion_head": "class Solution:\n    def maxScore(self, nums: List[int]) -> int:\n        n = len(nums)\n        max_score = 0\n        \n        for i in range(n):\n            lcm "
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T2_he",
+      "pass_at_1": 0.95,
+      "n_pass": 19,
+      "n_total": 20,
+      "elapsed_sec": 3.0378012657165527,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [b for a, b in zip([delimeter] + numbers, numbers + [delimeter])]\n"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T2_lcb",
+      "pass_at_1": 0.0,
+      "n_pass": 0,
+      "n_total": 10,
+      "elapsed_sec": 1.5008387565612793,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3579",
+          "method": "maxGoodNumber",
+          "difficulty": "medium",
+          "reason": "test 0: got 197121 expected 30",
+          "completion_head": "class Solution:\n    def maxGoodNumber(self, nums: List[int]) -> int:\n        nums = sorted(nums, key=lambda x: bin(x)[2:].zfill(8), reverse=True)\n        return"
+        },
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "TypeError: ord() expected a character, but string of length 0 found",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"\n        for char in target:\n            if char"
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 4",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        count = 0\n        left = 0\n        right = 0\n        char_count = {char: 0 for "
+        },
+        {
+          "task_id": "lcb/leetcode/3607",
+          "method": "minOperations",
+          "difficulty": "medium",
+          "reason": "test 1: got 1 expected -1",
+          "completion_head": "class Solution:\n    def minOperations(self, nums: List[int]) -> int:\n        n = len(nums)\n        operations = 0\n        for i in range(1, n):\n            if n"
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 0: got 128 expected 64",
+          "completion_head": "class Solution:\n    def maxScore(self, nums: List[int]) -> int:\n        def gcd(a, b):\n            while b:\n                a, b = b, a % b\n            return a"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T4_he",
+      "pass_at_1": 0.85,
+      "n_pass": 17,
+      "n_total": 20,
+      "elapsed_sec": 2.9717581272125244,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [x for pair in zip(numbers, numbers[1:]) for x in pair]\n"
+        },
+        {
+          "task_id": "HumanEval/10",
+          "entry_point": "make_palindrome",
+          "reason": "AssertionError: ",
+          "completion_head": "    if len(string) == 0:\n        return ''\n    for i in range(len(string)):\n        if is_palindrome(string[i:]) or stri"
+        },
+        {
+          "task_id": "HumanEval/17",
+          "entry_point": "parse_music",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [4, 2, 1, 2, 2, 1, 1, 1, 1, 4, 4]\n"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T4_lcb",
+      "pass_at_1": 0.0,
+      "n_pass": 0,
+      "n_total": 10,
+      "elapsed_sec": 1.4694511890411377,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3579",
+          "method": "maxGoodNumber",
+          "difficulty": "medium",
+          "reason": "SyntaxError: unmatched ')' (<string>, line 15)",
+          "completion_head": "class Solution:\n    def maxGoodNumber(self, nums: List[int]) -> int:\n        nums = [bin(x)[2:] for x in nums]\n        max_num = 0\n        for x in nums:\n      "
+        },
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "test 0: got ['', 'b', 'b', 'b', 'b', 'ba', 'd'] expected ['a', 'aa', 'ab', 'aba', 'abb', 'abc']",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"\n        for char in target:\n            if char"
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 1: got 5 expected 15",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        count = 0\n        for i in range(len(s)):\n            unique = set()\n          "
+        },
+        {
+          "task_id": "lcb/leetcode/3607",
+          "method": "minOperations",
+          "difficulty": "medium",
+          "reason": "test 1: got 1 expected -1",
+          "completion_head": "class Solution:\n    def minOperations(self, nums: List[int]) -> int:\n        operations = 0\n        n = len(nums)\n        for i in range(1, n):\n            if n"
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 0: got 16 expected 64",
+          "completion_head": "class Solution:\n    def gcd(self, a, b):\n        while b:\n            a, b = b, a % b\n        return a\n\n    def lcm(self, a, b):\n        return a * b // self.gc"
+        }
+      ]
+    }
+  ]
+}

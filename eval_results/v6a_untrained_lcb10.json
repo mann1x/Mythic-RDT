@@ -1,0 +1,219 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "limit": 0,
+    "recurrent_layer_idx": 10,
+    "recurrent_block_start": 4,
+    "recurrent_block_end": 22,
+    "block_mode": true,
+    "prelude_layers": 4,
+    "coda_layers": 4,
+    "gate_init_bias": 0.0,
+    "layerscale_init": 0.0001,
+    "layerscale_clamp_max": 0.01,
+    "force_bypass": false,
+    "T_values": [
+      1,
+      2,
+      4
+    ],
+    "gen_tokens": 384,
+    "no_kv_cache": false,
+    "batch_size": 4,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "output_json": "eval_results/v6a_untrained_lcb10.json",
+    "skip_base": false,
+    "checkpoint": null,
+    "lora_rank": 8,
+    "lora_alpha": 16.0,
+    "lora_targets": [
+      "self_attn.q_proj_or_q_a",
+      "self_attn.o_proj"
+    ],
+    "quant": "nf4",
+    "lcb_limit": 10,
+    "lcb_difficulty": "medium",
+    "first_iter_identity": true,
+    "bypass_trainables": false,
+    "lcb_min_date": "2024-10-01"
+  },
+  "results": [
+    {
+      "name": "base_lcb",
+      "pass_at_1": 0.4,
+      "n_pass": 4,
+      "n_total": 10,
+      "elapsed_sec": 1.2630417346954346,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "IndexError: string index out of range",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"\n        \n        for char in target:\n          "
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 4",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        count = 0\n        char_count = {char: 0 for char in 'abc'}\n        left = 0\n   "
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 2: got 0 expected 9",
+          "completion_head": "class Solution:\n    def gcd(self, a, b):\n        while b:\n            a, b = b, a % b\n        return a\n\n    def lcm(self, a, b):\n        return a * b // self.gc"
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "method": "minTimeToReach",
+          "difficulty": "medium",
+          "reason": "test 2: got 4 expected 3",
+          "completion_head": "class Solution:\n    def minTimeToReach(self, moveTime: List[List[int]]) -> int:\n        n, m = len(moveTime), len(moveTime[0])\n        dp = [[float('inf')] * m "
+        },
+        {
+          "task_id": "lcb/leetcode/3639",
+          "method": "isZeroArray",
+          "difficulty": "medium",
+          "reason": "test 0: got False expected 'true'",
+          "completion_head": "class Solution:\n    def isZeroArray(self, nums: List[int], queries: List[List[int]]) -> bool:\n        for l, r in queries:\n            for i in range(l, r + 1):"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T1_lcb",
+      "pass_at_1": 0.4,
+      "n_pass": 4,
+      "n_total": 10,
+      "elapsed_sec": 1.2446081638336182,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "IndexError: string index out of range",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"\n        \n        for char in target:\n          "
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 4",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        count = 0\n        char_count = {char: 0 for char in 'abc'}\n        left = 0\n   "
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 2: got 0 expected 9",
+          "completion_head": "class Solution:\n    def gcd(self, a, b):\n        while b:\n            a, b = b, a % b\n        return a\n\n    def lcm(self, a, b):\n        return a * b // self.gc"
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "method": "minTimeToReach",
+          "difficulty": "medium",
+          "reason": "test 2: got 4 expected 3",
+          "completion_head": "class Solution:\n    def minTimeToReach(self, moveTime: List[List[int]]) -> int:\n        n, m = len(moveTime), len(moveTime[0])\n        dp = [[float('inf')] * m "
+        },
+        {
+          "task_id": "lcb/leetcode/3639",
+          "method": "isZeroArray",
+          "difficulty": "medium",
+          "reason": "test 0: got False expected 'true'",
+          "completion_head": "class Solution:\n    def isZeroArray(self, nums: List[int], queries: List[List[int]]) -> bool:\n        for l, r in queries:\n            for i in range(l, r + 1):"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T2_lcb",
+      "pass_at_1": 0.2,
+      "n_pass": 2,
+      "n_total": 10,
+      "elapsed_sec": 1.3424994945526123,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "IndexError: string index out of range",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"\n        for char in target:\n            if char"
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 0: got 10 expected 4",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        count = 0\n        for i in range(len(s)):\n            unique_chars = set()\n    "
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 2: got 0 expected 9",
+          "completion_head": "class Solution:\n    def gcd(self, a: int, b: int) -> int:\n        while b:\n            a, b = b, a % b\n        return a\n\n    def lcm(self, a: int, b: int) -> in"
+        },
+        {
+          "task_id": "lcb/leetcode/3629",
+          "method": "lengthAfterTransformations",
+          "difficulty": "medium",
+          "reason": "test 0: got 2 expected 7",
+          "completion_head": "class Solution:\n    def lengthAfterTransformations(self, s: str, t: int) -> int:\n        MOD = 10**9 + 7\n        transformed = \"\"\n        for char in s:\n       "
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "method": "minTimeToReach",
+          "difficulty": "medium",
+          "reason": "test 0: got 7 expected 6",
+          "completion_head": "class Solution:\n    def minTimeToReach(self, moveTime: List[List[int]]) -> int:\n        n = len(moveTime)\n        m = len(moveTime[0])\n        time = 0\n        "
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T4_lcb",
+      "pass_at_1": 0.1,
+      "n_pass": 1,
+      "n_total": 10,
+      "elapsed_sec": 1.3202953338623047,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "SyntaxError: unmatched ')' (<string>, line 9)",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str)):\n        target = target\n        target_length = len(target)\n        target_list = list(target)\n\n    "
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "SyntaxError: unmatched ')' (<string>, line 9)",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int)):\n       \n"
+        },
+        {
+          "task_id": "lcb/leetcode/3607",
+          "method": "minOperations",
+          "difficulty": "medium",
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 15)",
+          "completion_head": "class Solution:\n    def minOperations(self, nums: List[int]) -> int:\n        operations = 0\n\n        for i in range(1, len(nums)):\n            while nums[i] < n"
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "TypeError: Solution.gcd() takes 3 positional arguments but 4 were given",
+          "completion_head": "class Solution:\n    def gcd(self,a: int,b: int):\n        while b:\n            a,b = b,a%b\n        return a\n\n    def lcm(self,a: int,b: int):\n        return a*b/"
+        },
+        {
+          "task_id": "lcb/leetcode/3629",
+          "method": "lengthAfterTransformations",
+          "difficulty": "medium",
+          "reason": "SyntaxError: unmatched ')' (<string>, line 9)",
+          "completion_head": "class Solution:\n    def lengthAfterTransformations(self, s: str, t: int)):\n        MOD = 10^9 + 7\n       \n        def transform(s):\n            s = list(s)\n    "
+        }
+      ]
+    }
+  ]
+}
