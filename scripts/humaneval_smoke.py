@@ -445,22 +445,24 @@ def run_eval_lcb(name: str, completions: list[str],
     t0 = time.time()
     n_pass = 0
     failures: list[dict] = []
+    per_problem: list[dict] = []
     for prob, comp in zip(problems, completions):
         cleaned = clean_lcb_completion(comp, prob["starter_code"])
         passed, reason = score_lcb_problem(
             cleaned, prob["public_tests"], prob["method_name"],
         )
+        per_problem.append({"task_id": prob["task_id"], "passed": bool(passed),
+                            "reason": "" if passed else reason[:160]})
         if passed:
             n_pass += 1
         else:
-            if len(failures) < 5:
-                failures.append({
-                    "task_id": prob["task_id"],
-                    "method": prob["method_name"],
-                    "difficulty": prob["difficulty"],
-                    "reason": reason[:160],
-                    "completion_head": cleaned[:160],
-                })
+            failures.append({
+                "task_id": prob["task_id"],
+                "method": prob["method_name"],
+                "difficulty": prob["difficulty"],
+                "reason": reason[:160],
+                "completion_head": cleaned[:160],
+            })
     elapsed = time.time() - t0
     return RunResult(
         name=name,
@@ -469,6 +471,7 @@ def run_eval_lcb(name: str, completions: list[str],
         n_total=len(problems),
         elapsed_sec=elapsed,
         failures=failures,
+        per_problem=per_problem,
     )
 
 
@@ -574,17 +577,20 @@ def wrapper_generate(
 ) -> list[str]:
     """Greedy generation through the wrapper.
 
-    Uses KV cache when T==1 (huge speedup vs naive recompute -- a 200-token
-    completion goes from ~50,000 token-forwards to ~200). For T>1 the
-    wrapper currently doesn't support KV cache (would need T separate cache
-    slots per recurrent block layer); falls back to recompute-per-token.
+    As of 2026-04-28 the wrapper exposes HF GenerationMixin compliance —
+    `wrapper.generate(...)` works through HF's standard generation loop, the
+    same path base.generate() uses. This eliminates the wrapper-vs-base path
+    divergence that previously biased the wrapper LCB pass@1 down by ~20pp
+    (probe `_probe_wrapper_generate.py` confirmed byte-identical T=1 output
+    when first_iter_identity=True). The custom step-by-step loop that lived
+    here before has been deleted; ANY future divergence between base and
+    wrapper at T=1 with first_iter_identity is now a wrapper bug, not a
+    smoke-tooling artifact.
     """
-    use_cache = not no_kv_cache
     completions: list[str] = []
     old_side = tokenizer.padding_side
     tokenizer.padding_side = "left"
     pad_id = tokenizer.pad_token_id or tokenizer.eos_token_id or 0
-    eos_id = tokenizer.eos_token_id
     try:
         for start in range(0, len(prompts), batch_size):
             batch = prompts[start : start + batch_size]
@@ -594,69 +600,20 @@ def wrapper_generate(
             )
             input_ids = enc.input_ids.to(device)
             attn = enc.attention_mask.to(device)
-            done = torch.zeros(input_ids.size(0), dtype=torch.bool, device=device)
-            generated = torch.empty((input_ids.size(0), 0),
-                                    dtype=torch.long, device=device)
-
-            if use_cache:
-                # ----- T=1 KV-cache path -----
-                # Initial pass: full prefix in, get logits + cache.
-                out = wrapper(
-                    input_ids, attention_mask=attn, T=T,
-                    force_bypass=force_bypass,
-                    use_cache=True, return_dict=True,
-                )
-                logits = out.logits
-                past = out.past_key_values
-                cur_mask = attn
-                next_id = logits[:, -1, :].argmax(dim=-1)
-                if eos_id is not None:
-                    done = done | (next_id == eos_id)
-                generated = torch.cat([generated, next_id.unsqueeze(1)], dim=1)
-                cur_mask = torch.cat(
-                    [cur_mask, (~done).long().unsqueeze(1)], dim=1
-                )
-                # Incremental: feed only the new token each step.
-                for _ in range(gen_tokens - 1):
-                    if done.all():
-                        break
-                    out = wrapper(
-                        next_id.unsqueeze(1), attention_mask=cur_mask, T=T,
-                        force_bypass=force_bypass,
-                        past_key_values=past, use_cache=True, return_dict=True,
-                    )
-                    past = out.past_key_values
-                    next_id = out.logits[:, -1, :].argmax(dim=-1)
-                    next_id = torch.where(done, torch.full_like(next_id, pad_id), next_id)
-                    if eos_id is not None:
-                        done = done | (next_id == eos_id)
-                    generated = torch.cat([generated, next_id.unsqueeze(1)], dim=1)
-                    cur_mask = torch.cat(
-                        [cur_mask, (~done).long().unsqueeze(1)], dim=1
-                    )
-            else:
-                # ----- T>1 recompute path (legacy) -----
-                cur = input_ids
-                cur_mask = attn
-                for _ in range(gen_tokens):
-                    logits = wrapper(
-                        cur, attention_mask=cur_mask, T=T, force_bypass=force_bypass
-                    )
-                    if not torch.is_tensor(logits):
-                        logits = logits.logits
-                    next_id = logits[:, -1, :].argmax(dim=-1)
-                    next_id = torch.where(done, torch.full_like(next_id, pad_id), next_id)
-                    if eos_id is not None:
-                        done = done | (next_id == eos_id)
-                    cur = torch.cat([cur, next_id.unsqueeze(1)], dim=1)
-                    cur_mask = torch.cat(
-                        [cur_mask, (~done).long().unsqueeze(1)], dim=1
-                    )
-                    if done.all():
-                        break
-                generated = cur[:, input_ids.shape[1]:]
+            # NB: T and force_bypass forwarded into the wrapper via
+            # prepare_inputs_for_generation (model_kwargs path).
+            kwargs = {"T": T}
+            if force_bypass:
+                kwargs["force_bypass"] = True
+            out = wrapper.generate(
+                input_ids=input_ids, attention_mask=attn,
+                max_new_tokens=gen_tokens, do_sample=False,
+                pad_token_id=pad_id,
+                use_cache=(not no_kv_cache),
+                **kwargs,
+            )
             for r in range(len(batch)):
-                gen_only = generated[r].tolist()
+                gen_only = out[r, input_ids.shape[1]:].tolist()
                 completions.append(tokenizer.decode(gen_only, skip_special_tokens=True))
     finally:
         tokenizer.padding_side = old_side
@@ -676,6 +633,7 @@ class RunResult:
     n_total: int
     elapsed_sec: float
     failures: list[dict]
+    per_problem: list[dict] = None  # one entry per problem: task_id, passed, reason
 
 
 def run_eval(
@@ -686,21 +644,23 @@ def run_eval(
     t0 = time.time()
     n_pass = 0
     failures: list[dict] = []
+    per_problem: list[dict] = []
     for prob, comp in zip(problems, completions):
         cleaned = clean_completion(comp, prob["prompt"], prob["entry_point"])
         passed, reason = score_problem(
             prob["prompt"], cleaned, prob["test"], prob["entry_point"]
         )
+        per_problem.append({"task_id": prob.get("task_id"), "passed": bool(passed),
+                            "reason": "" if passed else reason[:120]})
         if passed:
             n_pass += 1
         else:
-            if len(failures) < 5:
-                failures.append({
-                    "task_id": prob.get("task_id"),
-                    "entry_point": prob["entry_point"],
-                    "reason": reason[:120],
-                    "completion_head": cleaned[:120],
-                })
+            failures.append({
+                "task_id": prob.get("task_id"),
+                "entry_point": prob["entry_point"],
+                "reason": reason[:120],
+                "completion_head": cleaned[:120],
+            })
     elapsed = time.time() - t0
     return RunResult(
         name=name,
@@ -709,6 +669,7 @@ def run_eval(
         n_total=len(problems),
         elapsed_sec=elapsed,
         failures=failures,
+        per_problem=per_problem,
     )
 
 
@@ -750,6 +711,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--dtype", type=str, default="bfloat16",
                    choices=["bfloat16", "float16", "float32"])
     p.add_argument("--output-json", type=str, default=None)
+    p.add_argument("--skip-wrapper", action="store_true",
+                   help="Skip ALL wrapper construction and eval. Useful for "
+                        "running a base-only baseline on a different host while "
+                        "the wrapper eval runs elsewhere. Pairs with parallel "
+                        "split: e.g. local 3090 runs --skip-wrapper + base, pod "
+                        "runs --skip-base + wrapper.")
     p.add_argument("--skip-base", action="store_true",
                    help="Skip the base-model run (only useful for re-runs).")
     # Checkpoint-loading: required to eval a Phase 1 fine-tune. When omitted
@@ -780,6 +747,15 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--lcb-difficulty", type=str, default="medium",
                    choices=["easy", "medium", "hard"],
                    help="LCB difficulty filter (smoke default: medium).")
+    p.add_argument("--max-loop-iters", type=int, default=None,
+                   help="Override the wrapper's max_loop_iters (default: max(--T-values)). "
+                        "Required when loading a checkpoint trained at T_max larger than "
+                        "the T-values you want to evaluate. Example: load a v4-anchored "
+                        "ckpt (T_max=4) and eval only T=1: pass `--T-values 1 --max-loop-iters 4` "
+                        "so the wrapper builds with [4,...] T-axis tensors and the ckpt "
+                        "loads cleanly. Without this flag the bug-050 strict guard refuses "
+                        "the load (T-axis shrinkage) and the smoke aborts. See "
+                        "memory/feedback_smoke_max_loop_iters.md.")
     p.add_argument("--first-iter-identity", action="store_true",
                    help="v6A architectural fix: t=0 iteration of the recurrence "
                         "loop is unconditionally identity (h_next = block_out). At "
@@ -893,6 +869,18 @@ def main() -> int:
             print(f"[smoke]   BASE LCB pass@1 = {r.pass_at_1*100:.1f}%  ({r.n_pass}/{r.n_total})")
             results.append(r)
 
+    if args.skip_wrapper:
+        print("[smoke] --skip-wrapper set: skipping all wrapper construction and eval. "
+              "Writing base-only results.")
+        if args.output_json:
+            from pathlib import Path as _Path
+            _Path(args.output_json).parent.mkdir(parents=True, exist_ok=True)
+            with open(args.output_json, "w") as _f:
+                json.dump({"args": vars(args), "results": [asdict(r) for r in results]},
+                          _f, indent=2, default=str)
+            print(f"[smoke] wrote -> {args.output_json}")
+        return 0
+
     cfg = MythicRDTDeepseekV2Config(
         prelude_layers=args.prelude_layers,
         coda_layers=args.coda_layers,
@@ -905,7 +893,8 @@ def main() -> int:
         layerscale_init=args.layerscale_init,
         layerscale_clamp_max=args.layerscale_clamp_max,
         train_loop_iters=1,
-        max_loop_iters=max(args.T_values),
+        max_loop_iters=(args.max_loop_iters if args.max_loop_iters is not None
+                        else max(args.T_values)),
         base_model_path=str(base_path),
     )
     print(f"[smoke] building wrapper (layer={cfg.recurrent_layer_idx})...")

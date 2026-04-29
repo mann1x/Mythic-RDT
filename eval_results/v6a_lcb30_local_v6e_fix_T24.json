@@ -1,0 +1,765 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "limit": 0,
+    "recurrent_layer_idx": 10,
+    "recurrent_block_start": 4,
+    "recurrent_block_end": 22,
+    "block_mode": true,
+    "prelude_layers": 4,
+    "coda_layers": 4,
+    "gate_init_bias": 0.0,
+    "layerscale_init": 0.0001,
+    "layerscale_clamp_max": 0.01,
+    "force_bypass": false,
+    "T_values": [
+      2,
+      4
+    ],
+    "gen_tokens": 384,
+    "no_kv_cache": false,
+    "batch_size": 4,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "output_json": "eval_results/v6a_lcb30_local_v6e_fix_T24.json",
+    "skip_wrapper": false,
+    "skip_base": true,
+    "checkpoint": "checkpoints/phase1_v6a_dual_t/checkpoint-200",
+    "lora_rank": 8,
+    "lora_alpha": 16.0,
+    "lora_targets": [
+      "self_attn.q_proj_or_q_a",
+      "self_attn.o_proj"
+    ],
+    "quant": "nf4",
+    "lcb_limit": 30,
+    "lcb_difficulty": "medium",
+    "max_loop_iters": 4,
+    "first_iter_identity": true,
+    "bypass_trainables": false,
+    "lcb_min_date": "2024-10-01"
+  },
+  "results": [
+    {
+      "name": "wrapper_T2_lcb",
+      "pass_at_1": 0.06666666666666667,
+      "n_pass": 2,
+      "n_total": 30,
+      "elapsed_sec": 4.055626630783081,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3579",
+          "method": "maxGoodNumber",
+          "difficulty": "medium",
+          "reason": "SyntaxError: invalid character '\uff1a' (U+FF1A) (<string>, line 21)",
+          "completion_head": "class Solution:\n    def maxGoodNumber(self, nums: List[int]) -> int:\n        def to_binary(num):\n            return bin(num)[2:]\n\n        def from_binary(binary"
+        },
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "NameError: name 'current_sim' is not defined",
+          "completion_head": "class Solution:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current_string = \"\"\n\n        for char in target:\n           "
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 4",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int:\n        n = len(s)\n        left = 0\n        count = 0\n        letter_count = {letter:0 "
+        },
+        {
+          "task_id": "lcb/leetcode/3607",
+          "method": "minOperations",
+          "difficulty": "medium",
+          "reason": "NameError: cannot access free variable 'divisor' where it is not associated with a value in enclosing scope",
+          "completion_head": "class Solution:\n    def minOperations(self, nums: List[int]) -> int:\n        def get_divisors(x):\n            divisors = []\n            for i in range(1, int(x*"
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "test 0: got 128 expected 64",
+          "completion_head": "class Solution:\n    def gcd(self, x, y):\n        while y:\n            x, y = y, x % y\n        return x\n\n    def lcm(self, x, y):\n        return x * y // self.gc"
+        },
+        {
+          "task_id": "lcb/leetcode/3629",
+          "method": "lengthAfterTransformations",
+          "difficulty": "medium",
+          "reason": "test 0: got 10 expected 7",
+          "completion_head": "class Solution:\n    def lengthAfterTransformations(self, s: str, t: int) -> int:\n        MOD = 10**9 + 7\n        def transform(c):\n            if c == 'z':\n    "
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "method": "minTimeToReach",
+          "difficulty": "medium",
+          "reason": "test 0: got 7 expected 6",
+          "completion_head": "class Solution:\n    def minTimeToReach(self, moveTime: List[List[int]]) -> int:\n        n = len(moveTime)\n        m = len(moveTime[0])\n        time = 0\n\n       "
+        },
+        {
+          "task_id": "lcb/leetcode/3639",
+          "method": "isZeroArray",
+          "difficulty": "medium",
+          "reason": "test 0: got False expected 'true'",
+          "completion_head": "class Solution:\n    def isZeroArray(self, nums: List[int], queries: List[List[int]]) -> bool:\n        for l, r in queries:\n            for i in range(l, r + 1):"
+        },
+        {
+          "task_id": "lcb/leetcode/3654",
+          "method": "minArraySum",
+          "difficulty": "medium",
+          "reason": "test 0: got 31 expected 23",
+          "completion_head": "class Solution:\n    def minArraySum(self, nums: List[int], k: int, op1: int, op2: int) -> int:\n        for _ in range(op1):\n            min_value = min(nums)\n  "
+        },
+        {
+          "task_id": "lcb/leetcode/3487",
+          "method": "maxRemovals",
+          "difficulty": "medium",
+          "reason": "NameError: name 'index_inmask_setbitpositioni_in_targetIndices' is not defined",
+          "completion_head": "class Solution:\n    def maxRemovals(self, source: str, pattern: str, targetIndices: List[int]) -> int:\n        def is_subsequence(s, p):\n            it = iter(s"
+        },
+        {
+          "task_id": "lcb/leetcode/3587",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "IndexError: list index out of range",
+          "completion_head": "class Solution:\n    def maxScore(self, n: int, k: int, stayScore: List[List[int]], travelScore: List[List[int]]) -> int:\n        # Initialize a 2D dp array wher"
+        },
+        {
+          "task_id": "lcb/leetcode/3622",
+          "method": "maxFrequency",
+          "difficulty": "medium",
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 18)",
+          "completion_head": "class Solution:\n    def maxFrequency(self, nums: List[int], k: int, numOperations: int) -> int:\n        nums.sort()\n        left, total, max_freq = 0, 0, 1\n\n   "
+        },
+        {
+          "task_id": "lcb/leetcode/3591",
+          "method": "shiftDistance",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 2",
+          "completion_head": "class Solution:\n    def shiftDistance(self, s: str, t: str, nextCost: List[int], previousCost: List[int]) -> int:\n        n = len(s)\n        min_cost = float('i"
+        },
+        {
+          "task_id": "lcb/leetcode/3647",
+          "method": "maxRemoval",
+          "difficulty": "medium",
+          "reason": "test 0: got -1 expected 1",
+          "completion_head": "class Solution:\n    def maxRemoval(self, nums: List[int], queries: List[List[int]]) -> int:\n        n = len(nums)\n        prefix_sum = [0] * (n + 1)\n\n        fo"
+        },
+        {
+          "task_id": "lcb/leetcode/3594",
+          "method": "getLargestOutlier",
+          "difficulty": "medium",
+          "reason": "test 0: got 0 expected 10",
+          "completion_head": "class Solution:\n    def getLargestOutlier(self, nums: List[int]) -> int:\n        sum_value = sum(nums) - sum(set(nums))\n        set_nums = set(nums)\n\n        fo"
+        },
+        {
+          "task_id": "lcb/leetcode/3681",
+          "method": "maxRectangleArea",
+          "difficulty": "medium",
+          "reason": "NameError: name 'max_1area' is not defined",
+          "completion_head": "class Solution:\n    def maxRectangleArea(self, points: List[List[int]]) -> int:\n        points_set = set(tuple(point) for point in points)\n        max_area = -1"
+        },
+        {
+          "task_id": "lcb/leetcode/3653",
+          "method": "maxSubarraySum",
+          "difficulty": "medium",
+          "reason": "NameError: name 'max_brsum' is not defined",
+          "completion_head": "class Solution:\n    def maxSubarraySum(self, nums: List[int], k: int) -> int:\n        n = len(nums)\n        max_sum = -float('inf')\n\n        for i in range(n):\n"
+        },
+        {
+          "task_id": "lcb/leetcode/3649",
+          "method": "findMinimumTime",
+          "difficulty": "medium",
+          "reason": "test 0: got 8 expected 4",
+          "completion_head": "class Solution:\n    def findMinimumTime(self, strength: List[int], K: int) -> int:\n        strength.sort()\n        time = 0\n        X = 1\n        for s in stren"
+        },
+        {
+          "task_id": "lcb/leetcode/3655",
+          "method": "minOperations",
+          "difficulty": "medium",
+          "reason": "test 0: got -1 expected 85",
+          "completion_head": "class Solution:\n    def minOperations(self, n: int, m: int) -> int:\n        def is_prime(num):\n            if num <= 1:\n                return False\n           "
+        },
+        {
+          "task_id": "lcb/leetcode/3613",
+          "method": "maxAmount",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 8)",
+          "completion_head": " ```python\nclass Solution:\n    def maxAmount(self, initialCurrency: str, pairs1: List[List[str]], rates1: List[float], pairs2: List[List[str]], rates2: List[flo"
+        },
+        {
+          "task_id": "lcb/leetcode/3686",
+          "method": "beautifulSplits",
+          "difficulty": "medium",
+          "reason": "NameError: name 'leftsums' is not defined",
+          "completion_head": "class Solution:\n    def beautifulSplits(self, nums: List[int]) -> int:\n        n = len(nums)\n        prefix_sums = [0] * (n + 1)\n        for i in range(1, n + 1"
+        },
+        {
+          "task_id": "lcb/leetcode/3620",
+          "method": "maxDistinctElements",
+          "difficulty": "medium",
+          "reason": "test 0: got 4 expected 6",
+          "completion_head": "class Solution:\n    def maxDistinctElements(self, nums: List[int], k: int) -> int:\n        nums.sort()\n        n = len(nums)\n        if n <= 1:\n            retu"
+        },
+        {
+          "task_id": "lcb/leetcode/3683",
+          "method": "answerString",
+          "difficulty": "medium",
+          "reason": "SyntaxError: invalid syntax (<string>, line 17)",
+          "completion_head": "class Solution:\n    def answerString(self, word: str, numFriends: int) -> str:\n        def get_max_lexicographical_string(s):\n            return max(s)\n\n       "
+        },
+        {
+          "task_id": "lcb/leetcode/3659",
+          "method": "countPathsWithXorValue",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 8)",
+          "completion_head": " ```python\nclass Solution:\n    def countPathsWithXorValue(self, grid: List[List[int]], k: int) -> int:\n        m, n = len(grid), len(grid[0])\n        mod = 10**"
+        },
+        {
+          "task_id": "lcb/leetcode/3657",
+          "method": "checkValidCuts",
+          "difficulty": "medium",
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 22)",
+          "completion_head": "class Solution:\n    def checkValidCuts(self, n: int, rectangles: List[List[int]]) -> bool:\n        # Create a set of all x-coordinates and y-coordinates\n       "
+        },
+        {
+          "task_id": "lcb/leetcode/3715",
+          "method": "maximumCoins",
+          "difficulty": "medium",
+          "reason": "test 0: got 9 expected 10",
+          "completion_head": "class Solution:\n    def maximumCoins(self, coins: List[List[int]], k: int) -> int:\n        max_coins = 0\n        for l, r, c in coins:\n            if r - l + 1 "
+        },
+        {
+          "task_id": "lcb/leetcode/3716",
+          "method": "longestSubsequence",
+          "difficulty": "medium",
+          "reason": "test 1: got 6 expected 4",
+          "completion_head": "class Solution:\n    def longestSubsequence(self, nums: List[int]) -> int:\n        n = len(nums)\n        dp = [1] * n\n\n        for i in range(1, n):\n            "
+        },
+        {
+          "task_id": "lcb/leetcode/3677",
+          "method": "maximumAmount",
+          "difficulty": "medium",
+          "reason": "SyntaxError: '[' was never closed (<string>, line 25)",
+          "completion_head": "class Solution:\n    def maximumAmount(self, coins: List[List[int]]) -> int:\n        m, n = len(coins), lenneutralize_robbers(coins)\n        dp = [[0] * n for _ "
+        }
+      ],
+      "per_problem": [
+        {
+          "task_id": "lcb/leetcode/3579",
+          "passed": false,
+          "reason": "SyntaxError: invalid character '\uff1a' (U+FF1A) (<string>, line 21)"
+        },
+        {
+          "task_id": "lcb/leetcode/3566",
+          "passed": false,
+          "reason": "NameError: name 'current_sim' is not defined"
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "passed": false,
+          "reason": "test 0: got 0 expected 4"
+        },
+        {
+          "task_id": "lcb/leetcode/3607",
+          "passed": false,
+          "reason": "NameError: cannot access free variable 'divisor' where it is not associated with a value in enclosing scope"
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "passed": false,
+          "reason": "test 0: got 128 expected 64"
+        },
+        {
+          "task_id": "lcb/leetcode/3629",
+          "passed": false,
+          "reason": "test 0: got 10 expected 7"
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "passed": false,
+          "reason": "test 0: got 7 expected 6"
+        },
+        {
+          "task_id": "lcb/leetcode/3639",
+          "passed": false,
+          "reason": "test 0: got False expected 'true'"
+        },
+        {
+          "task_id": "lcb/leetcode/3654",
+          "passed": false,
+          "reason": "test 0: got 31 expected 23"
+        },
+        {
+          "task_id": "lcb/leetcode/3487",
+          "passed": false,
+          "reason": "NameError: name 'index_inmask_setbitpositioni_in_targetIndices' is not defined"
+        },
+        {
+          "task_id": "lcb/leetcode/3587",
+          "passed": false,
+          "reason": "IndexError: list index out of range"
+        },
+        {
+          "task_id": "lcb/leetcode/3622",
+          "passed": false,
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 18)"
+        },
+        {
+          "task_id": "lcb/leetcode/3591",
+          "passed": false,
+          "reason": "test 0: got 0 expected 2"
+        },
+        {
+          "task_id": "lcb/leetcode/3647",
+          "passed": false,
+          "reason": "test 0: got -1 expected 1"
+        },
+        {
+          "task_id": "lcb/leetcode/3594",
+          "passed": false,
+          "reason": "test 0: got 0 expected 10"
+        },
+        {
+          "task_id": "lcb/leetcode/3681",
+          "passed": false,
+          "reason": "NameError: name 'max_1area' is not defined"
+        },
+        {
+          "task_id": "lcb/leetcode/3653",
+          "passed": false,
+          "reason": "NameError: name 'max_brsum' is not defined"
+        },
+        {
+          "task_id": "lcb/leetcode/3649",
+          "passed": false,
+          "reason": "test 0: got 8 expected 4"
+        },
+        {
+          "task_id": "lcb/leetcode/3655",
+          "passed": false,
+          "reason": "test 0: got -1 expected 85"
+        },
+        {
+          "task_id": "lcb/leetcode/3613",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 8)"
+        },
+        {
+          "task_id": "lcb/leetcode/3686",
+          "passed": false,
+          "reason": "NameError: name 'leftsums' is not defined"
+        },
+        {
+          "task_id": "lcb/leetcode/3620",
+          "passed": false,
+          "reason": "test 0: got 4 expected 6"
+        },
+        {
+          "task_id": "lcb/leetcode/3683",
+          "passed": false,
+          "reason": "SyntaxError: invalid syntax (<string>, line 17)"
+        },
+        {
+          "task_id": "lcb/leetcode/3699",
+          "passed": true,
+          "reason": ""
+        },
+        {
+          "task_id": "lcb/leetcode/3659",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 8)"
+        },
+        {
+          "task_id": "lcb/leetcode/3657",
+          "passed": false,
+          "reason": "IndentationError: unindent does not match any outer indentation level (<string>, line 22)"
+        },
+        {
+          "task_id": "lcb/leetcode/3634",
+          "passed": true,
+          "reason": ""
+        },
+        {
+          "task_id": "lcb/leetcode/3715",
+          "passed": false,
+          "reason": "test 0: got 9 expected 10"
+        },
+        {
+          "task_id": "lcb/leetcode/3716",
+          "passed": false,
+          "reason": "test 1: got 6 expected 4"
+        },
+        {
+          "task_id": "lcb/leetcode/3677",
+          "passed": false,
+          "reason": "SyntaxError: '[' was never closed (<string>, line 25)"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T4_lcb",
+      "pass_at_1": 0.03333333333333333,
+      "n_pass": 1,
+      "n_total": 30,
+      "elapsed_sec": 4.041058540344238,
+      "failures": [
+        {
+          "task_id": "lcb/leetcode/3579",
+          "method": "maxGoodNumber",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def maxGoodNumber(self, nums: List[int]) -> int:arcelono\n        nums.sort(key=lambda x: bin(x)[2:].zfill(8), reverse=True)\n        return i"
+        },
+        {
+          "task_id": "lcb/leetcode/3566",
+          "method": "stringSequence",
+          "difficulty": "medium",
+          "reason": "SyntaxError: invalid syntax (<string>, line 8)",
+          "completion_head": "class Solution:\u89e3\u8bf4:\n    def stringSequence(self, target: str) -> List[str]:\n        result = []\n        current = \"\"ghz\n        for char in target: resolv\n      "
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "method": "numberOfSubstrings",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def numberOfSubstrings(self, s: str, k: int) -> int: rEFInd\n        count = 0\n        for i in range(len(s)):\n            unique_chars = set"
+        },
+        {
+          "task_id": "lcb/leetcode/3607",
+          "method": "minOperations",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def minOperations(self, nums: List[int]) -> int:arcelon\n        n = len(nums)\n        ops = 0\n        possible = True\n\n        while True:\n "
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 18)",
+          "completion_head": "class Solution:\n    def gcd(self, a, b):\n        while b:\n            a, b = b, a % b\n        return a\n\n    def lcm(self, a, b):\n        return a * b // self.gc"
+        },
+        {
+          "task_id": "lcb/leetcode/3629",
+          "method": "lengthAfterTransformations",
+          "difficulty": "medium",
+          "reason": "SyntaxError: cannot assign to expression (<string>, line 8)",
+          "completion_head": "class Solution:arcelonums = 10**9 + ghzl = 10**9 + 7\n\n    def lengthAfterTransformations(self, s: str, t: int) -> int \u0414\u043e\u0431\u0440\u0443:\n        def transform(c):\n         "
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "method": "minTimeToReach",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 9)",
+          "completion_head": "class Solution: reimbert\n    def minTimeToReach(self, moveTime: List[List[int]]) -> int:\n        n, m = len(moveTime), len(moveTime[0])\n        dp = [[0] * m fo"
+        },
+        {
+          "task_id": "lcb/leetcode/3639",
+          "method": "isZeroArray",
+          "difficulty": "medium",
+          "reason": "SyntaxError: invalid syntax. Perhaps you forgot a comma? (<string>, line 11)",
+          "completion_head": "class Solution:\n    def isZeroArray(self, nums: List[int], queries: List[List[int]]) -> bool:\n        for l_i, r_i in queries:\n            for j in range(l_i, r"
+        },
+        {
+          "task_id": "lcb/leetcode/3654",
+          "method": "minArraySum",
+          "difficulty": "medium",
+          "reason": "SyntaxError: invalid syntax (<string>, line 9)",
+          "completion_head": "class Solution:\n    def minArraySum(self, nums: List[int], k: int, op1: int, op2: int) -> int: \u0414\u043e\u0431\u0440\u0443:\n        for _ in range(op1):\n            idx = nums.index("
+        },
+        {
+          "task_id": "lcb/leetcode/3487",
+          "method": "maxRemovals",
+          "difficulty": "medium",
+          "reason": "SyntaxError: unmatched ')' (<string>, line 9)",
+          "completion_head": "class Solution:\n    def maxRemovals(self, source: str, pattern: str, targetIndices: List[int])) -> int: \u0425\u0435\u0440\u043c\u0430\u043d\n        max_removals = 0\n        for idx in targe"
+        },
+        {
+          "task_id": "lcb/leetcode/3587",
+          "method": "maxScore",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 8)",
+          "completion_head": " ```python\nclass Solution:\n    def maxScore(self, n: int, k: int, stayScore: List[List[int]], travelScore: Listaresmeep."
+        },
+        {
+          "task_id": "lcb/leetcode/3622",
+          "method": "maxFrequency",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def maxFrequency(self, nums: List[int], k: int, numOperations: int) -> int:\u8fd9\u4e2a\u82f1\u96c4\n        nums.sort()\n        n = len(nums)\n        total = \u8fd9\u4e2a"
+        },
+        {
+          "task_id": "lcb/leetcode/3591",
+          "method": "shiftDistance",
+          "difficulty": "medium",
+          "reason": "SyntaxError: closing parenthesis ']' does not match opening parenthesis '(' (<string>, line 9)",
+          "completion_head": "class Solution:\n    def shiftDistance(self, s: str, t: str, nextCost: List[int], previousCost: List LTspice[int]]) -> int:\n        n = len(s)\n        dp = [floa"
+        },
+        {
+          "task_id": "lcb/leetcode/3647",
+          "method": "maxRemoval",
+          "difficulty": "medium",
+          "reason": "SyntaxError: invalid syntax (<string>, line 14)",
+          "completion_head": "class Solution:\n    def maxRemoval(self, nums: List[int], queries: List[List[int]]) -> int:\n        n = len(nums)\n        queries_count = [0] * n\n        for l,"
+        },
+        {
+          "task_id": "lcb/leetcode/3594",
+          "method": "getLargestOutlier",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def getLargestOutlier(self, nums: List[int]) -> int: sum_of_special_numbers = sum(nums) - sum(set(nums))\n        return max(nums, key=lambda"
+        },
+        {
+          "task_id": "lcb/leetcode/3681",
+          "method": "maxRectangleArea",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def maxRectangleArea(self, points: List[List[int]]) -> int: Granollers\n        from collections import defaultdict\n\n        points_set = set"
+        },
+        {
+          "task_id": "lcb/leetcode/3653",
+          "method": "maxSubarraySum",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def maxSubarraySum(self, nums: List[int], k: int) -> int: Granollers\n        n = len(nums)\n        max_sum = float('-inf')\n        for i in "
+        },
+        {
+          "task_id": "lcb/leetcode/3649",
+          "method": "findMinimumTime",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def findMinimumTime(self, strength: List[int], K: int) -> int: optocoupler = 0\n        strength.sort()\n        X =  uleo = 1\n        for s i"
+        },
+        {
+          "task_id": "lcb/leetcode/3655",
+          "method": "minOperations",
+          "difficulty": "medium",
+          "reason": "SyntaxError: closing parenthesis ')' does not match opening parenthesis '[' (<string>, line 22)",
+          "completion_head": "class Solution:\n    def minOperations(self, n: int, m:memItemint) -> int:\n        def isPrime(x: int) -> bool:\n            if x <=  xty:\n                return "
+        },
+        {
+          "task_id": "lcb/leetcode/3613",
+          "method": "maxAmount",
+          "difficulty": "medium",
+          "reason": "SyntaxError: closing parenthesis ']' does not match opening parenthesis '(' (<string>, line 9)",
+          "completion_head": "class Solution: #:\n    def maxAmount(self, initialCurrency: str, pairs1: List[List[str]], rates1: List[float]], rates2: List[float]]) -> float:\n        # Create"
+        },
+        {
+          "task_id": "lcb/leetcode/3686",
+          "method": "beautifulSplits",
+          "difficulty": "medium",
+          "reason": "SyntaxError: expected ':' (<string>, line 9)",
+          "completion_head": "class Solution:\n    def beautifulSplits(self, nums: List[int]) -> int Granollers:\n        n = len(nums)\n        if n < 3:\n            return  Cartan:\n        co"
+        },
+        {
+          "task_id": "lcb/leetcode/3620",
+          "method": "maxDistinctElements",
+          "difficulty": "medium",
+          "reason": "SyntaxError: invalid syntax (<string>, line 23)",
+          "completion_head": "class Solution:\n    def maxDistinctElements(self, nums: List[int], k: int) -> int:\n        if k >= max(nums):\n            return 1\n        nums.sort()\n        d"
+        },
+        {
+          "task_id": "lcb/leetcode/3683",
+          "method": "answerString",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 9)",
+          "completion_head": "class Solution:flatmap\n    def answerString(self, word: str, numFriends: int) -> str\u0414\u0438\u043c\u0438:\n        n = len(word)\n        splits = []\n        for i in range(n):\n "
+        },
+        {
+          "task_id": "lcb/leetcode/3659",
+          "method": "countPathsWithXorValue",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 8)",
+          "completion_head": " ```python\nclass Solution:\n    def countPathsWithXorValue(self, grid: List[List[int]], k: int) -> int:\n        m, n = len(grid), len(grid[0])\n        MOD = 10**"
+        },
+        {
+          "task_id": "lcb/leetcode/3657",
+          "method": "checkValidCuts",
+          "difficulty": "medium",
+          "reason": "test 0: got False expected 'true'",
+          "completion_head": "class Solution:\n    def checkValidCuts(self, n: int, rectangles: List[List[int]]) -> bool:\n        # Create a set of all the rectangles\n        rect_set = set()"
+        },
+        {
+          "task_id": "lcb/leetcode/3634",
+          "method": "calculateScore",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def calculateScore(self, s: str) -> int:ennickek\n        n = len(s)\n        score = ennickekmakecellk()\n        marked = [False] * n\n       "
+        },
+        {
+          "task_id": "lcb/leetcode/3715",
+          "method": "maximumCoins",
+          "difficulty": "medium",
+          "reason": "SyntaxError: invalid syntax (<string>, line 18)",
+          "completion_head": "class Solution:\n    def maximumCoins(self, coins: List[List[int]], k: int) -> int:\n        coins.sort()\n        n = len(coins)\n        max_coins = 0\n        for"
+        },
+        {
+          "task_id": "lcb/leetcode/3716",
+          "method": "longestSubsequence",
+          "difficulty": "medium",
+          "reason": "SyntaxError: expected ':' (<string>, line 9)",
+          "completion_head": "class Solution:\n    def longestSubsequence(self, nums: List[int]) -> intarcelono django\n"
+        },
+        {
+          "task_id": "lcb/leetcode/3677",
+          "method": "maximumAmount",
+          "difficulty": "medium",
+          "reason": "IndentationError: unexpected indent (<string>, line 10)",
+          "completion_head": "class Solution:\n    def maximumAmount(self, coins: List[List[int]]) -> int: placebo = 0\n        m, n = len(coins), len(coins[0])\n        dp = [[0] * n for _ in "
+        }
+      ],
+      "per_problem": [
+        {
+          "task_id": "lcb/leetcode/3579",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3566",
+          "passed": false,
+          "reason": "SyntaxError: invalid syntax (<string>, line 8)"
+        },
+        {
+          "task_id": "lcb/leetcode/3502",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3607",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3593",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 18)"
+        },
+        {
+          "task_id": "lcb/leetcode/3629",
+          "passed": false,
+          "reason": "SyntaxError: cannot assign to expression (<string>, line 8)"
+        },
+        {
+          "task_id": "lcb/leetcode/3627",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 9)"
+        },
+        {
+          "task_id": "lcb/leetcode/3639",
+          "passed": false,
+          "reason": "SyntaxError: invalid syntax. Perhaps you forgot a comma? (<string>, line 11)"
+        },
+        {
+          "task_id": "lcb/leetcode/3654",
+          "passed": false,
+          "reason": "SyntaxError: invalid syntax (<string>, line 9)"
+        },
+        {
+          "task_id": "lcb/leetcode/3487",
+          "passed": false,
+          "reason": "SyntaxError: unmatched ')' (<string>, line 9)"
+        },
+        {
+          "task_id": "lcb/leetcode/3587",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 8)"
+        },
+        {
+          "task_id": "lcb/leetcode/3622",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3591",
+          "passed": false,
+          "reason": "SyntaxError: closing parenthesis ']' does not match opening parenthesis '(' (<string>, line 9)"
+        },
+        {
+          "task_id": "lcb/leetcode/3647",
+          "passed": false,
+          "reason": "SyntaxError: invalid syntax (<string>, line 14)"
+        },
+        {
+          "task_id": "lcb/leetcode/3594",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3681",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3653",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3649",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3655",
+          "passed": false,
+          "reason": "SyntaxError: closing parenthesis ')' does not match opening parenthesis '[' (<string>, line 22)"
+        },
+        {
+          "task_id": "lcb/leetcode/3613",
+          "passed": false,
+          "reason": "SyntaxError: closing parenthesis ']' does not match opening parenthesis '(' (<string>, line 9)"
+        },
+        {
+          "task_id": "lcb/leetcode/3686",
+          "passed": false,
+          "reason": "SyntaxError: expected ':' (<string>, line 9)"
+        },
+        {
+          "task_id": "lcb/leetcode/3620",
+          "passed": false,
+          "reason": "SyntaxError: invalid syntax (<string>, line 23)"
+        },
+        {
+          "task_id": "lcb/leetcode/3683",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 9)"
+        },
+        {
+          "task_id": "lcb/leetcode/3699",
+          "passed": true,
+          "reason": ""
+        },
+        {
+          "task_id": "lcb/leetcode/3659",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 8)"
+        },
+        {
+          "task_id": "lcb/leetcode/3657",
+          "passed": false,
+          "reason": "test 0: got False expected 'true'"
+        },
+        {
+          "task_id": "lcb/leetcode/3634",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        },
+        {
+          "task_id": "lcb/leetcode/3715",
+          "passed": false,
+          "reason": "SyntaxError: invalid syntax (<string>, line 18)"
+        },
+        {
+          "task_id": "lcb/leetcode/3716",
+          "passed": false,
+          "reason": "SyntaxError: expected ':' (<string>, line 9)"
+        },
+        {
+          "task_id": "lcb/leetcode/3677",
+          "passed": false,
+          "reason": "IndentationError: unexpected indent (<string>, line 10)"
+        }
+      ]
+    }
+  ]
+}

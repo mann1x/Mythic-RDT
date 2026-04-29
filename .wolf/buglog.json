@@ -533,6 +533,102 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-04-28T11:00:08.392Z"
+    },
+    {
+      "id": "bug-034",
+      "timestamp": "2026-04-28T20:23:11.742Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 18→28 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-28T20:23:11.742Z"
+    },
+    {
+      "id": "bug-035",
+      "timestamp": "2026-04-28T21:48:33.415Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 13→66 lines (2 removed) | Also: from transformers.cache_utils import DynamicCache; if past_key_values is None: | Also: loss=loss, logits=logits,; past_key_values=past_key_values if use_cache else ",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-04-28T21:50:14.942Z"
+    },
+    {
+      "id": "bug-036",
+      "timestamp": "2026-04-28T21:53:16.745Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "61 lines replaced/restructured",
+      "fix": "Rewrote 88→42 lines (61 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-28T21:53:16.745Z"
+    },
+    {
+      "id": "bug-037",
+      "timestamp": "2026-04-28T22:27:55.653Z",
+      "error_message": "Wrong reference: render_lcb_chat_prompt should be build_lcb_chat_prompts",
+      "file": "scripts/_probe_wrapper_generate_lcb.py",
+      "root_cause": "Used \"render_lcb_chat_prompt\" instead of \"build_lcb_chat_prompts\"",
+      "fix": "Changed render_lcb_chat_prompt → build_lcb_chat_prompts",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-28T22:27:55.653Z"
+    },
+    {
+      "id": "bug-038",
+      "timestamp": "2026-04-29T05:40:52.839Z",
+      "error_message": "Missing error handling in unknown",
+      "file": "../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T05:40:52.839Z"
+    },
+    {
+      "id": "bug-039",
+      "timestamp": "2026-04-29T06:29:07.797Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 6→25 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T06:29:07.797Z"
     }
   ]
 }

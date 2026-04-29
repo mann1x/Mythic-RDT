@@ -33,7 +33,9 @@ from typing import Any, Optional
 import torch
 import torch.nn.functional as F
 from torch import nn
-from transformers import AutoModelForCausalLM
+from transformers import AutoModelForCausalLM, GenerationConfig
+from transformers.cache_utils import Cache, DynamicCache
+from transformers.generation import GenerationMixin
 from transformers.modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
 from transformers.modeling_outputs import CausalLMOutputWithPast
 
@@ -42,7 +44,58 @@ from .loop_state import set_loop_t
 from .recurrence import RecurrenceCell
 
 
-class MythicRDTDeepseekV2ForCausalLM(nn.Module):
+class _MythicCacheView(Cache):
+    """Thin Cache facade over the wrapper's per-iteration `dict[int, DynamicCache]`.
+
+    HF's `model.generate()` introspects `past_key_values` via methods like
+    `get_seq_length()`, treating it as a single Cache instance. Our wrapper
+    actually keeps T separate per-iteration caches (one DynamicCache per loop
+    iteration t in [0, T-1]) so that the same base attention layer can be
+    re-run T times with independent K/V history. This view delegates the
+    introspection HF performs to slot[0] (which always exists and tracks the
+    same prefill length as every other slot by construction), while keeping
+    the underlying dict accessible via `.iter_caches` for the wrapper's loop.
+
+    On the FIRST forward call past_key_values is None, so the wrapper builds
+    the dict + wraps it in this view, returning the view as `past_key_values`
+    in `CausalLMOutputWithPast`. HF generate then passes the view back into
+    the next forward; the wrapper unwraps via `.iter_caches` to access the
+    per-iteration DynamicCache slots.
+    """
+
+    def __init__(self, iter_caches: dict[int, DynamicCache]):
+        super().__init__()
+        # NB: not a regular dict-of-Cache; we deliberately do NOT call
+        # super().__init__() on Cache because newer transformers versions add
+        # state we don't want to inherit. The Cache abstract base only
+        # requires get_seq_length / get_max_cache_shape / update.
+        self.iter_caches: dict[int, DynamicCache] = iter_caches
+
+    def __len__(self) -> int:
+        # Number of layers cached on slot 0. HF generate uses len(past_kv) to
+        # decide whether the cache is "empty"; we mirror slot 0's layer count.
+        return len(self.iter_caches.get(0, DynamicCache()))
+
+    def get_seq_length(self, layer_idx: int = 0) -> int:
+        c0 = self.iter_caches.get(0)
+        if c0 is None or len(c0) == 0:
+            return 0
+        return int(c0.get_seq_length(layer_idx))
+
+    def get_max_cache_shape(self) -> Optional[int]:
+        return None  # dynamic, no fixed cap
+
+    def get_max_length(self) -> Optional[int]:  # legacy alias on older transformers
+        return None
+
+    def update(self, *args, **kwargs):  # not called by HF on this view; wrapper owns updates
+        raise RuntimeError(
+            "_MythicCacheView.update() should not be called directly; the wrapper "
+            "manages per-iteration DynamicCache updates internally inside _loop_step."
+        )
+
+
+class MythicRDTDeepseekV2ForCausalLM(nn.Module, GenerationMixin):
     """Recurrent-Depth wrapper around DeepSeek-Coder-V2-Lite-Instruct.
 
     Note: this is a plain `nn.Module`, not a `PreTrainedModel`. v0
@@ -128,6 +181,135 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
             p.requires_grad_(False)
 
     # ------------------------------------------------------------------
+    # HF GenerationMixin compliance
+    # ------------------------------------------------------------------
+    # The wrapper is a plain nn.Module + GenerationMixin (NOT PreTrainedModel)
+    # to keep training simple. We expose just enough surface for HF's
+    # `model.generate()` to call our `forward()` correctly:
+    #   - main_input_name + can_generate() so generate() picks the right path
+    #   - generation_config inherited from base
+    #   - device/dtype properties HF inspects
+    #   - prepare_inputs_for_generation handles continuation steps (slice to
+    #     last token when past_key_values is set) and forwards our extra
+    #     kwargs (T, force_gate_zero, force_bypass) into forward().
+    #   - _reorder_cache no-op for greedy; for beam search we'd reorder each
+    #     iteration's slot, but greedy/sampling never call this.
+    # ------------------------------------------------------------------
+
+    main_input_name = "input_ids"
+    _supports_cache_class = True       # we wrap our own dict in _MythicCacheView
+    _is_stateful = False
+    supports_gradient_checkpointing = False  # checkpoint_loop is wrapper-internal
+
+    def can_generate(self) -> bool:
+        return True
+
+    @property
+    def device(self) -> torch.device:
+        # PreTrainedModel.device walks parameters; we do the same so
+        # GenerationMixin can place tensors correctly.
+        try:
+            return next(self.parameters()).device
+        except StopIteration:
+            return torch.device("cpu")
+
+    @property
+    def dtype(self) -> torch.dtype:
+        try:
+            return next(self.parameters()).dtype
+        except StopIteration:
+            return torch.float32
+
+    @property
+    def generation_config(self) -> GenerationConfig:
+        # Inherit base's generation config; users can override at generate-call.
+        cfg = getattr(self, "_generation_config", None)
+        if cfg is not None:
+            return cfg
+        # Fall back to base's, then to a default.
+        base_cfg = getattr(self.base, "generation_config", None)
+        if base_cfg is not None:
+            return base_cfg
+        return GenerationConfig()
+
+    @generation_config.setter
+    def generation_config(self, value: GenerationConfig) -> None:
+        self._generation_config = value
+
+    def get_input_embeddings(self):
+        return self.base.get_input_embeddings()
+
+    def get_output_embeddings(self):
+        # base.lm_head — used by HF for tied-weight handling
+        return getattr(self.base, "lm_head", None)
+
+    def prepare_inputs_for_generation(
+        self,
+        input_ids,
+        past_key_values=None,
+        attention_mask=None,
+        inputs_embeds=None,
+        cache_position=None,
+        **kwargs,
+    ) -> dict:
+        """Build the kwargs dict for the next forward(...) call.
+
+        On the first call past_key_values is None (or empty); we forward the
+        full input_ids. On subsequent calls past_key_values is a populated
+        _MythicCacheView; HF generate has appended the next token so input_ids
+        ends with new context — we slice to just the new tokens.
+
+        We always force `use_cache=True` during generation. Custom kwargs (T,
+        force_gate_zero, force_bypass) are forwarded if present.
+        """
+        # Determine how many tokens to forward this step. With a populated
+        # cache, only the new tokens since the last call need to go through.
+        past_len = 0
+        if past_key_values is not None:
+            try:
+                past_len = int(past_key_values.get_seq_length())
+            except Exception:
+                past_len = 0
+        if past_len > 0 and input_ids.size(1) > past_len:
+            # Standard HF generate: pass only the trailing new tokens.
+            input_ids = input_ids[:, past_len:]
+
+        # NB: do NOT include `return_dict` here — HF generate sets it itself
+        # and passing both produces "multiple values for keyword argument".
+        out = {
+            "input_ids": input_ids,
+            "attention_mask": attention_mask,
+            "past_key_values": past_key_values,
+            "use_cache": True,
+        }
+        # Forward any custom kwargs the caller passed to generate()
+        for k in ("T", "force_gate_zero", "force_bypass", "n_loops"):
+            if k in kwargs:
+                # Translate `n_loops` (the public API name from CLAUDE.md /
+                # MASTER_PLAN.md) to internal `T` if both forms are used.
+                out_key = "T" if k == "n_loops" else k
+                out[out_key] = kwargs[k]
+        return out
+
+    def _reorder_cache(self, past_key_values, beam_idx):
+        # Greedy / sampling don't beam — fall through. If we ever support
+        # beam, reorder each slot's DynamicCache by beam_idx. For now,
+        # raise loudly so silent breakage isn't possible.
+        if past_key_values is None:
+            return None
+        # If the underlying caches each implement reorder_cache, delegate.
+        view = past_key_values
+        if isinstance(view, _MythicCacheView):
+            for t, c in view.iter_caches.items():
+                if hasattr(c, "reorder_cache"):
+                    view.iter_caches[t] = c.reorder_cache(beam_idx)
+            return view
+        raise NotImplementedError(
+            "MythicRDT _reorder_cache only supports _MythicCacheView; "
+            "beam search not yet wired."
+        )
+
+    # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
 
@@ -198,7 +380,22 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
         every block layer's DepthLoRA picks the same T-slice within an
         iteration.
         """
-        set_loop_t(t)
+        # v6E: at t=0 with first_iter_identity, also disable DepthLoRA so the
+        # block forward is a pure base computation (no LoRA add). v6A originally
+        # only zeroed the recurrence ADD (LTI/gate/LayerScale); the trained LoRA
+        # weights still perturbed the block forward at t=0 and degraded T=1 LCB
+        # below base after training. v6E uses the existing DepthLoRA out-of-range
+        # short-circuit (`if t < 0: return out` in lora_inject.DepthLoRALinear)
+        # by setting set_loop_t(-1) for the t==0 iteration in identity mode.
+        # Net effect at T=1: wrapper output = coda(base_block(prelude(x))) ≡ base
+        # byte-for-byte, AFTER training too (LoRA[0] weights are loaded but
+        # bypassed at t=0). T>=1 iterations get set_loop_t(t) as normal.
+        # See memory/project_phase1_v6_diagnosis.md and the v6A ckpt-200 LCB-30
+        # post-mortem (T=1=10% << base 26.7% even with first_iter_identity).
+        if t == 0 and getattr(self.config, "first_iter_identity", False):
+            set_loop_t(-1)
+        else:
+            set_loop_t(t)
         block_out = h
         for layer in rec_layers:
             block_out, _ = self._run_layer(layer, block_out, attn_4d, position_ids)
@@ -206,12 +403,7 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
             # Legacy single-layer mode bypass: return the block output
             # directly, mimicking "run the layer once".
             return block_out
-        # v6A: first-iteration identity. When enabled, the t=0 iteration adds
-        # no LTI/gate/LayerScale contribution -- output is the bare base-block
-        # forward. At T=1 this makes the wrapper output ≡ base by construction
-        # (prelude -> base_recurrent_block -> coda, no perturbation). T>=1
-        # iterations inject normally. See memory/project_phase1_v6_diagnosis.md
-        # for the diagnostic probes that motivated this fix.
+        # v6A/v6E first-iteration identity: skip the recurrence ADD at t=0.
         if t == 0 and getattr(self.config, "first_iter_identity", False):
             return block_out
         cell_out = self.recurrence(h, e, block_out, t=t, force_gate_zero=force_gate_zero)
@@ -268,23 +460,37 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
         # different inputs after prior iters' recurrence-cell updates).
         # Cache structure: dict[int, DynamicCache] keyed by iteration t.
         # - past_key_values[0] holds: prelude (t=0) + block iter 0 + coda (t=0)
-        # - past_key_values[t] for t>=1 holds: block iter t
+        # - iter_caches[t] for t>=1 holds: block iter t
         base_model = self.base.model  # the inner DeepseekV2Model
         bsz, seq_len = input_ids.shape
         device = input_ids.device
 
+        # Unwrap a _MythicCacheView (used by HF generate) back to the dict
+        # the wrapper internally manages. First call from generate has
+        # past_key_values=None.
+        if isinstance(past_key_values, _MythicCacheView):
+            iter_caches = past_key_values.iter_caches
+        elif isinstance(past_key_values, dict):
+            iter_caches = past_key_values
+        elif past_key_values is None:
+            iter_caches = None
+        else:
+            # Defensive: HF might hand us its own DynamicCache if our
+            # _supports_cache_class signal is misinterpreted. Fall back to
+            # treating it as slot[0] only.
+            iter_caches = {0: past_key_values}
+
         if use_cache:
-            from transformers.cache_utils import DynamicCache
-            if past_key_values is None:
-                past_key_values = {}
+            if iter_caches is None:
+                iter_caches = {}
             # Ensure a cache exists for each recurrence iteration we will run.
             for t in range(T):
-                if t not in past_key_values:
-                    past_key_values[t] = DynamicCache()
+                if t not in iter_caches:
+                    iter_caches[t] = DynamicCache()
             # past_kv_len = how many tokens are already cached on slot[0]
             # (first prelude layer). All slots on the same iteration cache
             # have the same length by construction.
-            past_kv_len = int(past_key_values[0].get_seq_length(0))
+            past_kv_len = int(iter_caches[0].get_seq_length(0))
         else:
             past_kv_len = 0
 
@@ -338,7 +544,7 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
 
         # ----- Prelude -----
         # All prelude layers write to slot[layer_idx] of the iteration-0 cache.
-        prelude_cache = past_key_values[0] if use_cache else None
+        prelude_cache = iter_caches[0] if use_cache else None
         for i in range(cfg.prelude_layers):
             h, _ = self._run_layer(
                 base_model.layers[i], h, attn_4d, position_ids,
@@ -378,16 +584,38 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
                 # T-iter cache path: each iteration t has its own DynamicCache
                 # shared across the block's layers. Recurrence cell is
                 # per-token and needs no cache.
+                #
+                # IMPORTANT: this branch must mirror `_loop_step`'s v6E
+                # `first_iter_identity` semantics — at t=0 we (a) call
+                # `set_loop_t(-1)` so DepthLoRA's bypass short-circuit fires
+                # (no LoRA add at the trained slice 0) and (b) return
+                # `block_out` instead of running the recurrence cell. Without
+                # this, HF generate (which always passes use_cache=True via
+                # GenerationMixin) silently runs the t=0 iteration with
+                # LoRA[0] active AND the recurrence add, producing output
+                # that diverges from base on every prompt. Symptom: probe
+                # `_probe_wrapper_generate_lcb.py` reports first_div >= 0
+                # for all 30 LCB problems despite v6E's claim of
+                # base byte-identity. Fixed 2026-04-29.
                 for t in range(T):
-                    set_loop_t(t)
+                    is_v6e_identity_t0 = (
+                        t == 0
+                        and getattr(self.config, "first_iter_identity", False)
+                    )
+                    if is_v6e_identity_t0:
+                        set_loop_t(-1)
+                    else:
+                        set_loop_t(t)
                     block_out = h
-                    iter_cache = past_key_values[t]
+                    iter_cache = iter_caches[t]
                     for li, layer in enumerate(rec_layers):
                         block_out, _ = self._run_layer(
                             layer, block_out, attn_4d, position_ids,
                             past_key_value=iter_cache, use_cache=True,
                         )
-                    if gate_zero_effective and not self.recurrence.block_mode:
+                    if is_v6e_identity_t0:
+                        h = block_out
+                    elif gate_zero_effective and not self.recurrence.block_mode:
                         h = block_out
                     else:
                         cell_out = self.recurrence(
@@ -415,7 +643,7 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
 
         # ----- Coda -----
         # Coda layers reuse the iteration-0 cache (slot[layer_idx] of it).
-        coda_cache = past_key_values[0] if use_cache else None
+        coda_cache = iter_caches[0] if use_cache else None
         n_total = base_model.config.num_hidden_layers
         for i in range(n_total - cfg.coda_layers, n_total):
             h, _ = self._run_layer(
@@ -455,9 +683,12 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module):
         # (labels passed -> loss field populated). Plain logits when called
         # directly without labels (probe / smoke / phase-0 paths).
         if return_dict or labels is not None or use_cache:
+            # Wrap the per-iteration dict in a _MythicCacheView so HF
+            # generate() can introspect it (get_seq_length etc). The view
+            # round-trips: HF passes it back next call, we unwrap to dict.
+            past_out = _MythicCacheView(iter_caches) if use_cache else None
             return CausalLMOutputWithPast(
-                loss=loss, logits=logits,
-                past_key_values=past_key_values if use_cache else None,
+                loss=loss, logits=logits, past_key_values=past_out,
             )
         return logits
 

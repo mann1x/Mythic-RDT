@@ -91,3 +91,10 @@ secrets/
 
 # Caliber local state
 .caliber/
+
+# Local pod backups (large, mirrored on S3 or pod itself — not in git)
+pod_archive_*/
+
+# Claude / session-local scheduling state
+.claude/scheduled_tasks.lock
+.claude/scheduled_tasks.json

@@ -960,3 +960,177 @@
 | 13:58 | Created scripts/pod_runner/run_v6a.sh | — | ~870 |
 | 14:00 | Session end: 2 writes across 2 files (STATUS.md, run_v6a.sh) | 1 reads | ~1170 tok |
 | 14:01 | Created tests/test_first_iter_identity.py | — | ~1236 |
+
+## Session: 2026-04-28 14:03
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-04-28 14:03
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-04-28 14:04
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 20:13 | Created scripts/pod_runner/run_v6a_bigsmoke.sh | — | ~497 |
+| 20:14 | Session end: 1 writes across 1 files (run_v6a_bigsmoke.sh) | 1 reads | ~13838 tok |
+| 20:18 | Edited scripts/humaneval_smoke.py | expanded (+6 lines) | ~140 |
+| 20:18 | Edited scripts/humaneval_smoke.py | expanded (+13 lines) | ~201 |
+| 20:19 | Edited scripts/humaneval_smoke.py | 12→11 lines | ~166 |
+| 20:22 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
+| 20:26 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
+| 20:26 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
+| 20:32 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
+| 20:42 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
+| 20:59 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
+| 21:02 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
+
+## Session: 2026-04-28 21:10
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 22:23 | Edited src/mythic_rdt/modeling.py | modified getattr() | ~499 |
+| 22:25 | Session end: 1 writes across 1 files (modeling.py) | 2 reads | ~3340 tok |
+| 22:48 | Session end: 1 writes across 1 files (modeling.py) | 2 reads | ~3340 tok |
+| 22:52 | Edited scripts/humaneval_smoke.py | expanded (+9 lines) | ~238 |
+| 22:53 | Edited scripts/humaneval_smoke.py | 1→2 lines | ~37 |
+| 22:53 | Session end: 3 writes across 2 files (modeling.py, humaneval_smoke.py) | 2 reads | ~3615 tok |
+| 23:35 | Created scripts/_probe_v6e_identity.py | — | ~1440 |
+| 23:36 | Edited scripts/_probe_v6e_identity.py | modified _to_logits() | ~150 |
+
+## Session: 2026-04-28 23:38
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 23:48 | Edited src/mythic_rdt/modeling.py | modified __init__() | ~875 |
+| 23:49 | Edited src/mythic_rdt/modeling.py | modified can_generate() | ~1629 |
+| 23:49 | Edited src/mythic_rdt/modeling.py | modified isinstance() | ~372 |
+| 23:50 | Edited src/mythic_rdt/modeling.py | 6→9 lines | ~143 |
+| 23:50 | Created scripts/_probe_wrapper_generate.py | — | ~1478 |
+| 23:51 | Edited src/mythic_rdt/modeling.py | 7→8 lines | ~97 |
+| 23:53 | Edited scripts/humaneval_smoke.py | reduced (-46 lines) | ~584 |
+| 23:55 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
+| 23:55 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
+| 00:01 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
+| 00:09 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
+| 00:12 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
+| 00:20 | Created scripts/_probe_wrapper_generate_lcb.py | — | ~1541 |
+
+## Session: 2026-04-28 00:22
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 00:27 | Edited scripts/_probe_wrapper_generate_lcb.py | inline fix | ~18 |
+| 00:27 | Edited scripts/_probe_wrapper_generate_lcb.py | inline fix | ~17 |
+
+## Session: 2026-04-28 00:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 00:31 | Created scripts/pod_runner/run_v6e.sh | — | ~753 |
+| 00:32 | Created scripts/probe_then_v6e_chain.sh | — | ~732 |
+
+## Session: 2026-04-28 00:33
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 07:40 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_python_unbuffered.md | — | ~432 |
+| 07:40 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~107 |
+| 07:41 | Session end: 2 writes across 2 files (feedback_python_unbuffered.md, MEMORY.md) | 3 reads | ~9901 tok |
+| 07:56 | Edited scripts/humaneval_smoke.py | modified zip() | ~305 |
+| 07:56 | Edited scripts/humaneval_smoke.py | modified zip() | ~299 |
+| 07:57 | Edited scripts/humaneval_smoke.py | 8→9 lines | ~66 |
+| 07:57 | Edited scripts/_probe_wrapper_generate_lcb.py | 3→3 lines | ~26 |
+
+## Session: 2026-04-29 07:57
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:02 | Edited scripts/_probe_wrapper_generate_lcb.py | 3→4 lines | ~66 |
+| 08:02 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
+| 08:02 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
+| 08:05 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
+| 08:05 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
+| 08:05 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
+| 08:08 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
+| 08:12 | Created scripts/_probe_wrapper_generate_lcb.py | — | ~2152 |
+| 08:21 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md | — | ~655 |
+| 08:21 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~136 |
+| 08:23 | Session end: 4 writes across 3 files (_probe_wrapper_generate_lcb.py, project_flash_attn_install_blocked.md, MEMORY.md) | 2 reads | ~4654 tok |
+| 08:23 | Session end: 4 writes across 3 files (_probe_wrapper_generate_lcb.py, project_flash_attn_install_blocked.md, MEMORY.md) | 2 reads | ~4654 tok |
+| 08:24 | Session end: 4 writes across 3 files (_probe_wrapper_generate_lcb.py, project_flash_attn_install_blocked.md, MEMORY.md) | 2 reads | ~4654 tok |
+
+## Session: 2026-04-29 08:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:29 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md | modified retrying() | ~580 |
+| 08:29 | Session end: 1 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~621 tok |
+| 08:31 | Session end: 1 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~621 tok |
+
+## Session: 2026-04-29 08:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:31 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md | 8→11 lines | ~190 |
+| 08:31 | Session end: 1 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~204 tok |
+| 08:33 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md | modified fixes() | ~614 |
+| 08:34 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 08:37 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 08:46 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 08:48 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 08:48 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 08:49 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 09:00 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 09:01 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 09:02 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 09:09 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
+| 09:12 | Edited src/mythic_rdt/modeling.py | modified range() | ~653 |
+
+## Session: 2026-04-29 09:20
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:22 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6e_inference_path_bug.md | — | ~1248 |
+
+## Session: 2026-04-29 09:22
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:24 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~244 |
+| 09:25 | Session end: 1 writes across 1 files (MEMORY.md) | 1 reads | ~261 tok |
+| 09:28 | Session end: 1 writes across 1 files (MEMORY.md) | 1 reads | ~261 tok |
+
+## Session: 2026-04-29 09:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:45 | Created scripts/_probe_logit_identity.py | — | ~1503 |
+| 09:46 | Edited ../.wolf/buglog.json | expanded (+20 lines) | ~522 |
+| 09:47 | Session end: 2 writes across 2 files (_probe_logit_identity.py, buglog.json) | 5 reads | ~14545 tok |
+| 09:48 | Session end: 2 writes across 2 files (_probe_logit_identity.py, buglog.json) | 5 reads | ~14545 tok |
+| 09:50 | Session end: 2 writes across 2 files (_probe_logit_identity.py, buglog.json) | 5 reads | ~14545 tok |
+| 09:51 | Session end: 2 writes across 2 files (_probe_logit_identity.py, buglog.json) | 5 reads | ~14545 tok |
+
+## Session: 2026-04-29 09:52
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:53 | Edited ../.wolf/cerebrum.md | modified forgetting() | ~616 |
+| 09:55 | Session end: 1 writes across 1 files (cerebrum.md) | 1 reads | ~660 tok |
+| 09:57 | Session end: 1 writes across 1 files (cerebrum.md) | 1 reads | ~660 tok |
+| 09:57 | Session end: 1 writes across 1 files (cerebrum.md) | 1 reads | ~660 tok |
+| 09:59 | Session end: 1 writes across 1 files (cerebrum.md) | 1 reads | ~660 tok |
+
+## Session: 2026-04-29 09:59
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 10:56 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6a_post_fix_verdict.md | — | ~1209 |
+| 10:57 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~211 |
+| 10:57 | Session end: 2 writes across 2 files (project_v6a_post_fix_verdict.md, MEMORY.md) | 0 reads | ~1522 tok |
+| 11:08 | Session end: 2 writes across 2 files (project_v6a_post_fix_verdict.md, MEMORY.md) | 0 reads | ~1522 tok |
+| 11:18 | Edited .gitignore | expanded (+7 lines) | ~59 |

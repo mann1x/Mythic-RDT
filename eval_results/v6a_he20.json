@@ -1,0 +1,126 @@
+{
+  "args": {
+    "base": "base/DeepSeek-Coder-V2-Lite-Instruct",
+    "limit": 20,
+    "recurrent_layer_idx": 10,
+    "recurrent_block_start": 4,
+    "recurrent_block_end": 22,
+    "block_mode": true,
+    "prelude_layers": 4,
+    "coda_layers": 4,
+    "gate_init_bias": 0.0,
+    "layerscale_init": 0.0001,
+    "layerscale_clamp_max": 0.01,
+    "force_bypass": false,
+    "T_values": [
+      1,
+      2,
+      4
+    ],
+    "gen_tokens": 384,
+    "no_kv_cache": false,
+    "batch_size": 4,
+    "device": "cuda",
+    "dtype": "bfloat16",
+    "output_json": "eval_results/v6a_he20.json",
+    "skip_base": false,
+    "checkpoint": "checkpoints/phase1_v6a_dual_t",
+    "lora_rank": 8,
+    "lora_alpha": 16.0,
+    "lora_targets": [
+      "self_attn.q_proj_or_q_a",
+      "self_attn.o_proj"
+    ],
+    "quant": "nf4",
+    "lcb_limit": 0,
+    "lcb_difficulty": "medium",
+    "first_iter_identity": true,
+    "bypass_trainables": false,
+    "lcb_min_date": "2024-10-01"
+  },
+  "results": [
+    {
+      "name": "base_he",
+      "pass_at_1": 1.0,
+      "n_pass": 20,
+      "n_total": 20,
+      "elapsed_sec": 3.1813254356384277,
+      "failures": []
+    },
+    {
+      "name": "wrapper_T1_he",
+      "pass_at_1": 0.95,
+      "n_pass": 19,
+      "n_total": 20,
+      "elapsed_sec": 3.1939964294433594,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [num for i, num in enumerate(numbers) if i != 0] if numbers else []\n"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T2_he",
+      "pass_at_1": 0.9,
+      "n_pass": 18,
+      "n_total": 20,
+      "elapsed_sec": 3.2076358795166016,
+      "failures": [
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [n for i, n in enumerate(numbers) if i != 0]\n"
+        },
+        {
+          "task_id": "HumanEval/19",
+          "entry_point": "sort_numbers",
+          "reason": "SyntaxError: ':' expected after dictionary key (<string>, line 17)",
+          "completion_head": "    num_dict = {\n        'zero': 0,\n        'one': 1,\n        'two': 2,\n        'three': 3,\n        'four': 4,\n        n"
+        }
+      ]
+    },
+    {
+      "name": "wrapper_T4_he",
+      "pass_at_1": 0.75,
+      "n_pass": 15,
+      "n_total": 20,
+      "elapsed_sec": 3.1647400856018066,
+      "failures": [
+        {
+          "task_id": "HumanEval/1",
+          "entry_point": "separate_paren_groups",
+          "reason": "AssertionError: ",
+          "completion_head": "    paren_string = paren_string.replace(' ', '')\n    groups = []\n    stack = []\n    current_group = ''\n\n    for char in "
+        },
+        {
+          "task_id": "HumanEval/5",
+          "entry_point": "intersperse",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [n for i, n in enumerate(numbers) if i != 0] if numbers else []\n"
+        },
+        {
+          "task_id": "HumanEval/6",
+          "entry_point": "parse_nested_parens",
+          "reason": "AssertionError: ",
+          "completion_head": "    return [paren_string.count(f'({i})') for i in range(1, 100)]\n"
+        },
+        {
+          "task_id": "HumanEval/9",
+          "entry_point": "rolling_max",
+          "reason": "IndexError: list index out of range",
+          "completion_head": "    rolling_max_list = []\n    current_max = numbers[0]\n    for number in numbers:\n        current_max = max(current_max,"
+        },
+        {
+          "task_id": "HumanEval/19",
+          "entry_point": "sort_numbers",
+          "reason": "ValueError: invalid literal for int() with base 10: 'three'",
+          "completion_head": "    num_to_int = {\n        'zero': 0,\n        'one': 1,\n        'two': 2,\n        'three': 3,\n        'four': 4,\n       "
+        }
+      ]
+    }
+  ]
+}
