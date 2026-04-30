@@ -44,6 +44,7 @@ experiments/*/runs/
 checkpoints/
 runs/
 wandb/
+pod_wandb/
 outputs/
 
 # Model file extensions

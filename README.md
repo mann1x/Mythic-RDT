@@ -2,7 +2,7 @@
 
 **Recurrent-Depth Transformer wrapping MoE bases (DeepSeek-Coder-V2-Lite-Instruct, Gemma 4 26B-A4B 98e v3)** via the OpenMythos blueprint and a retrofit-recurrence fine-tune curriculum (arXiv 2511.07384).
 
-Status: **pre-alpha, Phase 1 fine-tune iterating.** No public release yet. Stage 1 wrapper is built and evaluated; v3-T1 validated (95 % HumanEval-20), v4 stacked but collapses on LiveCodeBench-medium, v5 dual-T training is in flight (2026-04-28). **Read [`STATUS.md`](STATUS.md) for the current architecture, training history, bugs, and next steps** — `MASTER_PLAN.md` (below) is the kickoff plan and does not reflect post-v3 state.
+Status: **pre-alpha, Phase 1 fine-tune iterating.** No public release yet. Stage 1 wrapper is built and evaluated; the v6 series is investigating loss-recipe deltas on top of the validated `Fix-A block_mode_residual` architecture. v6H is the first run that does NOT catastrophically degrade T=4 on LiveCodeBench (HE-20 100/100/100, LCB-30 T=1/2/4 = 30/20/26.7 vs base 30 — controlled, no harm, no win); v6I tested dropping the `kl_anchor` regularizer and was REJECTED (kl_anchor proved load-bearing, not a brake); **v6K (v6H baseline + focal-weighted CE on T=4) is in flight on a vast.ai pod, ETA finish 2026-04-30 ~17:00–22:30 UTC**. **Read [`STATUS.md`](STATUS.md) for the full architecture, training history, bugs, and next steps** — `MASTER_PLAN.md` (below) is the kickoff plan and does not reflect post-v3 state.
 
 ## What this is
 

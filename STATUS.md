@@ -1,8 +1,20 @@
 # Mythic-RDT — Current Status (Stage 1)
 
-**Last updated:** 2026-04-28 — v5 dual-T training in flight on pod (run `3a6muz4p`).
+**Last updated:** 2026-04-30 — **v6K** (v6H baseline + focal-weighted CE on T=4) training in flight on vast.ai pod 35822024 (wandb `et2eektc`), ETA finish ~17:00–22:30 UTC. v6H = controlled baseline (no harm, no win). v6I REJECTED (kl_anchor proved load-bearing).
 **Companion to:** `MASTER_PLAN.md` (kickoff plan, unchanged), `README.md` (intended public surface).
 This file is the source of truth for *what actually happened* and *what is in flight*.
+
+**TL;DR scoreboard (LCB-30 medium, base = 30% = 9/30 problems):**
+
+| Run | T=1 | T=2 | T=4 | Verdict |
+|---|---|---|---|---|
+| v3-T1 | 0% | — | — | T=1 LCB collapse intrinsic to block_mode |
+| v4-anchored | 0% | 0% | 0% | wrapper produces alt-but-wrong code |
+| v5 dual-T | 0% | 10% | 10% | first non-zero LCB ever; T=1 still 0% |
+| v6A trained | 26.7% | 6.7% | 3.3% | drift: T>1 worse than T=1; recipe REJECTED |
+| **v6H** | **30%** | **20%** | **26.7%** | **first to NOT catastrophically degrade T=4** |
+| v6I (LCB-10) | 30% | 20% | 10% | catastrophic; kl_anchor was load-bearing; REJECTED |
+| **v6K** | TBD | TBD | TBD | **active — target T=4 ≥ 33%** |
 
 ---
 
@@ -126,7 +138,71 @@ which silently corrupted positions for any padded batch — that bug masked the 
 
 - **Architectural finding:** the 19-layer block_mode wrapper degrades long-form generation **even at T=1, even with direct training of the T=1 slice**. KL anchor preserves token-level distribution on training corpus, not algorithmic correctness over 200–400 token generations. Same finding as v4-anchored at T=1 — both v4 and v5 collapse the T=1 LCB slice from base 30 % → 0 %. v3-T1 LCB **never tested** (HE-only validation) — that data point would settle whether the T=1 collapse is intrinsic to block_mode or specific to v4/v5 training.
 
-- **Decision: don't ship v5, don't launch v6 yet.** Run diagnostic probes first (see §10 Quickstart probes added below) — three cheap experiments that localise the failure mode (wrapper plumbing vs architectural perturbation vs training-time drift). Only then decide whether to (a) shrink the recurrent block, (b) re-anchor T=1 with stronger / per-token KL on long contexts, (c) abandon block_mode for single-layer recurrence.
+- **Decision (then): don't ship v5, don't launch v6 yet.** Run diagnostic probes first.
+- **What actually happened next:** probes 1-3 ran 2026-04-28; localized the failure to recurrence injection at near-identity init magnitudes. v6 series began. See §2.7+.
+
+### v6A — first-iter-identity architecture, dual-T trained, REJECTED 🔴
+
+- **Setup:** make t=0 iteration of the recurrence loop unconditionally identity (`h_next = block_out`, no LTI/gate/LayerScale/LoRA contribution). T=1 wrapper output ≡ base byte-for-byte by construction. Then dual-T(1,4) margin+distill train as in v5, 200 steps.
+- **v6A untrained smoke** (local 3090, base=40% LCB-10): T=1=40% (=base, byte-identical), T=2=20%, T=4=10%. Identity invariant held empirically.
+- **v6A trained ckpt-200 LCB-30** (after v6E inference fix, see §2.8): T=1=26.7% (=base −1), T=2=6.7%, T=4=3.3%. **Trained recurrence is harmful and compounds across iterations.** Failures at T=4 dominated by syntax errors. Drift root cause: the `block_mode` formula `h_next = block_out + small·injection` REPLACES h with the 19-layer block output every iteration → ||h|| grew 5.74× over 4 iters (probe `_probe_recurrence_drift.py`). Coda received OOD activations.
+- **v6A weights unsalvageable.** No post-loop fix (B/C/blend) recovered T=4 above 0% — drift is BOTH magnitude AND direction (cos→0 on hypersphere). Memory `project_v6a_post_fix_verdict.md`, `project_recurrence_root_cause_block_mode.md`, `project_inference_fix_test_v6a.md`.
+
+### v6E inference path bug (caught mid-v6A debugging)
+
+- **Symptom:** all "v6E base-identity at T=1" claims via `model.generate()` were FALSE.
+- **Root cause** (`src/mythic_rdt/modeling.py`): `MythicRDTDeepseekV2ForCausalLM.forward` has TWO branches — `use_cache=False` (training) calls `_loop_step` (which had the v6E `first_iter_identity` logic), and `use_cache=True` (HF generate path) inlines the loop body in `forward` (which had ZERO `first_iter_identity` logic). HF `GenerationMixin.generate()` always passes `use_cache=True`. Every wrapper.generate() call ran with LoRA[0] active + recurrence add at t=0, even though training treated t=0 as identity.
+- **Fix:** mirror `_loop_step` semantics in the inline use_cache loop (`set_loop_t(-1)` + `h = block_out` at t=0).
+- **Cost:** ~6 hours of probes localizing it. New cerebrum Do-Not-Repeat: any change to recurrence loop semantics MUST be implemented in BOTH branches. Memory `project_v6e_inference_path_bug.md`, commit `be8a0d4`.
+
+### v6H — Fix-A `block_mode_residual` baseline ✅ CONTROLLED
+
+- **Setup:** new architectural fix for the block_mode drift problem — replace `h_next = block_out + small·injection` with `h_next = h + ls·g·(block_out − h) + small·injection`. The h-residual bounds ||h|| growth structurally. Recipe: `block_mode_residual=True`, `first_iter_identity=True`, prelude=4 / coda=4, recurrent block 4..22 (19 layers), `max_loop_iters=4`, LoRA rank 8, `layerscale_init=0.05` / `clamp_max=0.5`, `gate_init_bias=0.0`, `kl_anchor_alpha=0.5/every-2`, `margin_alpha=0.10/nats=0.02`, dual-T(1,4), 400 steps × ~66s/it = ~7h22m. Wandb `ueors8i6`.
+- **Eval (pod RTX 6000 Ada, NF4 base):**
+
+  | Eval | base | T=1 | T=2 | T=4 |
+  |---|---|---|---|---|
+  | HE-20 | 100% | 100% | 100% | 100% |
+  | LCB-30 medium | 30% | 30% | 20% | 26.7% |
+
+- **Verdict:** **first v6 to NOT catastrophically degrade T=4** (vs v6A LCB-30 T=4=13.3%). HE-20 perfect across all T = recurrence does ZERO harm on easier algorithmic problems. LCB-30 T=1 byte-exact base parity (first_iter_identity invariant + KL anchor preserved LoRA-B[0] from drifting). T=4 still −1 problem vs base (controlled, near-base, no harm but no win either).
+- **Why no T>base improvement:** wandb-visible loss tug-of-war. `kl_anchor (α=0.5)` pulls T=4 → base@T=1 distribution; `margin (α=0.10)` pushes T=4 NLL ≤ T=1 NLL − 0.02. Optimizer converges to "T=4 ≈ base in distribution + tiny CE win + no useful generation refinement". Memory `project_v6h_final_verdict.md`.
+
+### v6I — drop kl_anchor, REJECTED 🔴 (kl_anchor was load-bearing)
+
+- **Hypothesis:** the v6H tug-of-war was the *cause* of "controlled but flat". Drop `kl_anchor` (α=0.5 → 0), bump `margin_alpha` 0.10 → 0.15, tighten `layerscale_clamp_max` 0.5 → 0.25. Same Fix-A architecture as v6H. Wandb `r328zfvp`.
+- **Pod-side training metrics looked HEALTHIER than v6H:** ce_gap matured to −0.075 (vs v6H −0.06), margin_loss collapsed to ~0 sustained, no NaNs.
+- **Actual generation result (pandorum 5080 16GB, LCB-10, base=40%/4):**
+
+  | Ckpt | T=1 | T=2 | T=4 |
+  |---|---|---|---|
+  | ckpt-200 | 30.0% | 20.0% | 10.0% |
+  | ckpt-300 | 30.0% | 20.0% | 10.0% |
+
+- **Identical 30/20/10 across two consecutive checkpoints — stable catastrophic.** Killed at step 350/400 (~$4 burn before kill). The optimizer found a deeper CE win by drifting T=4 distribution OFF the manifold — loss reward was real but didn't transfer to autoregressive generation.
+- **The actual lesson:** `kl_anchor` was load-bearing, not a brake. It is the bound that keeps T=4's distribution close enough to base that the wrapper's coda can still parse it. Margin alone provides no such constraint; Fix-A `block_mode_residual` + tighter LayerScale clamp 0.25 is NOT sufficient safety without distributional pressure.
+- **New cerebrum Do-Not-Repeat (2026-04-30):** before dropping a regularizer because two losses "look opposing" on wandb, run a sacrificial short A/B (≤200 steps + interim eval). Don't commit a 7-13h run to a hypothesis pure mechanism analysis can't refute. Loss-on-training ≠ generation quality at T>1; deeper ce_gap with a regularizer removed is a RED FLAG. Memory `project_v6i_rejected.md`.
+
+### v6K — v6H baseline + focal-weighted CE on T=4 (in flight 🟡)
+
+- **Setup:** restore v6H's full recipe (kl_anchor 0.5 + margin 0.10 + clamp 0.5) and add ONE delta — focal-weighted CE on T=4 only:
+
+  ```
+  focal_w_per_token = (1 − p_T1_correct) ^ gamma   # gamma = 1.0
+  ce_hi_focal = sum(focal_w * ce_per_tok) / sum(focal_w)
+  ```
+
+  `ce_lo (T=1)` stays unweighted so T=1 still trains on all tokens uniformly. Concentrates T=4 gradient on tokens where T=1 is uncertain — exactly the tokens where recurrence has *room* to add value, vs being averaged out across confident tokens.
+- **Run:** `phase1_v6k_focal_anchored` on pod 35822024 (RTX 6000 Ada, NF4), 400 steps × ~74s/it = ~8h ETA. Launched 2026-04-30 09:23 UTC, ETA finish ~17:30–22:30 UTC. Wandb `et2eektc`.
+- **Hypothesis:** v6H proved architecture works (no harm) but T=4 self-cancels back to base because the dual-T loss applied uniformly across all tokens averages out the recurrence's potential contribution on hard tokens with its harm on easy ones. Focal weighting concentrates the gradient where it counts.
+- **Risks** (per cerebrum 2026-04-29 design discussion):
+  1. "Hard" ≠ "improvable" — high-entropy tokens may be genuinely uncertain (random variable names). Mitigation: ce_lo unweighted preserves T=1 capability; gentle gamma=1.0 (not 2.0).
+  2. kl_anchor + margin tug-of-war returns. Mitigation: same as v6H — it works (T=4 = base parity, no harm). Focal adds info without adding a third opposing force.
+- **Decision rules at finish:**
+  - T=4 LCB-30 ≥ 33% (= +1 problem on LCB-30) → focal CE is the productive direction; iterate on gamma or add EMA in v6L.
+  - T=4 ≈ 27% (= v6H) → focal didn't help; need a fundamentally different signal (e.g., teacher distillation from fp16 self).
+  - T=4 << 27% → focal damages even with anchor present; abandon focal direction.
+- Memory `project_v6k_design.md`. Run script `scripts/pod_runner/run_v6k.sh`.
 
 ---
 
@@ -236,107 +312,76 @@ Run on v4-anchored ckpt-400, summarised in `experiments/` (probe scripts inline,
 
 ## 9. Open items / next steps
 
-**v5 verdict landed 2026-04-28 ~12:25 UTC** (HE 95/85/80, LCB 0/10/10; partial — see §2.6).
+### Active investigation: v6K (in flight)
 
-**Diagnostic probes 1-3 completed 2026-04-28 ~13:30 UTC** (`eval_results/probe[1-3]_*.json`):
+- **Run:** `phase1_v6k_focal_anchored` on pod 35822024, wandb `et2eektc`. ETA finish 2026-04-30 ~17:00–22:30 UTC.
+- **Decision rules** at v6K finish (LCB-30 medium, base=30%):
+  - **T=4 ≥ 33% (≥+1 vs base)** → focal CE is productive; iterate (v6L = focal + EMA, or sweep gamma 0.5/1.5/2.0).
+  - **T=4 ≈ 27% (≈ v6H)** → focal didn't help; pivot to teacher distillation from fp16 self (same tokenizer, removes NF4 noise).
+  - **T=4 << 27%** → focal damages even with anchor; abandon focal direction; reconsider per-token KL on long-context training data.
+- **Pre-eval gate:** verify `[smoke] loaded 80 trainable tensors  missing=0 unexpected=0` (bug-050 guard). Run pandorum-side LCB-30 first (free GPU), then HE-20 if v6K has any LCB delta worth confirming.
 
-| Probe | Setup | LCB-10 T=1 | Implies |
-|---|---|---|---|
-| 1 (pod) | v3-T1 ckpt-400, 19-layer block, **trained** | **0 %** | not training-time drift |
-| 3 (local) | no ckpt, **5-layer block** (10-14), untrained | **0 %** | not block-size |
-| 2 (pod) | no ckpt, 19-layer block, **explicitly zeroed** (LS=0, gate=sigmoid(-10)≈0, lora_B=0) | **30 %** ✅ | **plumbing is fine** |
+### Settled items (decisions locked, no re-litigation)
 
-**Diagnosis:** wrapper plumbing is CORRECT (probe 2 reproduces base byte-for-byte). The failure is the recurrence injection itself, even at "near-identity" init magnitudes (~5e-5 per token contribution). The retrofit-recurrence paper's "near-identity init → smooth fine-tune up" assumption does NOT hold for code generation — code's exec-based pass@1 is fragile to micro-perturbations over 200-400 token generations in a way prose perplexity isn't. Full diagnosis: `memory/project_phase1_v6_diagnosis.md`.
-
-**v6A untrained smoke verdict (2026-04-28 ~14:00 UTC, `eval_results/v6a_untrained_lcb10.json`)** — local 3090, base = 40 % LCB:
-
-| LCB-10 | base | v3-T1 | v4-anchored | v5 ckpt-200 | **v6A untrained** |
-|---|---|---|---|---|---|
-| T=1 | 40 % | 0 % | 0 % | 0 % | **40 %** ✅ identity |
-| T=2 | — | — | 0 % | 10 % | **20 %** |
-| T=4 | — | — | 0 % | 10 % | **10 %** |
-
-**v6A T=1 LCB ≡ base byte-for-byte (mathematical identity confirmed empirically).** T=2/T=4 untrained surprised on the upside (predicted 0 %, got 20/10) — the t=0 identity puts h in a more anchored state than fresh prelude output, so t≥1 perturbed iterations are more robust than at fresh init. This validates the architectural fix as a strict superset of base.
-
-**v6A architectural fix (cleanest):** make t=0 iteration of the recurrence loop unconditionally identity:
-
-```python
-# src/mythic_rdt/modeling.py, _loop_step:
-if t == 0:
-    h_next = block_out  # T=1 wrapper output ≡ base byte-for-byte.
-else:
-    h_next = block_out + ls[t] * gate[t] * (injection + ...)
-```
-
-This makes T=1 = base by construction. T≥2 iterations inject normally with learned per-T params. Training reduces to pure offensive objective: "make T=4 beat the fixed T=1=base baseline". No defensive trade-off.
-
-**v6 candidate sequence:**
-
-1. **v6A** — first iteration is identity (this section). Smoke untrained T=1 = base, T=2/4 likely still ≈0% LCB at init.
-2. **Train v6A** with v5's dual-T(1,4) margin+distill objective. T=1 anchored structurally; train budget all goes into T=4.
-3. If trained T=4 LCB > base 30 % → **v6A wins**. Proceed to Phase A scale evals (HE-164, LCB-50/hard-20, MBPP+) → C.5 ACT halting head → Phase B data scale.
-4. If trained T=4 LCB ≤ base → **v6C** (v6A + curriculum gate clamp: gate_bias[t≥1] explicitly held near 0 for first half of training, slowly relaxes). Belt-and-suspenders for the perturbation-at-T≥2 problem.
-5. If v6C also fails → **v6D** (v6A + shrunk recurrent block 5-9 layers). Or pivot to OpenMythos's single-layer recurrence (different inject mechanism). Or pivot to Stage 2 where prose-style benchmarks may tolerate the failure mode.
+- **Architecture:** Fix-A `block_mode_residual=True` + `first_iter_identity=True`. Validated by v6H. The pre-Fix-A `h_next = block_out + small·injection` formula is permanently rejected (drift root cause, see §2.7).
+- **kl_anchor IS load-bearing.** Empirically refuted the 2026-04-29 "tug-of-war = drop one of the two" framing via v6I. Cerebrum Do-Not-Repeat updated. Future loss recipes ADD information on top of v6H, not REMOVE safety.
+- **first_iter_identity is INIT-only invariant.** After ANY training step that updates LoRA-B[0], T=1 ≠ base byte-exact. Always re-eval base on the same problem set in the same session.
+- **modeling.py forward has TWO branches** (`use_cache=True` vs `False`). Recurrence-loop changes MUST go in BOTH. New cerebrum Do-Not-Repeat. Long-term: consolidate into one helper.
 
 ### Standing items (deferred)
 
-- ~~Harden `_load_trainable_state`~~ — **DONE** 2026-04-28, raises `CheckpointShapeMismatchError` by default.
-- **Stage 2 (Mythic-Gemma4)** still parked. Stage 2 verification should run probe 2 first before training to confirm prose benchmarks tolerate the wrapper at near-identity init.
+- **Stage 2 (Mythic-Gemma4)** parked until Stage 1 ships a real LCB win (T=4 > base by ≥1 problem on LCB-30, sustained). Nothing close yet.
+- **C.5 ACT halting head** deferred until at least one wrapper recipe shows T>1 productive on LCB.
+- **v6L candidate (if v6K wins):** focal CE + EMA smoothing on focal_w (reduce gradient noise from per-batch focal weighting). Cheap follow-on.
+- **Distillation candidate (if v6K flat):** fp16 self-distillation (unquantized DS-Coder-V2-Lite as teacher, same tokenizer, no NF4 noise). DS-V3.x/V4 ruled out — different tokenizer, no token-level KL alignment.
 
-### Three diagnostic probes to run BEFORE any new training (cheap, ~1 day local 3090, ~$0)
+### Infrastructure (live)
 
-1. **v3-T1 LCB probe.** Smoke v3-T1 ckpt-400 on LCB-medium-10 with `--T-values 1 --max-loop-iters 1`. Tells us whether T=1 LCB collapse is intrinsic to block_mode (v3-T1 also = 0 % → architectural) or something v4/v5 broke (v3-T1 ≈ 30 % → training drift from v3 → v4 onward).
-
-2. **Bypass probe (zeroed-trainables wrapper).** Build the wrapper with no checkpoint loaded, then explicitly set `gate.bias = -10` (sigmoid ≈ 0), `LayerScale.scale = 0`, `LoRA-B = 0`. This wrapper should be **mathematically bit-identical to base**. Smoke on LCB-10 at T=1.
-   - If 30 % → wrapper plumbing is correct, v4/v5 trained drift is the problem.
-   - If 0 % → something in the wrapper plumbing itself (KV cache, position IDs, dtype, layer ordering) breaks long-form generation regardless of trainable params. New bug to find.
-
-3. **Shrunk-block probe.** Build wrapper with `recurrent_block_start=10 recurrent_block_end=14` (5 layers vs current 19), no checkpoint, T=1 untrained. Smoke LCB-10. If 25–30 % → 19-layer block is the perturbation source; v6 design = shrink the recurrent block to 5–9 layers. If still 0 % → block size isn't the issue, block_mode itself is.
-
-These three probes localise the failure to **wrapper plumbing** / **architectural perturbation** / **training-time drift** — three completely different next moves. Do not start v6 (any flavour) without knowing which.
-
-### After probes — v6 design candidates (mutually-exclusive next-experiment options)
-
-- **A — per-token KL on long-context training data.** Train v6 with KL anchor evaluated on 500–1k token continuations (LCB-style synthesised prompts) instead of short corpus snippets. Targets the actual failure regime. Highest leverage *if* probe 2 passes and probe 1 shows v3-T1 LCB ≈ 30 %.
-- **B — shrink recurrent block to 5–9 layers.** Less compounding drift per iteration. Trade-off: less capacity per loop. Right move *if* probe 3 shows 25–30 %.
-- **C — anneal gate clamped near 0 for first half of training.** Forces near-base inductive bias. Cheap to try regardless of probe outcomes.
-- **D — ACT halting head.** Phase C.5 from the agreed roadmap. Worth pursuing only after we have a wrapper that doesn't collapse at T=1.
-
-### Standing items (deferred)
-
-- ~~Harden `_load_trainable_state`~~ — **DONE** 2026-04-28, raises `CheckpointShapeMismatchError` by default. 8 unit tests in `tests/test_load_trainable_state.py`.
-- **Stage 2 (Mythic-Gemma4)** parked until Stage 1 ships a real LCB number. Currently nothing close.
+- **Pandorum 5080 16GB stack** (Windows + WSL2 + RTX 5080 Blackwell sm_120) is validated for ckpt eval (NF4 base + bnb 0.49.2 + sidecar venv). Frees the local 3090 for ollama/dev work.
+- **Pod backup hardening:** `scripts/sync_pod_to_solidpc.sh` mirrors v6K artifacts (checkpoints, run logs, wandb dir) to solidPC every 25 min via two redundant cron paths (system crontab + Claude session cron). Survives pod death.
+- **CIFS mounts** on pandorum WSL: `/mnt/backup_models` → `\\solidpc\backup_models`, `/shared/dev` → `\\solidpc\dev`. Sticks across reboots via fstab + scheduled portproxy refresh.
 
 ---
 
 ## 10. Quickstart for the next session
 
 ```bash
-# 1. Check v5 status (pod):
-ssh -p 36738 root@ssh6.vast.ai \
-  'tail -200 /workspace/mythic-rdt/eval_results/V5_RUN.log; ps -p 25561'
+# 1. Check v6K status (pod):
+ssh -p 22024 root@ssh6.vast.ai \
+  'tail -200 /workspace/mythic-rdt/eval_results/V6K_RUN.log; ps -p $(pgrep -f finetune_phase1)'
 
-# 2. Wandb live: https://wandb.ai/<user>/mythic-rdt/runs/3a6muz4p
+# 2. Wandb live: https://wandb.ai/mannix/mythic-rdt/runs/et2eektc
 
-# 3. Fetch v5 checkpoints when training finishes (run_v5.sh handles eval, but for manual smoke):
-rsync -av -e 'ssh -p 36738' \
-  root@ssh6.vast.ai:/workspace/mythic-rdt/checkpoints/v5_probe/checkpoint-200/ \
-  checkpoints/v5_probe/checkpoint-200/
+# 3. v6K artifacts auto-sync to solidPC every 25 min (system crontab + scripts/sync_pod_to_solidpc.sh).
+#    Force-sync:
+bash scripts/sync_pod_to_solidpc.sh
+ls checkpoints/phase1_v6k_focal_anchored/
 
-# 4. Smoke locally (3090):
-PYTHONDONTWRITEBYTECODE=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
-conda run -n mythic-rdt python scripts/humaneval_smoke.py \
-  --base base/DeepSeek-Coder-V2-Lite-Instruct \
-  --checkpoint checkpoints/v5_probe/checkpoint-200 \
-  --max-loop-iters 4 --T-values 1 2 4 \
-  --lcb-limit 10 --lcb-difficulty medium --lcb-min-date 2024-10-01 \
-  --quant nf4 --batch-size 4 --gen-tokens 384 \
-  --output-json eval_results/v5_ckpt200_local_3090.json
+# 4. When v6K finishes — eval on pandorum 5080 (free GPU, NF4 base via CIFS):
+ssh wsl 'cd /mnt/backup_models/Mythic-RDT && \
+  source /home/claude_test/miniconda3/etc/profile.d/conda.sh && conda activate mythic-rdt && \
+  PYTHONUNBUFFERED=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
+  HF_TOKEN=<token> HF_HUB_OFFLINE=1 \
+  python -u scripts/humaneval_smoke.py \
+    --base /mnt/backup_models/DeepSeek-Coder-V2-Lite-Instruct \
+    --checkpoint checkpoints/phase1_v6k_focal_anchored \
+    --first-iter-identity \
+    --T-values 1 2 4 --max-loop-iters 4 \
+    --prelude-layers 4 --coda-layers 4 \
+    --recurrent-block-start 4 --recurrent-block-end 22 \
+    --block-mode --block-mode-residual \
+    --gate-init-bias 0.0 --layerscale-clamp-max 0.5 \
+    --quant nf4 --batch-size 2 --gen-tokens 384 \
+    --lcb-limit 30 --lcb-difficulty medium --lcb-min-date 2024-10-01 \
+    --output-json /home/claude_test/v6k_lcb30_pandorum.json'
 
 # 5. VERIFY in the log: "[smoke] loaded 80 trainable tensors  missing=0 unexpected=0"
-#    Anything else = partial load = STOP.
+#    Anything else = partial load = STOP (bug-050).
+
+# 6. Fallback eval on local 3090 (only if pandorum unavailable AND ollama not loaded):
+nvidia-smi  # check free; if GPU >2GB used by non-ours, USE PANDORUM, do not force-unload ollama
 ```
 
 ---
 
-*Memory entries cross-referenced: `project_phase1_v3_t1_validation.md`, `project_phase1_v4_anchored_corrected_verdict.md`, `feedback_smoke_max_loop_iters.md`, `feedback_pyc_purge_after_modeling_patch.md`, `feedback_init_from_checkpoint_pattern.md`, `project_dscoder_5x_blocker.md`. Bug log: `.wolf/buglog.json` entries `bug-049`, `bug-050`.*
+*Memory entries cross-referenced: `project_v6h_final_verdict.md`, `project_v6i_rejected.md`, `project_v6k_design.md`, `project_v6a_post_fix_verdict.md`, `project_v6e_inference_path_bug.md`, `project_recurrence_root_cause_block_mode.md`, `project_phase1_v3_t1_validation.md`, `project_phase1_v4_anchored_corrected_verdict.md`, `feedback_smoke_max_loop_iters.md`, `feedback_pyc_purge_after_modeling_patch.md`, `feedback_init_from_checkpoint_pattern.md`, `project_dscoder_5x_blocker.md`. Bug log: `.wolf/buglog.json` entries `bug-049`, `bug-050`, `bug-054`.*
