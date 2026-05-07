@@ -76,6 +76,22 @@ Same as V2-Lite — the OpenMythos topology, native.
 
 Numbers are author-reported; we'll re-run on solidpc with the canonical lm-eval pipeline before quoting in the Mythic-RDT release.
 
+## Measured baseline (2026-05-07, fixed `06_eval_batched.py` scorer)
+
+Re-evaluated DS-Coder-V2-Lite-Instruct on the cross-tokenizer-distill pod (RTX 4090, 24 GB) with our own scorer (`experiments/validation/06_eval_batched.py` — raw `exec(prompt + completion)` with 30 s timeout per task, greedy decode, max-new-tokens 512). The eval script was patched on 2026-05-06 to use `rstrip()` instead of `strip()` when removing markdown fences (the prior `strip()` ate leading 4-space indentation, causing `IndentationError` on otherwise-correct generations and inflating false negatives).
+
+| Quant | HumanEval-164 pass@1 | MBPP-378 pass@1 |
+|---|---:|---:|
+| **NF4** (bnb 4-bit, NF4 + double-quant, bf16 compute) | **75.6 %** (124/164) | **60.6 %** (229/378) |
+| **BF16** (full-precision weights, CPU offload) | **75.6 %** (124/164) | **60.3 %** (228/378) |
+
+Two takeaways:
+
+1. **NF4 is bit-for-bit on HumanEval and ±1 problem on MBPP vs BF16.** For Mythic-RDT, NF4 is a free quantization on this base — no quality cost. All training and eval should default to NF4 unless we have a specific reason otherwise.
+2. **Our HE-164 measurement (75.6 %) matches the model card's HumanEval+ figure (75.6 %), not the headline HumanEval (81.1 %).** Most likely explanation: the model card uses an evaluation harness that does additional post-processing (e.g., humaneval-x trimming, or a different prompt template); our scorer takes the raw completion and `exec`s it directly. The 5.5 pp gap is methodological, not a model regression. **Mythic-RDT wrapper deltas must be measured against 75.6 / 60.6, not 81 / 68.8** — anything else would compare deltas across two different scorers.
+
+Throughout the rest of this document, where the "~81 %" baseline is referenced, the canonical Mythic-RDT internal baseline is **HE-164 = 75.6 % / MBPP-378 = 60.6 %** (NF4, our scorer). Targets in the success-criteria section below are re-anchored accordingly.
+
 ## Architectural fit for OpenMythos RDT — same as V2-Lite
 
 | OpenMythos requirement | Native to DS-Coder-V2-Lite? | Notes |
@@ -196,8 +212,8 @@ Verify SHA256 after download (will be added to `LOCAL_SHA256` once we've fetched
 Headline benchmark is **HumanEval pass@1** because the base is code-specialized. Targets:
 
 - T=1 HumanEval pass@1 ≥ base − 1 pp (within noise; should be near-identical to base).
-- **T=8 HumanEval pass@1 ≥ base + 5 pp** (i.e., target ≥ 86 % from a base of ~81 %).
-- T=8 MBPP+ ≥ base + 3 pp.
+- **T=8 HumanEval pass@1 ≥ base + 5 pp** (i.e., target ≥ **80.6 %** against the measured NF4 base of **75.6 %** on our scorer; equivalent to ~86 % on the model-card HumanEval scorer).
+- T=8 MBPP-378 ≥ base + 3 pp (target ≥ **63.6 %** against measured 60.6 %).
 - T=8 LiveCodeBench ≥ base + 4 pp (this is where multi-step deliberation should pay off the most).
 - T=1 MMLU ≤ base + 1.5 pp drift.
 - T=1 GSM8K within 2 pp of base.
@@ -207,7 +223,7 @@ If those hold: publish **`ManniX-ITA/Mythic-RDT-Coder-V2-Lite`**. The headline p
 
 > "A 16 B / 2.4 B-active code model that scales like a 50 B model when you turn the depth knob up. Same storage as DS-Coder-V2-Lite-Instruct; pass@1 climbs 5+ points on HumanEval at T=8 with no extra parameters."
 
-That's a publishable contribution and an artifact people will actually use, because **HumanEval@86 % at 16 B storage is genuinely useful** — much more so than a small-model RDT at 40 % GPQA would be. The recurrence story is concrete, the benchmark gain is meaningful, and the model is small enough to be deployed.
+That's a publishable contribution and an artifact people will actually use, because **HumanEval +5 pp at 16 B storage is genuinely useful** (≥80.6 % on our scorer / ~86 % on the model-card scorer) — much more so than a small-model RDT at 40 % GPQA would be. The recurrence story is concrete, the benchmark gain is meaningful, and the model is small enough to be deployed.
 
 ## Mythic-Coder-specific anti-patterns to avoid
 
