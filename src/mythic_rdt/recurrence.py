@@ -317,14 +317,29 @@ class RecurrenceCell(nn.Module):
         gate_init_bias: float = 0.0,
         layerscale_per_channel: bool = False,
         block_mode: bool = False,
+        block_mode_residual: bool = False,
         lti_log_a_init_low: float = 0.01,
         lti_log_a_init_high: float = 0.1,
         lti_b_init_std: float = 1e-4,
+        lti_residual_scale: float = 0.0,
     ) -> None:
         super().__init__()
         self.hidden_size = hidden_size
         self.n_iters = n_iters
         self.block_mode = bool(block_mode)
+        # v6W (2026-05-10, council finding): in block_mode_residual the LTI
+        # contribution was previously dropped entirely, leaving A_diag/B_proj
+        # as dead weight (no forward use, no gradient). Re-introduce it at a
+        # small fixed scale so LTI parameters become productive without
+        # re-introducing the unbounded ||h|| growth that motivated dropping
+        # them. Default 0.0 = pre-v6W behavior (LTI dead). Try 0.01 in v6W.
+        self.lti_residual_scale = float(lti_residual_scale)
+        # Fix A (2026-04-29): when True AND block_mode=True, use h-residual
+        # formula instead of the broken `h_next = block_out + ε·inj` form.
+        # See memory/project_recurrence_root_cause_block_mode.md for the
+        # drift-probe diagnosis. The residual formula bounds ||h|| growth
+        # per iteration and keeps coda's input in its training distribution.
+        self.block_mode_residual = bool(block_mode_residual)
 
         self.lti = LTIInjection(
             hidden_size=hidden_size,
@@ -370,11 +385,35 @@ class RecurrenceCell(nn.Module):
         )
         ls = self.layerscale(t).to(h.dtype)
         if self.block_mode:
-            # v3+: residual already flows through the block; LTI is purely
-            # additive. At gate=0 (or layerscale=0): h_next = block_out
-            # i.e. bit-exact "run the block once" — ideal for multi-layer
-            # recurrent blocks where skipping the block destroys coherence.
-            h_next = block_out + ls * gate_value * injection
+            if self.block_mode_residual:
+                # Fix A (2026-04-29): h-residual blend. mix ∈ [0, 1] gates
+                # how much block_out displaces h per iteration:
+                #   mix=0  -> h_next = h          (true near-identity)
+                #   mix=1  -> h_next = block_out  (current v3+ behavior)
+                #   mix=½  -> h_next = ½(h + block_out) (gradual update)
+                # ||h|| stays bounded around its iter-0 value because each
+                # iteration is a convex combination, not a replacement.
+                # LTI injection — by default dropped (legacy behavior); v6W+
+                # re-introduces it at a small FIXED scale (lti_residual_scale,
+                # default 0.0). The scale is independent of `mix` so LTI
+                # cannot blow up ||h|| even if the block_out residual is
+                # near-zero (the trained gate/layerscale can't amplify LTI
+                # past the fixed cap). 0.01 is the recommended starting
+                # value: large enough to give A_diag/B_proj a real gradient
+                # signal, small enough to stay bounded across T iterations
+                # (||h|| growth ≤ 1 + T·0.01·||inj||/||h|| ≈ 4% over T=4).
+                mix = (ls * gate_value).clamp(min=0.0, max=1.0)
+                h_next = h + mix * (block_out - h)
+                if self.lti_residual_scale != 0.0:
+                    h_next = h_next + self.lti_residual_scale * injection
+            else:
+                # v3+ original block_mode: h_next = block_out + ε·inj.
+                # KNOWN BROKEN at T>=2 because there's no h-residual to
+                # bound ||h|| growth across iterations (coda receives
+                # ||h||~5x training distribution -> syntactic gibberish).
+                # See memory/project_recurrence_root_cause_block_mode.md.
+                # Kept for backward-compat with v6A and earlier ckpts.
+                h_next = block_out + ls * gate_value * injection
         else:
             # v0-v2: original retrofit-recurrence formula. At gate≈0 the
             # iteration discards block_out (loop is near-identity). Works

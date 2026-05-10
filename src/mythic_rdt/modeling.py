@@ -167,6 +167,7 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module, GenerationMixin):
             lti_log_a_init_low=config.lti_log_a_init_low,
             lti_log_a_init_high=config.lti_log_a_init_high,
             lti_b_init_std=config.lti_b_init_std,
+            lti_residual_scale=getattr(config, "lti_residual_scale", 0.0),
         )
         # Match the base dtype so LTI Linear and other params don't fight
         # bf16 activations. Inside the loop we still cast to fp32 around

@@ -77,13 +77,11 @@ if str(THIS_FILE.parent) not in sys.path:
 from mythic_rdt.configuration import MythicRDTDeepseekV2Config  # noqa: E402
 from mythic_rdt.modeling import MythicRDTDeepseekV2ForCausalLM  # noqa: E402
 from mythic_rdt.training import (  # noqa: E402
-    Curriculum,
     MythicRDTTrainer,
     build_packed_dataset,
     build_training_args,
     count_trainable,
     inject_depth_lora,
-    list_injected,
 )
 from mythic_rdt.training.trainer import (  # noqa: E402
     TRAINABLE_STATE_FN,
@@ -132,6 +130,12 @@ def parse_args() -> argparse.Namespace:
                         "ls*gate*inj (block_out passes through). Required "
                         "when running multi-layer blocks; otherwise the loop "
                         "discards block_out at gate≈0 init.")
+    p.add_argument("--block-mode-residual", action="store_true",
+                   help="Fix A (v6F+): use h-residual formula "
+                        "h_next = h + mix*(block_out - h) where mix=(ls*gate).clamp(0,1). "
+                        "Bounds ||h|| growth across iterations so coda receives "
+                        "input in its training distribution. Requires --block-mode. "
+                        "See memory/project_recurrence_root_cause_block_mode.md.")
     p.add_argument("--first-iter-identity", action="store_true",
                    help="v6A architectural fix: t=0 iteration of the recurrence "
                         "loop is unconditionally identity (h_next = block_out). "
@@ -151,6 +155,12 @@ def parse_args() -> argparse.Namespace:
                    help="Optional upper clamp on PerLoopLayerScale. v3 "
                         "recommendation: 1e-2 to bound recurrent "
                         "perturbation per iteration.")
+    p.add_argument("--lti-residual-scale", type=float, default=0.0,
+                   help="v6W (council finding): re-introduce LTI contribution "
+                        "at this fixed scale in block_mode_residual. 0.0 = "
+                        "pre-v6W (LTI A_diag/B_proj are dead weight). 0.01 "
+                        "= v6W default (small enough to stay bounded over "
+                        "T iterations, large enough for productive gradient).")
     # LoRA
     p.add_argument("--lora-rank", type=int, default=8)
     p.add_argument("--lora-alpha", type=float, default=16.0)
@@ -197,6 +207,30 @@ def parse_args() -> argparse.Namespace:
                    help="v5: high T value (0 = config.max_loop_iters). "
                         "Activates when margin-alpha or distill-alpha > 0; "
                         "doubles forward cost per microbatch.")
+    # v6J: focal-weighted CE on the T=4 (high-T) path.
+    p.add_argument("--teacher-distill-alpha", type=float, default=0.0,
+                   help="If >0, add per-token sparse-top-K KL between wrapper "
+                        "T_hi and a precomputed BF16 teacher logits cache. "
+                        "Requires --teacher-logits.")
+    p.add_argument("--teacher-logits", type=str, default=None,
+                   help="Path to .pt produced by precompute_bf16_teacher_logits.py "
+                        "(must match --data-seed and --seq-len).")
+    p.add_argument("--teacher-distill-temperature", type=float, default=1.0,
+                   help="Hinton temperature for teacher KL (loss scaled by T^2).")
+    p.add_argument("--teacher-refinement-mask", action="store_true",
+                   help="v6R+: only apply teacher distill on tokens where the "
+                        "wrapper's T_lo argmax DISAGREES with the teacher's "
+                        "top-1. Focuses the distill gradient on tokens we "
+                        "already know T=1 gets wrong. Lets recurrence refine "
+                        "the disagreement-set without anchoring agreement-"
+                        "majority tokens to the teacher distribution.")
+
+    p.add_argument("--focal-gamma", type=float, default=0.0,
+                   help="v6J: focal weight exponent on T=4 CE per token. "
+                        "weight_per_token = (1 - p_T1_correct)^gamma. "
+                        "0 = standard CE (default). 1.0 = mild focal. "
+                        "Concentrates T=4 gradient on tokens where T=1 is uncertain. "
+                        "T=1 (low-T) CE stays unweighted so it trains uniformly.")
     # Trainer / data
     p.add_argument("--seq-len", type=int, default=2048,
                    help="Start at 2k; scale up to 4k/8k as VRAM allows.")
@@ -212,6 +246,18 @@ def parse_args() -> argparse.Namespace:
                    help="Quantize the FROZEN base to NF4/FP4 via bitsandbytes "
                         "(QLoRA). Frees ~22 GB VRAM at the cost of ~10-30%% "
                         "throughput. Phase 0 bit-exactness no longer holds.")
+    # Speed knobs (A/B isolation — both default to OFF for parity with prior runs)
+    p.add_argument("--attn-impl", type=str, default="eager",
+                   choices=["eager", "flash_attention_2", "sdpa"],
+                   help="Attention implementation forwarded to base "
+                        "from_pretrained. eager = legacy default. "
+                        "flash_attention_2 needs flash-attn installed "
+                        "(GLIBC>=2.32 or polyfill on local).")
+    p.add_argument("--moe-vec", action="store_true",
+                   help="Monkey-patch DeepseekV2MoE.forward with sorted/"
+                        "grouped dispatch (no per-expert Python mask loop). "
+                        "Numerically equivalent in fp32; bf16 may diverge "
+                        "by ~1e-3.")
     # Memory: gradient-checkpoint the recurrent loop body
     p.add_argument("--checkpoint-loop", action="store_true",
                    help="Gradient-checkpoint the recurrent loop body. Holds "
@@ -220,6 +266,17 @@ def parse_args() -> argparse.Namespace:
                         "any time activation memory is tight. ~30%% wall-time "
                         "overhead. v1 OOM'd at T=2 with this off; left off "
                         "by default so callers opt in explicitly.")
+    p.add_argument("--ac-cpu-offload", action="store_true",
+                   help="Stage checkpointed activations on pinned CPU memory "
+                        "during forward and prefetch back during backward "
+                        "(Unsloth+NVIDIA 2026 'double-buffered AC' borrow, "
+                        "https://unsloth.ai/blog/nvidia-collab). Requires "
+                        "--checkpoint-loop. PyTorch >=2.6 pipelines the H2D "
+                        "transfer with compute via internal streams. Trades "
+                        "~0.2-0.5 GB extra GPU buffer for full activation "
+                        "offload (saves 2-5 GB at T=4 sl=1024 on a 19-layer "
+                        "block). Free if PCIe bandwidth isn't your bottleneck; "
+                        "expect 0-5%% wall-time overhead.")
     # Logging
     p.add_argument("--wandb-project", type=str, default=None)
     p.add_argument("--wandb-run-name", type=str, default=None)
@@ -228,12 +285,14 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def _load_base_model(base_path: str, dtype: torch.dtype, quant: str):
+def _load_base_model(base_path: str, dtype: torch.dtype, quant: str,
+                     attn_impl: str = "eager"):
     """Load DS-Coder, optionally with bitsandbytes 4-bit quantization."""
     load_kwargs = {
         "trust_remote_code": True,
         "low_cpu_mem_usage": True,
         "device_map": "cuda",
+        "attn_implementation": attn_impl,
         **dtype_kwarg(dtype),
     }
     if quant != "none":
@@ -281,14 +340,22 @@ def main() -> int:
         print(f"ERROR: base path missing: {args.base}", file=sys.stderr)
         return 2
     if "/tmp" in args.output_dir:
-        print(f"ERROR: --output-dir under /tmp is forbidden (memory rule). "
-              f"Use a persistent disk path.", file=sys.stderr)
+        print("ERROR: --output-dir under /tmp is forbidden (memory rule). "
+              "Use a persistent disk path.", file=sys.stderr)
         return 2
 
     print(f"[ft] base={args.base}  output_dir={args.output_dir}  quant={args.quant}")
 
-    base = _load_base_model(args.base, dtype=dtype, quant=args.quant)
+    base = _load_base_model(args.base, dtype=dtype, quant=args.quant,
+                            attn_impl=args.attn_impl)
     base.eval()
+    print(f"[ft] attn_implementation={args.attn_impl}")
+    if args.moe_vec:
+        # Reuse the helper from humaneval_smoke.py — single source of truth.
+        sys.path.insert(0, str(Path(__file__).parent))
+        from humaneval_smoke import _patch_moe_forward  # noqa: E402
+        n_patched = _patch_moe_forward(base)
+        print(f"[ft] moe-vec: patched {n_patched} DeepseekV2MoE layers")
 
     cfg = MythicRDTDeepseekV2Config(
         prelude_layers=args.prelude_layers,
@@ -297,12 +364,14 @@ def main() -> int:
         recurrent_block_start=args.recurrent_block_start,
         recurrent_block_end=args.recurrent_block_end,
         block_mode=args.block_mode,
+        block_mode_residual=args.block_mode_residual,
         first_iter_identity=args.first_iter_identity,
         train_loop_iters=min(2, args.max_loop_iters),  # initial T; trainer overrides per-step
         max_loop_iters=args.max_loop_iters,
         gate_init_bias=args.gate_init_bias,
         layerscale_init=args.layerscale_init,
         layerscale_clamp_max=args.layerscale_clamp_max,
+        lti_residual_scale=args.lti_residual_scale,
         base_model_path=args.base,
     )
     wrapper = MythicRDTDeepseekV2ForCausalLM(cfg, base=base)
@@ -310,8 +379,18 @@ def main() -> int:
     # Surface the gradient-checkpoint flag onto the wrapper so its forward()
     # picks it up. Read inside the loop with `getattr(self, "_checkpoint_loop", False)`.
     wrapper._checkpoint_loop = bool(args.checkpoint_loop)
+    wrapper._checkpoint_loop_cpu_offload = bool(args.ac_cpu_offload)
     if wrapper._checkpoint_loop:
         print("[ft] gradient-checkpointing recurrent loop body (use_reentrant=False)")
+    if wrapper._checkpoint_loop_cpu_offload:
+        if not wrapper._checkpoint_loop:
+            raise SystemExit(
+                "[ft] --ac-cpu-offload requires --checkpoint-loop (the offload "
+                "context only takes effect inside torch.utils.checkpoint)."
+            )
+        print("[ft] AC CPU-offload active: saved tensors stage to pinned host "
+              "memory during forward, prefetched in backward (Unsloth+NVIDIA "
+              "2026 borrow). Expect +0.2-0.5 GB GPU buffer, -2 to -5 GB peak.")
 
     # Inject depth-LoRA on chosen Linears of the recurrent layer.
     records = inject_depth_lora(
@@ -461,6 +540,11 @@ def main() -> int:
         distill_alpha=args.distill_alpha,
         dual_t_lo=args.dual_t_lo,
         dual_t_hi=args.dual_t_hi,
+        focal_gamma=args.focal_gamma,
+        teacher_distill_alpha=args.teacher_distill_alpha,
+        teacher_logits_path=args.teacher_logits,
+        teacher_distill_temperature=args.teacher_distill_temperature,
+        teacher_refinement_mask=args.teacher_refinement_mask,
     )
     print(f"[ft] starting training; resume_flag={resume_flag!r}")
     trainer.train(resume_from_checkpoint=resume_flag)

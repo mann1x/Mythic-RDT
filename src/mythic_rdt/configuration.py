@@ -99,6 +99,16 @@ class MythicRDTDeepseekV2Config(MythicRDTConfig):
         #     -- at gate=0 the iteration keeps block_out. Bit-exact base
         #     behavior at T=1 if no LoRA is injected.
         block_mode: bool = False,
+        # v6F architectural fix (Fix A — memory: project_recurrence_root_cause_block_mode.md).
+        # When True (and block_mode=True), the recurrence cell uses the
+        # h-residual formula: h_next = h + mix*(block_out - h), where
+        # mix = (ls·gate).clamp(0,1). This bounds ||h|| growth per iter
+        # so coda receives input in its training distribution. The original
+        # block_mode formula `h_next = block_out + ε·inj` has NO h-residual
+        # across iterations and explodes ||h|| 5x by T=4 -> coda OOD ->
+        # syntactic gibberish (v6A LCB-30 T=4 = 3.3% with 13/30 syntax errs).
+        # Default False for backward-compat with v3/v4/v5/v6A/v6E ckpts.
+        block_mode_residual: bool = False,
         # v6A architectural fix (memory: project_phase1_v6_diagnosis.md). When
         # True, the t=0 iteration of the recurrence loop is unconditionally
         # identity: h_next = block_out (no LTI / gate / LayerScale add). Only
@@ -116,6 +126,11 @@ class MythicRDTDeepseekV2Config(MythicRDTConfig):
         lti_log_a_init_low: float = 0.01,
         lti_log_a_init_high: float = 0.1,
         lti_b_init_std: float = 1e-4,
+        # v6W (2026-05-10): re-introduces the LTI residual contribution at a
+        # small fixed scale in block_mode_residual. Pre-v6W default 0.0 means
+        # LTI A_diag/B_proj are dead weight (computed but discarded). 0.01 is
+        # the recommended starting value for v6W.
+        lti_residual_scale: float = 0.0,
         depth_lora_rank: int = 8,
         depth_lora_alpha: float = 16.0,
         gate_init_bias: float = -3.0,
@@ -139,12 +154,14 @@ class MythicRDTDeepseekV2Config(MythicRDTConfig):
             int(recurrent_block_end) if recurrent_block_end is not None else None
         )
         self.block_mode = bool(block_mode)
+        self.block_mode_residual = bool(block_mode_residual)
         self.first_iter_identity = bool(first_iter_identity)
         self.train_loop_iters = int(train_loop_iters)
         self.max_loop_iters = int(max_loop_iters)
         self.lti_log_a_init_low = float(lti_log_a_init_low)
         self.lti_log_a_init_high = float(lti_log_a_init_high)
         self.lti_b_init_std = float(lti_b_init_std)
+        self.lti_residual_scale = float(lti_residual_scale)
         self.depth_lora_rank = int(depth_lora_rank)
         self.depth_lora_alpha = float(depth_lora_alpha)
         self.gate_init_bias = float(gate_init_bias)

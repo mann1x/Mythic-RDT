@@ -54,11 +54,9 @@ import sys
 import time
 from dataclasses import dataclass, asdict
 from pathlib import Path
-from typing import Optional
-
 import torch
 from huggingface_hub import hf_hub_download
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM
 
 THIS_FILE = Path(__file__).resolve()
 REPO_ROOT = THIS_FILE.parent.parent
@@ -68,6 +66,86 @@ if str(SRC) not in sys.path:
 
 from mythic_rdt.configuration import MythicRDTDeepseekV2Config  # noqa: E402
 from mythic_rdt.modeling import MythicRDTDeepseekV2ForCausalLM  # noqa: E402
+
+
+def _patch_moe_forward(model) -> int:
+    """Replace DeepseekV2MoE.forward with a sorted/grouped dispatch path.
+
+    Eliminates the per-expert Python mask loop in the original training path
+    (64 iters with `flat_topk_idx == i` boolean compare per iter). Instead:
+    sort tokens by expert id once, dispatch only to active experts, unsort.
+
+    Numerically equivalent in fp32. In bf16, summation order across top-k
+    weighted experts may differ by ~1e-3 from the original.
+
+    Returns: count of layers patched.
+    """
+    import torch
+
+    def _vec_forward(self, hidden_states):
+        identity = hidden_states
+        orig_shape = hidden_states.shape
+        topk_idx, topk_weight, aux_loss = self.gate(hidden_states)
+        x = hidden_states.view(-1, hidden_states.shape[-1])
+        flat_topk_idx = topk_idx.view(-1)
+        # Repeat each token by top-k assignments
+        expanded = x.repeat_interleave(self.num_experts_per_tok, dim=0)
+        # Sort by expert id (stable groups, no per-iter GPU mask)
+        sort_idx = flat_topk_idx.argsort()
+        sorted_tokens = expanded[sort_idx]
+        # Token counts per expert -> CPU once (vs original training path which
+        # hits GPU 64x per layer with mask compares).
+        cnts = torch.bincount(
+            flat_topk_idx, minlength=len(self.experts)
+        ).tolist()
+        outs = []
+        start = 0
+        for i, n in enumerate(cnts):
+            if n == 0:
+                continue
+            end = start + n
+            outs.append(self.experts[i](sorted_tokens[start:end]))
+            start = end
+        sorted_out = (
+            torch.cat(outs, dim=0)
+            if outs
+            else sorted_tokens.new_empty(0, sorted_tokens.shape[-1])
+        )
+        # Unsort back to expanded order, then weighted sum across top-k slots
+        y = torch.empty_like(sorted_out)
+        y[sort_idx] = sorted_out
+        y = (
+            y.view(*topk_weight.shape, -1) * topk_weight.unsqueeze(-1)
+        ).sum(dim=1)
+        y = y.to(x.dtype).view(*orig_shape)
+        if self.training and aux_loss is not None:
+            from transformers.models.auto import modeling_auto  # noqa: F401
+            # Keep the original AddAuxiliaryLoss apply path — its module is
+            # only available on the model's modeling.py, look it up via class.
+            cls_mod = type(self).__module__
+            mod = sys.modules.get(cls_mod)
+            if mod is not None and hasattr(mod, "AddAuxiliaryLoss"):
+                y = mod.AddAuxiliaryLoss.apply(y, aux_loss)
+        if self.config.n_shared_experts is not None:
+            y = y + self.shared_experts(identity)
+        return y
+
+    n = 0
+    for module in model.modules():
+        if type(module).__name__ == "DeepseekV2MoE":
+            module.forward = _vec_forward.__get__(module, type(module))
+            n += 1
+    return n
+
+# Resumable per-batch eval helper. Used by the BASE eval blocks below; the
+# wrapper-eval paths still use the legacy "generate-all-then-score-all" flow
+# for now (they're a separate refactor — wrapper code path has T-axis
+# considerations that don't match the base resume pattern 1:1).
+from _eval_runner import (  # noqa: E402
+    IncrementalEvalState,
+    log_problem_done,
+    BatchTimer,
+)
 
 
 def _load_dscoder_tokenizer(base_path: str):
@@ -673,6 +751,196 @@ def run_eval(
     )
 
 
+def _run_base_eval_incremental(
+    name: str,
+    problems: list[dict],
+    chat_prompts: list[str],
+    base, tokenizer, gen_tokens: int, device, batch_size: int,
+    score_callable,
+    output_path: str | None,
+    args: argparse.Namespace,
+    log_prefix: str = "smoke",
+) -> "RunResult":
+    """Per-batch resumable base eval — saves partial JSON after every batch.
+
+    score_callable: (prob, raw_completion_str) -> (passed:bool, info_str, cleaned_str)
+    output_path: if given, write incremental JSON; if None, run legacy all-then-score.
+    """
+    # Legacy path (no resumable JSON) — used when caller doesn't want one or
+    # when both HE+LCB are active in one process (mixed-output edge case).
+    if output_path is None:
+        completions = base_generate(base, tokenizer, chat_prompts, gen_tokens,
+                                    device, batch_size)
+        per_problem, failures, n_pass = [], [], 0
+        for prob, raw in zip(problems, completions):
+            passed, info, cleaned = score_callable(prob, raw)
+            per_problem.append({"task_id": prob.get("task_id"),
+                                "passed": bool(passed),
+                                "reason": "" if passed else info[:160]})
+            if passed:
+                n_pass += 1
+            else:
+                failures.append({"task_id": prob.get("task_id"),
+                                 "reason": info[:160],
+                                 "completion_head": cleaned[:160]})
+        return RunResult(name=name, pass_at_1=n_pass/max(1, len(problems)),
+                         n_pass=n_pass, n_total=len(problems), elapsed_sec=0.0,
+                         failures=failures, per_problem=per_problem)
+
+    # Resumable path: load existing state, skip done task_ids, generate+score
+    # in batches, save after every batch.
+    state = IncrementalEvalState.load_or_create(output_path, vars(args),
+                                                log_prefix=log_prefix)
+    done_ids = state.done_ids()
+    paired = list(zip(problems, chat_prompts))
+    todo = [(p, c) for p, c in paired if str(p.get("task_id")) not in done_ids]
+    n_total = len(problems)
+    print(f"[{log_prefix}] {name}: {state.n_done()} already done, "
+          f"{len(todo)} todo (total {n_total})")
+
+    for i in range(0, len(todo), batch_size):
+        batch = todo[i:i + batch_size]
+        bps = [p for p, _ in batch]
+        bcs = [c for _, c in batch]
+        t = BatchTimer()
+        raws = base_generate(base, tokenizer, bcs, gen_tokens, device, len(bcs))
+        gen_secs_per = t.elapsed() / max(len(bcs), 1)
+        for prob, raw in zip(bps, raws):
+            t_score = BatchTimer()
+            passed, info, cleaned = score_callable(prob, raw)
+            score_secs = t_score.elapsed()
+            state.append({
+                "task_id": str(prob.get("task_id")),
+                "passed": bool(passed),
+                "reason": "" if passed else info[:160],
+                "cleaned_head": cleaned[:160],
+                "gen_secs": gen_secs_per,
+                "score_secs": score_secs,
+            })
+            log_problem_done(log_prefix, state.n_done(), n_total,
+                             str(prob.get("task_id")), passed,
+                             gen_secs_per, score_secs)
+        state.save()
+
+    n_pass = state.n_pass()
+    pass_at_1 = n_pass / max(n_total, 1)
+    elapsed = sum(r.get("gen_secs", 0.0) + r.get("score_secs", 0.0)
+                  for r in state.results)
+    state.update_summary(name=name, pass_at_1=pass_at_1, n_pass=n_pass,
+                         n_total=n_total, elapsed_sec=elapsed)
+    state.save()
+    return RunResult(
+        name=name, pass_at_1=pass_at_1, n_pass=n_pass, n_total=n_total,
+        elapsed_sec=elapsed,
+        failures=[{"task_id": r["task_id"], "reason": r["reason"],
+                   "completion_head": r["cleaned_head"]}
+                  for r in state.results if not r["passed"]],
+        per_problem=[{"task_id": r["task_id"], "passed": r["passed"],
+                      "reason": r["reason"]} for r in state.results],
+    )
+
+
+@torch.no_grad()
+def _wrapper_generate_batch(
+    wrapper, tokenizer, prompts: list[str], T: int, gen_tokens: int,
+    device, force_bypass: bool, no_kv_cache: bool,
+) -> list[str]:
+    """Single-batch wrapper.generate. Used by the incremental wrapper eval."""
+    old_side = tokenizer.padding_side
+    tokenizer.padding_side = "left"
+    pad_id = tokenizer.pad_token_id or tokenizer.eos_token_id or 0
+    try:
+        enc = tokenizer(
+            prompts, return_tensors="pt", padding=True, truncation=True,
+            max_length=2048, add_special_tokens=False,
+        )
+        input_ids = enc.input_ids.to(device)
+        attn = enc.attention_mask.to(device)
+        kwargs = {"T": T}
+        if force_bypass:
+            kwargs["force_bypass"] = True
+        out = wrapper.generate(
+            input_ids=input_ids, attention_mask=attn,
+            max_new_tokens=gen_tokens, do_sample=False,
+            pad_token_id=pad_id, use_cache=(not no_kv_cache),
+            **kwargs,
+        )
+        return [tokenizer.decode(out[r, input_ids.shape[1]:].tolist(),
+                                 skip_special_tokens=True)
+                for r in range(len(prompts))]
+    finally:
+        tokenizer.padding_side = old_side
+
+
+def _run_wrapper_eval_incremental(
+    name: str,
+    problems: list[dict],
+    chat_prompts: list[str],
+    wrapper, tokenizer, T: int, gen_tokens: int, device, batch_size: int,
+    force_bypass: bool, no_kv_cache: bool,
+    score_callable,
+    log_prefix: str = "smoke",
+) -> "RunResult":
+    """Per-batch wrapper eval with per-problem progress logging.
+
+    Mirrors the BASE incremental flow but for the wrapper at a fixed T.
+    No JSON resumability (wrapper runs are short and per-T; not worth
+    the per-T state file). Just emits the same `N/total task_id=X PASS
+    gen=... score=...` lines so monitors can track progress.
+    """
+    n_total = len(problems)
+    per_problem, failures = [], []
+    n_pass = 0
+    total_elapsed = 0.0
+    n_done = 0
+    for start in range(0, n_total, batch_size):
+        bps = problems[start:start + batch_size]
+        bcs = chat_prompts[start:start + batch_size]
+        t = BatchTimer()
+        raws = _wrapper_generate_batch(
+            wrapper, tokenizer, bcs, T, gen_tokens, device,
+            force_bypass=force_bypass, no_kv_cache=no_kv_cache,
+        )
+        gen_secs_per = t.elapsed() / max(len(bcs), 1)
+        for prob, raw in zip(bps, raws):
+            t_score = BatchTimer()
+            passed, info, cleaned = score_callable(prob, raw)
+            score_secs = t_score.elapsed()
+            per_problem.append({"task_id": str(prob.get("task_id")),
+                                "passed": bool(passed),
+                                "reason": "" if passed else info[:160]})
+            if passed:
+                n_pass += 1
+            else:
+                failures.append({"task_id": str(prob.get("task_id")),
+                                 "reason": info[:160],
+                                 "completion_head": cleaned[:160]})
+            total_elapsed += gen_secs_per + score_secs
+            n_done += 1
+            log_problem_done(log_prefix, n_done, n_total,
+                             str(prob.get("task_id")), passed,
+                             gen_secs_per, score_secs)
+    return RunResult(
+        name=name, pass_at_1=n_pass / max(n_total, 1),
+        n_pass=n_pass, n_total=n_total, elapsed_sec=total_elapsed,
+        failures=failures, per_problem=per_problem,
+    )
+
+
+def _he_score(prob: dict, raw: str) -> tuple[bool, str, str]:
+    cleaned = clean_completion(raw, prob["prompt"], prob["entry_point"])
+    passed, reason = score_problem(
+        prob["prompt"], cleaned, prob["test"], prob["entry_point"])
+    return passed, reason, cleaned
+
+
+def _lcb_score(prob: dict, raw: str) -> tuple[bool, str, str]:
+    cleaned = clean_lcb_completion(raw, prob["starter_code"])
+    passed, reason = score_lcb_problem(
+        cleaned, prob["public_tests"], prob["method_name"])
+    return passed, reason, cleaned
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="HumanEval-N smoke test for Mythic-RDT")
     p.add_argument("--base", type=str, default="base/DeepSeek-Coder-V2-Lite-Instruct")
@@ -686,6 +954,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--block-mode", action="store_true",
                    help="Use v3 recurrence formula (block_out passes "
                         "through; LTI is purely additive).")
+    p.add_argument("--block-mode-residual", action="store_true",
+                   help="Fix A (v6F+): use h-residual blend formula. "
+                        "Required to load v6F+ checkpoints correctly.")
     p.add_argument("--prelude-layers", type=int, default=1)
     p.add_argument("--coda-layers", type=int, default=1)
     p.add_argument("--gate-init-bias", type=float, default=0.0,
@@ -732,11 +1003,33 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--lora-alpha", type=float, default=16.0)
     p.add_argument("--lora-targets", type=str, nargs="+",
                    default=["self_attn.q_proj_or_q_a", "self_attn.o_proj"],
-                   help="Must match the targets used at training time.")
+                   help="Must match the targets used at training time. "
+                        "Auto-overridden from the checkpoint's state_dict "
+                        "when --checkpoint is supplied (unless "
+                        "--no-lora-autodetect is set).")
+    p.add_argument("--no-lora-autodetect", action="store_true",
+                   help="Disable auto-detection of LoRA targets/rank from the "
+                        "checkpoint state_dict. Use ONLY when intentionally "
+                        "loading a partial / mismatched ckpt for ablation. "
+                        "Default behavior infers targets+rank from saved keys "
+                        "(prevents bug-050 lineage where smoke defaults "
+                        "silently no-op the load and every T evals as base).")
     p.add_argument("--quant", type=str, default="none",
                    choices=["none", "nf4", "fp4"],
                    help="Match the training-time quant for VRAM-tight eval. "
                         "Pure bf16 base + trained adapters works too if it fits.")
+    # Speed knobs — enable independently for clean A/B isolation against
+    # the eager+orig-MoE baseline. Default OFF preserves prior runs' numerics.
+    p.add_argument("--attn-impl", type=str, default="eager",
+                   choices=["eager", "flash_attention_2", "sdpa"],
+                   help="Attention backend. eager (default) matches v6{H,K,N,Q} "
+                        "baseline. flash_attention_2 needs prebuilt wheel; "
+                        "expect 1-3 token-flips per long generation in bf16.")
+    p.add_argument("--moe-vec", action="store_true",
+                   help="Monkey-patch DeepseekV2MoE.forward with a sorted/grouped "
+                        "dispatch path that skips empty experts (no per-expert "
+                        "Python mask loop). Numerically equivalent in fp32; bf16 "
+                        "may differ by ~1e-3 due to summation order.")
     # LiveCodeBench mini (function_call subset) — optional second eval
     # alongside HumanEval-N. Tighter contamination control + harder problems
     # with real headroom for measuring T>1 value-add.
@@ -807,8 +1100,10 @@ def main() -> int:
         trust_remote_code=True,
         device_map="cuda",
         low_cpu_mem_usage=True,
+        attn_implementation=args.attn_impl,
         **_dtype_kw,
     )
+    print(f"[smoke] attn_impl={args.attn_impl}  moe_vec={args.moe_vec}")
     if args.quant != "none":
         from transformers import BitsAndBytesConfig
         _load_kwargs["quantization_config"] = BitsAndBytesConfig(
@@ -820,6 +1115,9 @@ def main() -> int:
         print(f"[smoke] base quantized to {args.quant.upper()} (compute={dtype})")
     base = AutoModelForCausalLM.from_pretrained(str(base_path), **_load_kwargs)
     base.eval()
+    if args.moe_vec:
+        _n_patched = _patch_moe_forward(base)
+        print(f"[smoke] MoE-vec patched on {_n_patched} layers")
     tokenizer = _load_dscoder_tokenizer(str(base_path))
     print(f"[smoke] tokenizer class: {type(tokenizer).__name__}")
     if tokenizer.pad_token is None and tokenizer.eos_token is not None:
@@ -846,39 +1144,65 @@ def main() -> int:
 
     results: list[RunResult] = []
 
+    # Resumable mode: when --output-json is set AND only ONE eval (HE or LCB)
+    # is active in this process, the helper writes per-problem incremental
+    # state to output_path. Each batch is saved atomically via temp+rename
+    # so a kill mid-eval loses at most one batch's worth of work.
+    he_active = bool(chat_prompts)
+    lcb_active = bool(lcb_problems)
+    only_one_eval = (he_active ^ lcb_active)  # XOR — exactly one active
+    base_resume_path = (args.output_json if (only_one_eval and args.output_json)
+                        else None)
+    used_incremental_for_output = False
+
     if not args.skip_base:
-        if chat_prompts:
-            print("[smoke] generating HumanEval with BASE...")
-            t0 = time.time()
-            base_completions = base_generate(
-                base, tokenizer, chat_prompts, args.gen_tokens, device, args.batch_size
+        if he_active:
+            print(f"[smoke] generating HumanEval with BASE "
+                  f"(resume={'on' if base_resume_path else 'off'})...")
+            r = _run_base_eval_incremental(
+                name="base_he", problems=problems, chat_prompts=chat_prompts,
+                base=base, tokenizer=tokenizer, gen_tokens=args.gen_tokens,
+                device=device, batch_size=args.batch_size,
+                score_callable=_he_score,
+                output_path=base_resume_path if he_active else None,
+                args=args, log_prefix="smoke",
             )
-            print(f"[smoke]   base HE generation: {time.time()-t0:.1f}s")
-            r = run_eval("base_he", base_completions, problems)
-            print(f"[smoke]   BASE HE pass@1 = {r.pass_at_1*100:.1f}%  ({r.n_pass}/{r.n_total})")
+            print(f"[smoke]   BASE HE pass@1 = {r.pass_at_1*100:.1f}%  "
+                  f"({r.n_pass}/{r.n_total})  elapsed={r.elapsed_sec:.1f}s")
             results.append(r)
-        if lcb_problems:
-            print("[smoke] generating LCB with BASE...")
-            t0 = time.time()
-            base_lcb_completions = base_generate(
-                base, tokenizer, lcb_chat_prompts, args.gen_tokens, device,
-                args.batch_size,
+            if he_active and base_resume_path:
+                used_incremental_for_output = True
+        if lcb_active:
+            print(f"[smoke] generating LCB with BASE "
+                  f"(resume={'on' if base_resume_path else 'off'})...")
+            r = _run_base_eval_incremental(
+                name="base_lcb", problems=lcb_problems,
+                chat_prompts=lcb_chat_prompts,
+                base=base, tokenizer=tokenizer, gen_tokens=args.gen_tokens,
+                device=device, batch_size=args.batch_size,
+                score_callable=_lcb_score,
+                output_path=base_resume_path if lcb_active else None,
+                args=args, log_prefix="smoke",
             )
-            print(f"[smoke]   base LCB generation: {time.time()-t0:.1f}s")
-            r = run_eval_lcb("base_lcb", base_lcb_completions, lcb_problems)
-            print(f"[smoke]   BASE LCB pass@1 = {r.pass_at_1*100:.1f}%  ({r.n_pass}/{r.n_total})")
+            print(f"[smoke]   BASE LCB pass@1 = {r.pass_at_1*100:.1f}%  "
+                  f"({r.n_pass}/{r.n_total})  elapsed={r.elapsed_sec:.1f}s")
             results.append(r)
+            if lcb_active and base_resume_path:
+                used_incremental_for_output = True
 
     if args.skip_wrapper:
         print("[smoke] --skip-wrapper set: skipping all wrapper construction and eval. "
               "Writing base-only results.")
-        if args.output_json:
+        if args.output_json and not used_incremental_for_output:
             from pathlib import Path as _Path
             _Path(args.output_json).parent.mkdir(parents=True, exist_ok=True)
             with open(args.output_json, "w") as _f:
                 json.dump({"args": vars(args), "results": [asdict(r) for r in results]},
                           _f, indent=2, default=str)
             print(f"[smoke] wrote -> {args.output_json}")
+        elif used_incremental_for_output:
+            print(f"[smoke] incremental JSON already at {args.output_json} "
+                  f"— skipping legacy overwrite")
         return 0
 
     cfg = MythicRDTDeepseekV2Config(
@@ -888,6 +1212,7 @@ def main() -> int:
         recurrent_block_start=args.recurrent_block_start,
         recurrent_block_end=args.recurrent_block_end,
         block_mode=args.block_mode,
+        block_mode_residual=args.block_mode_residual,
         first_iter_identity=args.first_iter_identity,
         gate_init_bias=args.gate_init_bias,
         layerscale_init=args.layerscale_init,
@@ -925,6 +1250,40 @@ def main() -> int:
                 )
             ckpt_dir = subs[-1]
             print(f"[smoke] resolved latest sub-checkpoint: {ckpt_dir.name}")
+        # Auto-detect target_modules + rank from the saved state_dict. Prevents
+        # the bug-050 lineage where smoke injects defaults (q/o + rank 8) but
+        # the ckpt was trained with FFN-on-all-experts at a different rank →
+        # state_dict load silently no-ops, wrapper runs at INIT, T=1=base.
+        # 2026-05-10: surfaced by v6V (FFN tree saved 7410 keys, smoke tried
+        # to load into 76 attention-LoRA names → loaded 4/80 tensors, every T
+        # eval'd as base 116/164). Pass --no-lora-autodetect to keep CLI flags.
+        _state_peek = torch.load(
+            ckpt_dir / TRAINABLE_STATE_FN, map_location="cpu", weights_only=True,
+        )
+        if not args.no_lora_autodetect:
+            _leaves: dict[str, int] = {}
+            for k, v in _state_peek.items():
+                if not k.endswith(".lora.lora_A"):
+                    continue
+                # Strip ".lora.lora_A", grab final attribute (e.g. up_proj,
+                # gate_proj, down_proj, o_proj, q_proj). Bare-name targets
+                # match the recursive walker in lora_inject.py — works for
+                # both attention (self_attn.X) and FFN (experts.<E>.X +
+                # shared_experts.X) paths uniformly.
+                stem = k[: -len(".lora.lora_A")]
+                leaf = stem.rsplit(".", 1)[-1]
+                _leaves[leaf] = v.shape[1]  # lora_A: [n_iters, rank, in_f]
+            if _leaves:
+                _detected_targets = sorted(_leaves.keys())
+                _detected_rank = max(_leaves.values())
+                if (set(_detected_targets) != set(args.lora_targets)
+                        or _detected_rank != args.lora_rank):
+                    print(f"[smoke] LoRA autodetect: targets="
+                          f"{args.lora_targets}→{_detected_targets} "
+                          f"rank={args.lora_rank}→{_detected_rank} "
+                          f"(use --no-lora-autodetect to keep CLI flags)")
+                args.lora_targets = _detected_targets
+                args.lora_rank = _detected_rank
         print(f"[smoke] injecting DepthLoRA (targets={args.lora_targets} rank={args.lora_rank}) ...")
         records = inject_depth_lora(
             wrapper,
@@ -935,9 +1294,8 @@ def main() -> int:
         )
         for r in records:
             print(f"[smoke]   lora wired: {r.qualified_name} rank={r.rank} T={r.n_iters}")
-        state = torch.load(
-            ckpt_dir / TRAINABLE_STATE_FN, map_location="cpu", weights_only=True,
-        )
+        # Reuse the state already peeked above for autodetect.
+        state = _state_peek
         loaded, missing, unexpected = _load_trainable_state(wrapper, state)
         print(f"[smoke] loaded {loaded} trainable tensors  "
               f"missing={len(missing)} unexpected={len(unexpected)}")
@@ -965,11 +1323,14 @@ def main() -> int:
             for n, p in wrapper.named_parameters():
                 base_n = n.rsplit(".", 1)[-1]
                 if base_n in ("bias",) and "gate" in n:
-                    p.fill_(-10.0); zeroed_g += 1
+                    p.fill_(-10.0)
+                    zeroed_g += 1
                 elif "layerscale" in n.lower() or n.endswith(".scale"):
-                    p.zero_(); zeroed_ls += 1
+                    p.zero_()
+                    zeroed_ls += 1
                 elif n.endswith("lora_B") or n.endswith("lora.B") or "lora_B" in n:
-                    p.zero_(); zeroed_b += 1
+                    p.zero_()
+                    zeroed_b += 1
         print(f"[smoke]   zeroed: gate_bias={zeroed_g}  layerscale={zeroed_ls}  lora_B={zeroed_b}")
         # Sanity: with these zeroed, layerscale=0 makes the entire injection collapse.
         # Wrapper is now mathematically a no-op recurrence ≈ base.
@@ -978,27 +1339,25 @@ def main() -> int:
     for T in args.T_values:
         if chat_prompts:
             print(f"[smoke] generating HumanEval with WRAPPER T={T}...")
-            t0 = time.time()
-            wrapper_completions = wrapper_generate(
-                wrapper, tokenizer, chat_prompts, T, args.gen_tokens, device,
-                args.batch_size, force_bypass=args.force_bypass,
-                no_kv_cache=args.no_kv_cache,
+            r = _run_wrapper_eval_incremental(
+                f"wrapper_T{T}_he", problems, chat_prompts,
+                wrapper, tokenizer, T, args.gen_tokens, device, args.batch_size,
+                force_bypass=args.force_bypass, no_kv_cache=args.no_kv_cache,
+                score_callable=_he_score,
+                log_prefix=f"smoke wT={T} HE",
             )
-            print(f"[smoke]   wrapper T={T} HE generation: {time.time()-t0:.1f}s")
-            r = run_eval(f"wrapper_T{T}_he", wrapper_completions, problems)
             print(f"[smoke]   WRAPPER T={T} HE pass@1 = {r.pass_at_1*100:.1f}%  "
                   f"({r.n_pass}/{r.n_total})")
             results.append(r)
         if lcb_problems:
             print(f"[smoke] generating LCB with WRAPPER T={T}...")
-            t0 = time.time()
-            wrapper_lcb_completions = wrapper_generate(
-                wrapper, tokenizer, lcb_chat_prompts, T, args.gen_tokens, device,
-                args.batch_size, force_bypass=args.force_bypass,
-                no_kv_cache=args.no_kv_cache,
+            r = _run_wrapper_eval_incremental(
+                f"wrapper_T{T}_lcb", lcb_problems, lcb_chat_prompts,
+                wrapper, tokenizer, T, args.gen_tokens, device, args.batch_size,
+                force_bypass=args.force_bypass, no_kv_cache=args.no_kv_cache,
+                score_callable=_lcb_score,
+                log_prefix=f"smoke wT={T} LCB",
             )
-            print(f"[smoke]   wrapper T={T} LCB generation: {time.time()-t0:.1f}s")
-            r = run_eval_lcb(f"wrapper_T{T}_lcb", wrapper_lcb_completions, lcb_problems)
             print(f"[smoke]   WRAPPER T={T} LCB pass@1 = {r.pass_at_1*100:.1f}%  "
                   f"({r.n_pass}/{r.n_total})")
             results.append(r)

@@ -135,6 +135,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--gate-init-bias", type=float, default=0.0)
     p.add_argument("--layerscale-init", type=float, default=1e-4)
     p.add_argument("--layerscale-clamp-max", type=float, default=0.5)
+    p.add_argument("--lti-residual-scale", type=float, default=0.0,
+                   help="v6W: re-introduce LTI contribution at this fixed "
+                        "scale in block_mode_residual. 0.0 = pre-v6W (LTI "
+                        "dead); 0.01 = v6W default (small but trainable).")
     p.add_argument("--checkpoint-loop", action="store_true")
 
     # Curriculum
@@ -257,6 +261,7 @@ def main() -> int:
         gate_init_bias=args.gate_init_bias,
         layerscale_init=args.layerscale_init,
         layerscale_clamp_max=args.layerscale_clamp_max,
+        lti_residual_scale=args.lti_residual_scale,
         base_model_path=args.student,
     )
     wrapper = MythicRDTDeepseekV2ForCausalLM(cfg, base=base)
