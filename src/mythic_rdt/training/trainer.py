@@ -28,9 +28,8 @@ from __future__ import annotations
 
 import json
 import os
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 import torch
 from torch import nn
@@ -219,11 +218,18 @@ if Trainer is not None:
             distill_alpha: float = 0.0,
             dual_t_lo: int = 1,
             dual_t_hi: int = 0,  # 0 means: use config.max_loop_iters
+            focal_gamma: float = 0.0,
+            teacher_distill_alpha: float = 0.0,
+            teacher_logits_path: Optional[str] = None,
+            teacher_distill_temperature: float = 1.0,
+            teacher_refinement_mask: bool = False,
             **kwargs,
         ) -> None:
             super().__init__(*args, **kwargs)
             self.curriculum = curriculum
             self._microbatch_counter: int = 0
+            self._global_block_counter: int = 0
+            self._block_counter_initialized: bool = False
             self.kl_anchor_alpha = float(kl_anchor_alpha)
             self.kl_anchor_every = int(kl_anchor_every)
             self.margin_alpha = float(margin_alpha)
@@ -231,7 +237,35 @@ if Trainer is not None:
             self.distill_alpha = float(distill_alpha)
             self.dual_t_lo = int(dual_t_lo)
             self.dual_t_hi = int(dual_t_hi)
-            self.dual_t_active = (self.margin_alpha > 0.0 or self.distill_alpha > 0.0)
+            self.focal_gamma = float(focal_gamma)
+            self.teacher_distill_alpha = float(teacher_distill_alpha)
+            self.teacher_distill_temperature = float(teacher_distill_temperature)
+            self.teacher_refinement_mask = bool(teacher_refinement_mask)
+            self._teacher_indices = None  # [N, L, K] int32, CPU
+            self._teacher_values = None   # [N, L, K] bf16, CPU
+            self._teacher_alignment_mask = None  # [N, L] bool, CPU — cross-vocab caches only
+            self._teacher_meta = None
+            if self.teacher_distill_alpha > 0 and teacher_logits_path:
+                cache = torch.load(teacher_logits_path, map_location="cpu", weights_only=False)
+                self._teacher_indices = cache["indices"]
+                self._teacher_values = cache["values"]
+                # NEW (v6V): cross-vocab caches store an alignment_mask field
+                # [N, L] bool indicating which student positions actually
+                # received a valid projected teacher logit. Same-vocab caches
+                # don't have this — every position is aligned by construction.
+                self._teacher_alignment_mask = cache.get("alignment_mask")
+                self._teacher_meta = cache.get("meta", {})
+                xv_marker = ""
+                if self._teacher_alignment_mask is not None:
+                    cov = float(self._teacher_alignment_mask.float().mean().item())
+                    xv_marker = f" alignment_mask=ON coverage={cov:.2%}"
+                print(f"[trainer] teacher distill active: alpha={self.teacher_distill_alpha} "
+                      f"T={self.teacher_distill_temperature} "
+                      f"refinement_mask={self.teacher_refinement_mask} "
+                      f"cache_shape={tuple(self._teacher_indices.shape)}{xv_marker} "
+                      f"meta={self._teacher_meta}")
+            self.dual_t_active = (self.margin_alpha > 0.0 or self.distill_alpha > 0.0
+                                   or self.teacher_distill_alpha > 0.0)
             if self.kl_anchor_alpha > 0 and self.kl_anchor_every > 0:
                 print(f"[trainer] KL-to-base anchor active: "
                       f"alpha={self.kl_anchor_alpha}, every={self.kl_anchor_every} steps")
@@ -240,6 +274,9 @@ if Trainer is not None:
                       f"hi={self.dual_t_hi or 'max_loop_iters'}, "
                       f"margin_alpha={self.margin_alpha}, margin_nats={self.margin_nats}, "
                       f"distill_alpha={self.distill_alpha}")
+            if self.focal_gamma > 0:
+                print(f"[trainer] focal CE active on T=4 path: gamma={self.focal_gamma} "
+                      f"(weight = (1 - p_T1_correct)^gamma per token)")
 
         # ------------------------------------------------------------------
         # Forward + loss
@@ -281,7 +318,49 @@ if Trainer is not None:
                     T=t_hi,
                 )
                 ce_lo = out_lo.loss if hasattr(out_lo, "loss") else out_lo["loss"]
-                ce_hi = out_hi.loss if hasattr(out_hi, "loss") else out_hi["loss"]
+
+                # T=4 CE: optionally apply focal weighting using T=1 model's
+                # per-token confidence on the ground-truth token. Concentrates
+                # the T=4 gradient on tokens where T=1 is uncertain (= where
+                # recurrence has room to add value). T=1 path stays unweighted
+                # so it still trains uniformly. See cerebrum 2026-04-29
+                # design notes for the rationale and risks.
+                if self.focal_gamma > 0 and "labels" in inputs and inputs.get("labels") is not None:
+                    hi_logits = out_hi.logits  # [B, L, V]
+                    labels = inputs["labels"]   # [B, L], -100 = ignore
+                    # next-token shift (HF causal LM convention)
+                    shift_logits = hi_logits[..., :-1, :].contiguous()
+                    shift_labels = labels[..., 1:].contiguous()
+                    valid = shift_labels != -100
+                    # T=1 confidence on the correct token (no_grad: weight only)
+                    with torch.no_grad():
+                        lo_logits_shift = out_lo.logits[..., :-1, :].contiguous()
+                        # cast to fp32 for numerically-stable softmax under bf16
+                        p_lo = torch.softmax(lo_logits_shift.float(), dim=-1)
+                        gt_idx = shift_labels.clamp(min=0).unsqueeze(-1)
+                        p_correct = p_lo.gather(-1, gt_idx).squeeze(-1)  # [B, L-1]
+                    focal_w = (1.0 - p_correct).pow(self.focal_gamma) * valid.float()
+                    # per-token CE on the T=4 path (no reduction)
+                    ce_per_tok = torch.nn.functional.cross_entropy(
+                        shift_logits.view(-1, shift_logits.size(-1)),
+                        shift_labels.view(-1),
+                        reduction="none",
+                        ignore_index=-100,
+                    ).view(shift_labels.shape)
+                    # focal-weighted mean (normalize by sum of weights, not token
+                    # count, so loss scale is comparable to standard CE)
+                    w_sum = focal_w.sum().clamp(min=1.0)
+                    ce_hi = (focal_w * ce_per_tok).sum() / w_sum
+                    try:
+                        self.log({
+                            "focal_w_mean": float(focal_w[valid].mean().detach().item()),
+                            "focal_w_max": float(focal_w[valid].max().detach().item()),
+                        })
+                    except Exception:
+                        pass
+                else:
+                    ce_hi = out_hi.loss if hasattr(out_hi, "loss") else out_hi["loss"]
+
                 loss = 0.5 * (ce_lo + ce_hi)
 
                 # Margin term: penalize when hi-T isn't strictly better than lo-T.
@@ -292,6 +371,93 @@ if Trainer is not None:
                         self.log({"margin_loss": float(margin_term.detach().item())})
                     except Exception:
                         pass
+
+                # Teacher distill term: sparse top-K KL between wrapper T_hi and
+                # precomputed BF16 base teacher logits (same data_seed → same
+                # block order). Gives gradient on EVERY token's distribution
+                # (not just argmax / hard-only), which addresses the focal-γ
+                # "starves easy correct tokens" problem at root.
+                if self.teacher_distill_alpha > 0 and self._teacher_indices is not None:
+                    B = inputs["input_ids"].shape[0]
+                    # Initialize block counter to match resume position on first call.
+                    if not self._block_counter_initialized:
+                        eff_batch = (self.args.per_device_train_batch_size
+                                     * max(1, self.args.gradient_accumulation_steps))
+                        self._global_block_counter = int(self.state.global_step) * eff_batch
+                        self._block_counter_initialized = True
+                    blk_lo = self._global_block_counter
+                    blk_hi = blk_lo + B
+                    cache_n = self._teacher_indices.shape[0]
+                    if blk_hi > cache_n:
+                        # Past end of cache: skip teacher loss this batch.
+                        pass
+                    else:
+                        # Slice cache → GPU. Shapes [B, L, K].
+                        t_idx = self._teacher_indices[blk_lo:blk_hi].to(out_hi.logits.device)
+                        t_val = self._teacher_values[blk_lo:blk_hi].to(out_hi.logits.device)
+                        # Shift to next-token (HF causal LM convention) so we
+                        # match labels[:,1:].
+                        hi_logits = out_hi.logits[..., :-1, :].contiguous()
+                        t_idx_s = t_idx[..., :-1, :].contiguous().long()
+                        t_val_s = t_val[..., :-1, :].contiguous().float()
+                        labels_s = (inputs.get("labels")[..., 1:].contiguous()
+                                    if inputs.get("labels") is not None
+                                    else torch.zeros_like(t_idx_s[..., 0]))
+                        valid = (labels_s != -100)
+                        # v6V: AND in the alignment_mask if the cache has one.
+                        # Cross-vocab caches mark positions where projection
+                        # failed (alignment skipped) with mask=False; we MUST
+                        # exclude those from the loss or they contribute pure
+                        # zeros and dilute the gradient.
+                        if self._teacher_alignment_mask is not None:
+                            am = self._teacher_alignment_mask[blk_lo:blk_hi].to(
+                                out_hi.logits.device
+                            )
+                            am_s = am[..., :-1].contiguous()  # [B, L-1]
+                            valid = valid & am_s
+                        # Refinement mask (v6R+): only apply distill on tokens where
+                        # the wrapper at T_lo disagrees with the teacher's top-1
+                        # — i.e. the tokens we already know T=1 gets wrong. This
+                        # focuses the distill gradient on tokens where recurrence
+                        # has room to refine, instead of anchoring every token
+                        # (including agreement-majority) to the teacher.
+                        refine_mask = None
+                        if self.teacher_refinement_mask:
+                            lo_logits_shift = out_lo.logits[..., :-1, :].contiguous()
+                            lo_argmax = lo_logits_shift.argmax(dim=-1)         # [B, L-1]
+                            teacher_top1 = t_idx_s[..., 0]                     # [B, L-1]
+                            refine_mask = (lo_argmax != teacher_top1)          # disagreement
+                            valid = valid & refine_mask
+                        # Gather wrapper logits at teacher's top-K vocab indices.
+                        student_topk = hi_logits.gather(-1, t_idx_s)  # [B, L-1, K]
+                        # Temperature-scaled softmax over the K-vocab subset.
+                        T_temp = self.teacher_distill_temperature
+                        log_q = torch.nn.functional.log_softmax(student_topk.float() / T_temp, dim=-1)
+                        p = torch.nn.functional.softmax(t_val_s / T_temp, dim=-1)
+                        # KL(p || q) per token.
+                        kl_per_tok = (p * (p.clamp(min=1e-12).log() - log_q)).sum(dim=-1)
+                        n_valid = valid.sum().clamp(min=1)
+                        kl_distill = (kl_per_tok * valid.float()).sum() / n_valid
+                        # Hinton T^2 scaling so alpha is comparable to CE units.
+                        loss = loss + self.teacher_distill_alpha * (T_temp * T_temp) * kl_distill
+                        try:
+                            log_dict = {
+                                "teacher_distill_loss": float(kl_distill.detach().item()),
+                                "teacher_block_idx": float(blk_lo),
+                            }
+                            if refine_mask is not None:
+                                # frac of valid (non-padded) tokens where wrapper T_lo
+                                # disagrees with teacher top-1 = the tokens carrying
+                                # distill loss. Lower = wrapper closer to teacher already.
+                                base_valid = (labels_s != -100)
+                                log_dict["teacher_refine_mask_frac"] = float(
+                                    (refine_mask & base_valid).sum().float()
+                                    / base_valid.sum().clamp(min=1).float()
+                                )
+                            self.log(log_dict)
+                        except Exception:
+                            pass
+                    self._global_block_counter += B
 
                 # Distill term: KL(lo || hi.detach()) per token.
                 if self.distill_alpha > 0:

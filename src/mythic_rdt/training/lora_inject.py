@@ -155,14 +155,45 @@ def inject_depth_lora(
     records: list[InjectionRecord] = []
 
     targets_list = list(targets)
+    # If a target is a bare leaf name (no "."), expand it into all matching
+    # leaf modules under rec_layer via recursive walk — mirrors PEFT's
+    # target_modules substring behaviour. Required for M124f-style
+    # FFN-only LoRA on DSC-V2-Lite MoE layers (mlp.shared_experts.up_proj +
+    # mlp.experts[0..63].up_proj per layer; raw "up_proj" matches them all).
+    # Dotted targets (e.g. "self_attn.q_proj") still resolve via the
+    # exact-path code path for backward-compat with v6R/v6S attention LoRA.
     for layer_idx in layer_indices:
         rec_layer = wrapper.base.model.layers[layer_idx]
+        # Build the (parent, leaf_name, leaf) injection list for this layer.
+        injections: list[tuple[nn.Module, str, nn.Module]] = []
         for path in targets_list:
-            try:
-                parent, leaf_name, leaf = _resolve_attr_path(rec_layer, path)
-            except AttributeError as exc:
-                # Some MLA paths only exist in certain configs; skip silently.
-                print(f"[lora] skip layer {layer_idx} {path}: {exc}")
+            if "." in path:
+                # Exact dotted path (legacy v0-v6 attention LoRA path).
+                try:
+                    injections.append(_resolve_attr_path(rec_layer, path))
+                except AttributeError as exc:
+                    print(f"[lora] skip layer {layer_idx} {path}: {exc}")
+                continue
+            # Bare leaf name: walk the layer's submodule tree and inject at
+            # every leaf whose final attribute name matches `path`.
+            for sub_qname, sub_mod in rec_layer.named_modules():
+                if not sub_qname:
+                    continue
+                last = sub_qname.rsplit(".", 1)[-1]
+                if last != path:
+                    continue
+                # Get the parent of sub_mod relative to rec_layer.
+                parent_qname = sub_qname.rsplit(".", 1)[0] if "." in sub_qname else ""
+                parent_mod = rec_layer
+                if parent_qname:
+                    for piece in parent_qname.split("."):
+                        parent_mod = getattr(parent_mod, piece) if not piece.isdigit() else parent_mod[int(piece)]
+                injections.append((parent_mod, last, sub_mod))
+            if not any(p is not None for p, _, _ in injections):
+                print(f"[lora] no leafs match '{path}' under layer {layer_idx}")
+        for parent, leaf_name, leaf in injections:
+            # Skip if already wrapped (re-running inject is a no-op).
+            if isinstance(leaf, LoRAInjectedLinear):
                 continue
             in_f = getattr(leaf, "in_features", None)
             out_f = getattr(leaf, "out_features", None)

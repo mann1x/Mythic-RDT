@@ -163,6 +163,7 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module, GenerationMixin):
             gate_init_bias=config.gate_init_bias,
             layerscale_per_channel=config.layerscale_per_channel,
             block_mode=config.block_mode,
+            block_mode_residual=getattr(config, "block_mode_residual", False),
             lti_log_a_init_low=config.lti_log_a_init_low,
             lti_log_a_init_high=config.lti_log_a_init_high,
             lti_b_init_std=config.lti_b_init_std,
@@ -171,10 +172,20 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module, GenerationMixin):
         # bf16 activations. Inside the loop we still cast to fp32 around
         # RMSNorm calls (phase 1+) per MASTER_PLAN.md stability rule.
         try:
-            base_dtype = next(self.base.parameters()).dtype
+            _bp = next(self.base.parameters())
+            base_dtype = _bp.dtype
+            base_device = _bp.device
         except StopIteration:
             base_dtype = torch.float32
-        self.recurrence.to(dtype=base_dtype)
+            base_device = torch.device("cpu")
+        # Move recurrence cell to BOTH base dtype AND base device. Without the
+        # device move, A_diag / B / LayerScale / gate sit on CPU after init
+        # and crash with "expected all tensors on same device" at the FIRST
+        # iteration that exercises LTI — which is t=1 (since first_iter_identity
+        # bypasses LTI at t=0). v6V joint trainer hit this 2026-05-10 at
+        # opt_step=16 when curriculum first sampled T>1. v6R/v6S sidestepped
+        # it via HF Trainer's auto device placement.
+        self.recurrence.to(dtype=base_dtype, device=base_device)
 
         # Freeze base; only RDT params are trainable in v0.
         for p in self.base.parameters():
@@ -624,12 +635,55 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module, GenerationMixin):
                         )
                         h = cell_out.h_next
             else:
+                # Optional CPU-offload of the per-step saved activations during
+                # checkpoint (Unsloth+NVIDIA 2026 borrow:
+                # https://unsloth.ai/blog/nvidia-collab — section "Double-buffered
+                # Activation Checkpointing"). With `pin_memory=True`, PyTorch
+                # ≥2.6 stages saved tensors on pinned host memory during forward
+                # and pipelines the H2D prefetch with backward compute, giving
+                # the same overlap the Unsloth blog describes (+0.23-0.47 GB
+                # GPU overhead amortized across the loop, vs 2.5-5 GB of saved
+                # activations for a 19-layer block at T=4 sl=1024).
+                # Wrapper attribute `_checkpoint_loop_cpu_offload` is set by the
+                # finetune_phase1 driver from the `--ac-cpu-offload` flag.
+                use_cpu_offload = use_ckpt and getattr(
+                    self, "_checkpoint_loop_cpu_offload", False
+                )
+                if use_cpu_offload:
+                    from torch.autograd.graph import save_on_cpu
+                    import contextlib as _ctxlib
+
+                    def _ac_offload_ctx():
+                        return save_on_cpu(pin_memory=True), _ctxlib.nullcontext()
+                else:
+                    _ac_offload_ctx = None
+
+                # gradient-checkpoint w/ use_reentrant=False truncates the
+                # backward graph if NO input tensor to the checkpointed
+                # function requires grad. With NF4 base + prelude all frozen,
+                # `h` arrives with requires_grad=False even though the LoRA
+                # modules INSIDE _loop_step do have trainable params. Mark h
+                # before the loop so the checkpoint sees a grad-requiring
+                # input. (Bug bit v6V joint trainer 2026-05-10; HF Trainer
+                # path used by v6R/v6S sidesteps this via embed-input hooks.)
+                if use_ckpt and not h.requires_grad:
+                    h.requires_grad_(True)
                 for t in range(T):
                     if use_ckpt:
+                        ckpt_kwargs = {"use_reentrant": False}
+                        if _ac_offload_ctx is not None:
+                            ckpt_kwargs["context_fn"] = _ac_offload_ctx
+                            # determinism_check default is "default" which reruns
+                            # forward and compares outputs — not what we want
+                            # under CPU-offload, the pinned-CPU round-trip can
+                            # introduce trivial bf16 noise. Disable it; the
+                            # backward correctness is guaranteed by save_on_cpu
+                            # + use_reentrant=False's standard contract.
+                            ckpt_kwargs["determinism_check"] = "none"
                         h = torch.utils.checkpoint.checkpoint(
                             self._loop_step,
                             h, e, t, rec_layers, attn_4d, position_ids, gate_zero_effective,
-                            use_reentrant=False,
+                            **ckpt_kwargs,
                         )
                     else:
                         h = self._loop_step(
@@ -640,6 +694,30 @@ class MythicRDTDeepseekV2ForCausalLM(nn.Module, GenerationMixin):
                 self.recurrence.layerscale.clamp_max = prev_clamp
         if return_hidden_trace:
             trace["after_recurrence"] = h.detach().clone()
+
+        # ----- Post-loop drift fix (experimental, env-var gated) -----
+        # 2026-04-29: drift probe (project_recurrence_root_cause_block_mode.md)
+        # showed ||h|| grows 5.7x over 4 iterations because block_mode formula
+        # has no h-residual. Coda receives OOD input. These flags let us test
+        # candidate fixes WITHOUT retraining.
+        # MYTHIC_POST_LOOP_FIX env var:
+        #   unset / "none" -> baseline (no change)
+        #   "rms"          -> h = base.model.norm(h)  (re-use trained final RMSNorm)
+        #   "scale"        -> per-token rescale to target ||h||
+        #                     (target from MYTHIC_POST_LOOP_TARGET, default 25.0)
+        #   "blend"        -> h = (1-a)*h + a*e where e = prelude output, a from
+        #                     MYTHIC_POST_LOOP_BLEND (default 0.5)
+        import os as _os  # local import to avoid hot-path cost when unset
+        _fix = _os.environ.get("MYTHIC_POST_LOOP_FIX", "none").lower()
+        if _fix == "rms":
+            h = base_model.norm(h)
+        elif _fix == "scale":
+            _target = float(_os.environ.get("MYTHIC_POST_LOOP_TARGET", "25.0"))
+            _norm = h.norm(dim=-1, keepdim=True).clamp_min(1e-6)
+            h = h * (_target / _norm)
+        elif _fix == "blend":
+            _alpha = float(_os.environ.get("MYTHIC_POST_LOOP_BLEND", "0.5"))
+            h = (1.0 - _alpha) * h + _alpha * e
 
         # ----- Coda -----
         # Coda layers reuse the iteration-0 cache (slot[layer_idx] of it).
