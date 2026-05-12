@@ -629,6 +629,1270 @@
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-04-29T06:29:07.797Z"
+    },
+    {
+      "id": "bug-040",
+      "timestamp": "2026-04-29T10:54:28.913Z",
+      "error_message": "Wrong operator: >= should be ==",
+      "file": "scripts/pod_runner/run_v6e.sh",
+      "root_cause": "Used \">=\" instead of \"==\"",
+      "fix": "Changed operator >= → ==",
+      "tags": [
+        "auto-detected",
+        "operator-fix",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T10:54:28.913Z"
+    },
+    {
+      "id": "bug-041",
+      "timestamp": "2026-04-29T10:54:46.226Z",
+      "error_message": "Incorrect value in code",
+      "file": "scripts/pod_runner/run_v6e.sh",
+      "root_cause": "Had \"[v6e] PHASE 1: distillation-dominant single-T=4 t",
+      "fix": "Changed to \"[v6e] PHASE 1: kl-anchor-dominant dual-T(1,4) tra",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-29T10:54:52.459Z"
+    },
+    {
+      "id": "bug-042",
+      "timestamp": "2026-04-29T12:08:08.056Z",
+      "error_message": "Incorrect value in code",
+      "file": "scripts/_test_post_loop_fixes.py",
+      "root_cause": "Had \"[fixtest] saved {OUT_PATH}\"",
+      "fix": "Changed to \"[fixtest] saved {out_path}\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T12:08:08.056Z"
+    },
+    {
+      "id": "bug-043",
+      "timestamp": "2026-04-29T12:44:19.624Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/recurrence.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 8→25 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T12:44:19.624Z"
+    },
+    {
+      "id": "bug-044",
+      "timestamp": "2026-04-29T12:53:55.471Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/pod_runner/run_v6f.sh",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 10→13 lines (9 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T12:53:55.471Z"
+    },
+    {
+      "id": "bug-045",
+      "timestamp": "2026-04-29T17:55:00.400Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6h_ckpt100_interim.md",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 7→11 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-29T17:55:00.400Z"
+    },
+    {
+      "id": "bug-046",
+      "timestamp": "2026-04-30T09:50:02.863Z",
+      "error_message": "Incorrect value in code",
+      "file": "README.md",
+      "root_cause": "Had `STATUS.md`",
+      "fix": "Changed to `Fix-A block_mode_residual`",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T09:50:02.863Z"
+    },
+    {
+      "id": "bug-047",
+      "timestamp": "2026-04-30T09:54:24.860Z",
+      "error_message": "Wrong operator: == should be <<",
+      "file": "STATUS.md",
+      "root_cause": "Used \"==\" instead of \"<<\"",
+      "fix": "Changed operator == → <<",
+      "tags": [
+        "auto-detected",
+        "operator-fix",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T09:54:24.860Z"
+    },
+    {
+      "id": "bug-048",
+      "timestamp": "2026-04-30T10:23:53.628Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/pandorum_base_full_eval.sh",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 7→42 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T10:23:53.628Z"
+    },
+    {
+      "id": "bug-049",
+      "timestamp": "2026-04-30T11:43:52.891Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/mbpp_smoke.py",
+      "root_cause": "47 lines replaced/restructured",
+      "fix": "Rewrote 73→96 lines (47 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T11:43:52.891Z"
+    },
+    {
+      "id": "bug-050",
+      "timestamp": "2026-04-30T12:01:09.343Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "17 lines replaced/restructured",
+      "fix": "Rewrote 22→45 lines (17 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T12:01:09.343Z"
+    },
+    {
+      "id": "bug-051",
+      "timestamp": "2026-04-30T13:02:00.099Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/pandorum_base_full_eval.sh",
+      "root_cause": "10 lines replaced/restructured",
+      "fix": "Rewrote 13→6 lines (10 removed) | Also: # --- 4. LCB hard full ---; echo \"=== [base_full] PHASE 4: LCB-hard full $(sta",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-04-30T13:02:01.270Z"
+    },
+    {
+      "id": "bug-052",
+      "timestamp": "2026-04-30T15:36:02.527Z",
+      "error_message": "Significant refactor of ",
+      "file": "STATUS.md",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 15→28 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-04-30T15:36:02.527Z"
+    },
+    {
+      "id": "bug-053",
+      "timestamp": "2026-05-02T04:31:24.102Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/pod_runner/run_v6q_he164.sh",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 12→14 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T04:31:24.102Z"
+    },
+    {
+      "id": "bug-054",
+      "timestamp": "2026-05-02T05:10:56.657Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/humaneval_smoke.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→3 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T05:10:56.657Z"
+    },
+    {
+      "id": "bug-055",
+      "timestamp": "2026-05-02T07:31:59.137Z",
+      "error_message": "Significant refactor of ",
+      "file": "STATUS.md",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 12→41 lines (7 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T07:31:59.137Z"
+    },
+    {
+      "id": "bug-056",
+      "timestamp": "2026-05-02T11:43:06.796Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/training/trainer.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 7→17 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T11:43:06.796Z"
+    },
+    {
+      "id": "bug-057",
+      "timestamp": "2026-05-02T18:46:46.437Z",
+      "error_message": "Wrong reference: AlignmentTable should be build_alignment",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/ctd/precompute.py",
+      "root_cause": "Used \"AlignmentTable\" instead of \"build_alignment\"",
+      "fix": "Changed AlignmentTable → build_alignment",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-02T18:48:40.168Z"
+    },
+    {
+      "id": "bug-058",
+      "timestamp": "2026-05-02T19:03:46.866Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/01_inspect.sh",
+      "root_cause": "Had \"Qwen/Qwen2.5-Coder-0.5B-Instruct\"",
+      "fix": "Changed to \"deepseek-ai/deepseek-coder-1.3b-instruct\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T19:03:46.866Z"
+    },
+    {
+      "id": "bug-059",
+      "timestamp": "2026-05-02T19:03:49.368Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/03_precompute_B.py",
+      "root_cause": "Had \"cache_B/qwen25_coder_7b_top32.pt\"",
+      "fix": "Changed to \"cache_B/dscoder_v1_67b_top32.pt\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T19:03:49.368Z"
+    },
+    {
+      "id": "bug-060",
+      "timestamp": "2026-05-02T19:03:50.547Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/04_precompute_C.py",
+      "root_cause": "Had \"cache_C/dscoder_v2_lite_via_ctd_top32.pt\"",
+      "fix": "Changed to \"cache_C/qwen25_coder_7b_via_ctd_top32.pt\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T19:03:50.547Z"
+    },
+    {
+      "id": "bug-061",
+      "timestamp": "2026-05-02T19:03:51.698Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/05_train.py",
+      "root_cause": "Had \"Qwen/Qwen2.5-Coder-0.5B-Instruct\"",
+      "fix": "Changed to \"deepseek-ai/deepseek-coder-1.3b-instruct\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T19:03:51.698Z"
+    },
+    {
+      "id": "bug-062",
+      "timestamp": "2026-05-02T19:03:52.926Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval.py",
+      "root_cause": "Had \"Qwen/Qwen2.5-Coder-0.5B-Instruct\"",
+      "fix": "Changed to \"deepseek-ai/deepseek-coder-1.3b-instruct\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T19:03:52.926Z"
+    },
+    {
+      "id": "bug-063",
+      "timestamp": "2026-05-02T20:50:00.473Z",
+      "error_message": "Significant refactor of ",
+      "file": "STATUS.md",
+      "root_cause": "26 lines replaced/restructured",
+      "fix": "Rewrote 39→70 lines (26 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T20:50:00.473Z"
+    },
+    {
+      "id": "bug-064",
+      "timestamp": "2026-05-02T23:04:21.157Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/ctd/mapper.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 10→14 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T23:04:21.157Z"
+    },
+    {
+      "id": "bug-065",
+      "timestamp": "2026-05-02T23:04:22.451Z",
+      "error_message": "Wrong return value",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/ctd/mapper.py",
+      "root_cause": "Was returning: out.reshape(*leading, self.student_vocab_size)",
+      "fix": "Now returns: out.to(in_dtype).reshape(*leading, self.student_vo",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-02T23:04:22.451Z"
+    },
+    {
+      "id": "bug-066",
+      "timestamp": "2026-05-03T00:13:07.505Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/ctd/mapper.py",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 12→18 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-03T00:13:07.505Z"
+    },
+    {
+      "id": "bug-067",
+      "timestamp": "2026-05-03T03:36:33.252Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 5→6 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-03T03:36:33.252Z"
+    },
+    {
+      "id": "bug-068",
+      "timestamp": "2026-05-03T04:33:24.969Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 9→19 lines (2 removed) | Also: _HE_STOPS = (\"\\nclass \", \"\\ndef \", \"\\n#\", \"\\nif __; \"\"\"Keep only the function body — cut at the first ",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-03T04:35:25.165Z"
+    },
+    {
+      "id": "bug-069",
+      "timestamp": "2026-05-03T11:45:01.144Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 14→14 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-03T11:45:01.144Z"
+    },
+    {
+      "id": "bug-070",
+      "timestamp": "2026-05-03T12:55:31.896Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 7→14 lines (3 removed) | Also: def run_humaneval(model, tokenizer, limit: Optiona; start: Optional[int] = None, end: Optional[int] =  | Also: print(f\"  HE {i}/{len(ds)} GENERATION ERROR on {ti; if (i + 1) % 10 == 0: | Also: print(f\"  MBPP {i}/{len(ds)} GENERATION ERROR on {; if (i + 1) % 20 == 0:",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 4,
+      "last_seen": "2026-05-03T12:58:58.176Z"
+    },
+    {
+      "id": "bug-071",
+      "timestamp": "2026-05-03T17:10:28.488Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/sweep_recipes_v2.sh",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 8→20 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-03T17:10:28.488Z"
+    },
+    {
+      "id": "bug-072",
+      "timestamp": "2026-05-03T19:28:28.702Z",
+      "error_message": "Wrong reference: qwen25_coder_7b_ctd_top32 should be qwen25_coder_7b_via_ctd_top32",
+      "file": "../../../../tmp/run_c_r04.sh",
+      "root_cause": "Used \"qwen25_coder_7b_ctd_top32\" instead of \"qwen25_coder_7b_via_ctd_top32\"",
+      "fix": "Changed qwen25_coder_7b_ctd_top32 → qwen25_coder_7b_via_ctd_top32",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-03T19:28:28.702Z"
+    },
+    {
+      "id": "bug-073",
+      "timestamp": "2026-05-04T15:58:30.154Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/pyproject.toml",
+      "root_cause": "Had \"Apache-2.0\"",
+      "fix": "Changed to \"MIT\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "toml"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T15:58:30.154Z"
+    },
+    {
+      "id": "bug-074",
+      "timestamp": "2026-05-04T16:04:00.129Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/README.md",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 8→27 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T16:04:00.129Z"
+    },
+    {
+      "id": "bug-075",
+      "timestamp": "2026-05-04T18:04:12.161Z",
+      "error_message": "Wrong reference: running should be 38",
+      "file": "../../../../shared/dev/omnimergekit/docs/METHOD_kl_distillation.md",
+      "root_cause": "Used \"running\" instead of \"38\"",
+      "fix": "Changed running → 38",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T18:04:12.161Z"
+    },
+    {
+      "id": "bug-076",
+      "timestamp": "2026-05-04T18:23:25.477Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "23 lines replaced/restructured",
+      "fix": "Rewrote 27→44 lines (23 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T18:23:25.477Z"
+    },
+    {
+      "id": "bug-077",
+      "timestamp": "2026-05-04T19:59:03.820Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 12→51 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T19:59:03.820Z"
+    },
+    {
+      "id": "bug-078",
+      "timestamp": "2026-05-04T22:03:52.310Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 10→31 lines (9 removed) | Also: | Qwen3-Coder-Next-7B (cross-vocab via CTD) | ~82 ; That ~7 pp teacher-quality gap on HE plus a ~30× m | Also: 1. Build a **diff-smoke** corpus: HE problems wher; PASSED but M6b (CTD) FAILED. These are the problem",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-04T22:06:29.926Z"
+    },
+    {
+      "id": "bug-079",
+      "timestamp": "2026-05-04T22:48:52.213Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 5→5 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-04T22:48:52.213Z"
+    },
+    {
+      "id": "bug-080",
+      "timestamp": "2026-05-05T04:43:02.745Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 20→27 lines (7 removed) | Also: For Mythic-RDT v6U, this means the small-models va; recipe-family floor and any further KL-recipe iter",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-05T04:43:24.016Z"
+    },
+    {
+      "id": "bug-081",
+      "timestamp": "2026-05-05T10:12:12.531Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../tmp/06_train_onpolicy_anchor.py",
+      "root_cause": "Had \"[on-policy] step={opt_step}/{total_steps} loss={a",
+      "fix": "Changed to \"[anchor] step={opt_step}/{total_steps} loss={avg:",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T10:12:12.531Z"
+    },
+    {
+      "id": "bug-082",
+      "timestamp": "2026-05-05T12:01:41.431Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 4→6 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T12:01:41.431Z"
+    },
+    {
+      "id": "bug-083",
+      "timestamp": "2026-05-05T15:05:34.155Z",
+      "error_message": "Wrong reference: training should be HE",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "Used \"training\" instead of \"HE\"",
+      "fix": "Changed training → HE",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-05T15:05:34.155Z"
+    },
+    {
+      "id": "bug-084",
+      "timestamp": "2026-05-06T03:13:54.367Z",
+      "error_message": "Wrong reference: training should be HE",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "Used \"training\" instead of \"HE\"",
+      "fix": "Changed training → HE",
+      "tags": [
+        "auto-detected",
+        "wrong-reference",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T03:13:54.367Z"
+    },
+    {
+      "id": "bug-085",
+      "timestamp": "2026-05-06T10:17:55.423Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 9→11 lines (7 removed) | Also: - `06_train_onpolicy_xv.py` — cross-vocab on-polic; - `06_eval.py` — SQLite-cached, resumable HE+MBPP ",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-06T10:19:06.540Z"
+    },
+    {
+      "id": "bug-086",
+      "timestamp": "2026-05-06T10:46:06.845Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "Had `cache_teacher/qwen25c7b_inst_mbpp_tvp_topk128.pt`",
+      "fix": "Changed to 's NOT synth pollution; Qwen-Inst module-rewrite i",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T10:46:06.845Z"
+    },
+    {
+      "id": "bug-087",
+      "timestamp": "2026-05-06T12:05:49.914Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../tmp/06_train_kl_on_cache.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 10→12 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T12:05:49.914Z"
+    },
+    {
+      "id": "bug-088",
+      "timestamp": "2026-05-06T12:54:42.159Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../tmp/06_train_grpo_kl_distill.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 10→31 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T12:54:42.159Z"
+    },
+    {
+      "id": "bug-089",
+      "timestamp": "2026-05-06T13:08:32.794Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../tmp/06_train_grpo_kl_distill.py",
+      "root_cause": "15 lines replaced/restructured",
+      "fix": "Rewrote 20→12 lines (15 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T13:08:32.794Z"
+    },
+    {
+      "id": "bug-090",
+      "timestamp": "2026-05-06T13:12:12.340Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/ctd/util.py",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 14→29 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T13:12:12.340Z"
+    },
+    {
+      "id": "bug-091",
+      "timestamp": "2026-05-06T13:16:26.643Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/README.md",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 5→8 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T13:16:26.643Z"
+    },
+    {
+      "id": "bug-092",
+      "timestamp": "2026-05-06T15:00:53.643Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "14 lines replaced/restructured",
+      "fix": "Rewrote 17→25 lines (14 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T15:00:53.643Z"
+    },
+    {
+      "id": "bug-093",
+      "timestamp": "2026-05-06T15:01:07.136Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md",
+      "root_cause": "6 lines replaced/restructured",
+      "fix": "Rewrote 7→17 lines (6 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T15:01:07.136Z"
+    },
+    {
+      "id": "bug-094",
+      "timestamp": "2026-05-06T15:08:47.121Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../tmp/06_train_grpo_kl_verified.py",
+      "root_cause": "38 lines replaced/restructured",
+      "fix": "Rewrote 80→57 lines (38 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T15:08:47.121Z"
+    },
+    {
+      "id": "bug-095",
+      "timestamp": "2026-05-06T15:10:25.211Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../tmp/06_train_grpo_kl_verified.py",
+      "root_cause": "Had \"--reward-clip\"",
+      "fix": "Changed to \"--exec-timeout\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T15:10:25.211Z"
+    },
+    {
+      "id": "bug-096",
+      "timestamp": "2026-05-06T15:48:16.622Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../tmp/filter_corpus_strict.py",
+      "root_cause": "10 lines replaced/restructured",
+      "fix": "Rewrote 20→18 lines (10 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-06T15:48:16.622Z"
+    },
+    {
+      "id": "bug-097",
+      "timestamp": "2026-05-06T19:14:47.783Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 22→73 lines (9 removed) | Also: **M27 update (2026-05-06): naive GRPO+KL Distill v; HE 18.3 / MBPP 33.6.** Recipe: K=4 on-policy sampl",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-06T19:15:11.563Z"
+    },
+    {
+      "id": "bug-098",
+      "timestamp": "2026-05-07T02:31:14.871Z",
+      "error_message": "Significant refactor of ",
+      "file": "BASE_DEEPSEEK_CODER_V2_LITE.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 3→3 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T02:31:14.871Z"
+    },
+    {
+      "id": "bug-099",
+      "timestamp": "2026-05-07T05:13:09.758Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md",
+      "root_cause": "12 lines replaced/restructured",
+      "fix": "Rewrote 17→23 lines (12 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T05:13:09.758Z"
+    },
+    {
+      "id": "bug-100",
+      "timestamp": "2026-05-07T07:40:21.893Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 3→16 lines (2 removed) | Also: ### Phase 0 — Setup (~3-4 hours, mostly compute); 1. **VRAM smoke**: 5-step training loop with QC-14",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-05-07T07:41:57.898Z"
+    },
+    {
+      "id": "bug-101",
+      "timestamp": "2026-05-07T11:40:49.731Z",
+      "error_message": "Incorrect value in code",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/gen_teacher_completions.py",
+      "root_cause": "Had \"bf16\"",
+      "fix": "Changed to \"none\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T11:40:49.731Z"
+    },
+    {
+      "id": "bug-102",
+      "timestamp": "2026-05-07T16:44:22.040Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_onpolicy_xv_v2.py",
+      "root_cause": "5 lines replaced/restructured",
+      "fix": "Rewrote 17→38 lines (5 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T16:44:22.041Z"
+    },
+    {
+      "id": "bug-103",
+      "timestamp": "2026-05-07T17:40:39.133Z",
+      "error_message": "Wrong return value",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py",
+      "root_cause": "Was returning: m.group(1).strip() if m else t.strip()",
+      "fix": "Now returns: blocks[-1].strip()",
+      "tags": [
+        "auto-detected",
+        "return-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T17:40:39.133Z"
+    },
+    {
+      "id": "bug-104",
+      "timestamp": "2026-05-07T19:39:16.175Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../tmp/06_train_sft_on_teacher.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 21→49 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T19:39:16.175Z"
+    },
+    {
+      "id": "bug-105",
+      "timestamp": "2026-05-07T21:26:36.791Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/README.md",
+      "root_cause": "17 lines replaced/restructured",
+      "fix": "Rewrote 26→69 lines (17 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T21:26:36.791Z"
+    },
+    {
+      "id": "bug-106",
+      "timestamp": "2026-05-07T21:41:18.352Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 6→9 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T21:41:18.352Z"
+    },
+    {
+      "id": "bug-107",
+      "timestamp": "2026-05-07T22:00:21.534Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../tmp/run_v2_phase3.sh",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 13→20 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-07T22:00:21.534Z"
+    },
+    {
+      "id": "bug-108",
+      "timestamp": "2026-05-08T06:44:25.718Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 9→13 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T06:44:25.718Z"
+    },
+    {
+      "id": "bug-109",
+      "timestamp": "2026-05-08T07:27:39.193Z",
+      "error_message": "Significant refactor of ",
+      "file": "../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 21→39 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T07:27:39.193Z"
+    },
+    {
+      "id": "bug-110",
+      "timestamp": "2026-05-08T09:24:24.227Z",
+      "error_message": "Significant refactor of ",
+      "file": "BASE_DEEPSEEK_CODER_V2_LITE.md",
+      "root_cause": "8 lines replaced/restructured",
+      "fix": "Rewrote 15→52 lines (8 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-08T09:24:24.227Z"
+    },
+    {
+      "id": "bug-111",
+      "timestamp": "2026-05-09T21:30:36.163Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/pod_runner/run_v6s.sh",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 11→22 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-09T21:30:36.163Z"
+    },
+    {
+      "id": "bug-112",
+      "timestamp": "2026-05-10T05:02:41.046Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/pod_runner/run_v6v_precompute.sh",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 14→26 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "sh"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-10T05:02:41.046Z"
+    },
+    {
+      "id": "bug-113",
+      "timestamp": "2026-05-10T06:23:52.958Z",
+      "error_message": "Incorrect value in code",
+      "file": "scripts/06_train_sft_recurrence.py",
+      "root_cause": "Had \"--attn-impl\"",
+      "fix": "Changed to \"--quant\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-10T06:23:52.958Z"
+    },
+    {
+      "id": "bug-114",
+      "timestamp": "2026-05-10T06:24:03.792Z",
+      "error_message": "Significant refactor of ",
+      "file": "scripts/06_train_sft_recurrence.py",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 9→21 lines (7 removed) | Also: cov = float(teacher_cache[\"alignment_mask\"].float(; print(f\"[v6v] teacher alignment coverage: {cov:.2% | Also: # Forward through wrapper at sampled T.; s_out = wrapper(input_ids=input_ids, attention_mas",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 3,
+      "last_seen": "2026-05-10T06:28:56.030Z"
+    },
+    {
+      "id": "bug-115",
+      "timestamp": "2026-05-10T06:35:02.809Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/training/lora_inject.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 10→41 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-10T06:35:02.809Z"
+    },
+    {
+      "id": "bug-116",
+      "timestamp": "2026-05-10T08:57:33.359Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/modeling.py",
+      "root_cause": "2 lines replaced/restructured",
+      "fix": "Rewrote 5→15 lines (2 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-10T08:57:33.359Z"
+    },
+    {
+      "id": "bug-117",
+      "timestamp": "2026-05-10T18:09:50.982Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/recurrence.py",
+      "root_cause": "4 lines replaced/restructured",
+      "fix": "Rewrote 6→13 lines (4 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-10T18:09:50.982Z"
+    },
+    {
+      "id": "bug-118",
+      "timestamp": "2026-05-12T01:16:41.330Z",
+      "error_message": "Significant refactor of ",
+      "file": "src/mythic_rdt/recurrence.py",
+      "root_cause": "9 lines replaced/restructured",
+      "fix": "Rewrote 13→22 lines (9 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "py"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-05-12T01:16:41.330Z"
     }
   ]
 }

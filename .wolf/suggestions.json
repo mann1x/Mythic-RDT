@@ -1,4 +1,36 @@
 {
-  "suggestions": [],
-  "generated_at": null
+  "generated_at": "2026-05-04T02:01:00.129Z",
+  "achievements": [
+    "v6R produced first wrapper-positive T=4 LCB direction: T=4=29.1% vs base 25.5% (+2pp, within noise but directional)",
+    "v6Q FA2+MoEVec inference stack delivered ~3.7x speedup with 100/100/100/100 HE-20 parity",
+    "v6Q full re-eval confirmed loss recipe (not architecture) was the ceiling (HE-164 70-72% flat, LCB-55 23-26% flat)",
+    "Discovered focal-γ is loss-shape not warmup via wandb A/B (γ>1.5 harmful) — disproved kl+focal+phase3 triple-interaction theory",
+    "Bootstrapped cross-tokenizer-distill sister project (mapper, alignment, losses, precompute, teachers, validation experiments)",
+    "Refinement-mask design validated as cleaner than α-tuning (gated 97% of distill by step 400)"
+  ],
+  "improvements": [
+    "src/mythic_rdt/training/trainer.py has been edited 10+ times — refactor compute_loss into composable loss components (CE, focal, distill, margin, mask)",
+    "scripts/humaneval_smoke.py edited 15+ times — extract _wrapper_generate_batch and _patch_moe_forward into shared modules under src/mythic_rdt/eval/",
+    "Consolidate scripts/local_v6{k,l,n,q}_ckpt_lcb10.sh into one parameterized eval driver (model/ckpt/T-set as args)",
+    "scripts/pod_runner/run_v6{a..r}.sh duplicate >90% — collapse to a templated launcher with recipe YAML",
+    "Move ad-hoc probe scripts (_probe_*.py, _test_post_loop_fixes.py) into experiments/ with hypothesis notes per OpenWolf convention",
+    "eval_results/ has 80+ untracked json/log files — add a results manifest or move to a structured eval_results/<version>/ layout"
+  ],
+  "next_tasks": [
+    "Design v6S: switch refinement mask to T_hi disagreement signal (mask should not measure on the easy-to-converge forward pass)",
+    "Run v6R full re-eval at HE-164 + LCB-medium-full to confirm +2pp T=4 lift outside noise",
+    "Lower distill α below 0.3 OR hybrid distill+kl_anchor as v6R follow-up (per project_v6q_final_verdict)",
+    "Defer speculative-decoding plan until v6R/v6S quality lift confirmed (per STATUS §12)",
+    "Commit pending tree (modeling.py, recurrence.py, trainer.py, configuration.py + STATUS.md/CALIBER_LEARNINGS.md)",
+    "Untrack large eval_results/ artifacts via .gitignore patterns; keep only json verdicts"
+  ],
+  "risks": [
+    "v6R +2pp T=4 is within SE (~8pp on n=55 LCB) — risk of declaring win on noise; needs HE-164 + larger-n LCB confirmation",
+    "Refinement mask gated 97% by step-400 → mask effectively vanished; v6S design assumption may be wrong",
+    "Inheritance chain across v6{H,K,N,Q,R} pod scripts means one buggy template can silently corrupt multiple runs",
+    "DS-Coder transformers 4.46.3 sidecar venv coupling is fragile (bug-073: NF4 cache only loads in mythic-rdt env)",
+    "Massive untracked eval_results/ + pod_logs/ and 13 modified tracked files = uncommitted state across 5+ days, hard to bisect regressions",
+    "Pod-side scripts must mirror solidPC source-of-truth; drift between pod and src/mythic_rdt/ tree (per feedback_pod_sync) is recurring",
+    "trainer.py compute_loss complexity growing with each recipe variant — refactor risk vs continued v6S/v6T iteration speed"
+  ]
 }

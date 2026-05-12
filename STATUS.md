@@ -1,10 +1,20 @@
 # Mythic-RDT — Current Status (Stage 1)
 
-**Last updated:** 2026-04-30 — **v6K** (v6H baseline + focal-weighted CE on T=4) training in flight on vast.ai pod 35822024 (wandb `et2eektc`), ETA finish ~17:00–22:30 UTC. v6H = controlled baseline (no harm, no win). v6I REJECTED (kl_anchor proved load-bearing).
+**Last updated:** 2026-04-30 17:30 UTC — **v6K** (v6H baseline + focal-weighted CE on T=4) training in flight on vast.ai pod 35822024 (wandb `et2eektc`), step ~294/400 (74%), ETA finish ~19:30 UTC. ckpt-200 LCB-10 evaluated locally on 3090: T1=30 / T2=20 / T4=30 = base on the same 10 problems (no degradation; T=4 hadn't trained yet at that ckpt). v6H = controlled baseline (no harm, no win). v6I REJECTED (kl_anchor proved load-bearing).
 **Companion to:** `MASTER_PLAN.md` (kickoff plan, unchanged), `README.md` (intended public surface).
 This file is the source of truth for *what actually happened* and *what is in flight*.
 
-**TL;DR scoreboard (LCB-30 medium, base = 30% = 9/30 problems):**
+**Authoritative base baselines (NF4, gen-tokens=512, greedy, batch=2 on 5080):**
+
+| Eval | n | base pass@1 | source |
+|---|---|---|---|
+| HumanEval | 164 | **70.1%** (115/164) | pandorum_base_full_eval.sh phase 1, 2026-04-30 |
+| LCB-medium | 55 (post-2024-10-01) | **21.8%** (12/55) | pandorum_base_full_eval.sh phase 3, 2026-04-30 |
+| MBPP+ | 378 | TBD (running) | pandorum_base_full_eval.sh phase 5 |
+
+Note the LCB-medium n=55 base is **21.8%**, not the 30% number printed in the older "TL;DR scoreboard (LCB-30 medium, base = 30%)" line below — the 30% was from LCB-10 (first 10 problems, easier than the rest). The 21.8% LCB-55 number is the right gate for v6K's T=4 target.
+
+**Wrapper scoreboard (LCB-30 medium, base ≈ 30% on this 30-problem subset):**
 
 | Run | T=1 | T=2 | T=4 | Verdict |
 |---|---|---|---|---|
@@ -14,7 +24,10 @@ This file is the source of truth for *what actually happened* and *what is in fl
 | v6A trained | 26.7% | 6.7% | 3.3% | drift: T>1 worse than T=1; recipe REJECTED |
 | **v6H** | **30%** | **20%** | **26.7%** | **first to NOT catastrophically degrade T=4** |
 | v6I (LCB-10) | 30% | 20% | 10% | catastrophic; kl_anchor was load-bearing; REJECTED |
-| **v6K** | TBD | TBD | TBD | **active — target T=4 ≥ 33%** |
+| v6K ckpt-200 (LCB-10) | 30% | 20% | 30% | base-equal; T=4 hadn't trained yet (curriculum @ T=4 enters at step 200) |
+| **v6K final** | TBD | TBD | TBD | **active — target T=4 ≥ 33% on LCB-30** |
+
+**Performance: NF4 cache (2026-04-30)** — `scripts/cache_nf4_base.py` writes a pre-quantized DS-Coder dir at `base/DeepSeek-Coder-V2-Lite-Instruct-nf4/` (8.2 GB on disk). Future loads skip on-the-fly quantization: 42s on local nvme vs 5-15 min before. Use with `--base <cached_dir> --quant none`. `local_v6k_ckpt_lcb10.sh CKPT_NUM` runs LCB-10 against any v6K ckpt locally.
 
 ---
 
@@ -312,14 +325,74 @@ Run on v4-anchored ckpt-400, summarised in `experiments/` (probe scripts inline,
 
 ## 9. Open items / next steps
 
-### Active investigation: v6K (in flight)
+### Current state (2026-05-02 22:35 CEST): v6R PHASE 2b in flight, CTD library scaffolded
 
-- **Run:** `phase1_v6k_focal_anchored` on pod 35822024, wandb `et2eektc`. ETA finish 2026-04-30 ~17:00–22:30 UTC.
-- **Decision rules** at v6K finish (LCB-30 medium, base=30%):
-  - **T=4 ≥ 33% (≥+1 vs base)** → focal CE is productive; iterate (v6L = focal + EMA, or sweep gamma 0.5/1.5/2.0).
-  - **T=4 ≈ 27% (≈ v6H)** → focal didn't help; pivot to teacher distillation from fp16 self (same tokenizer, removes NF4 noise).
-  - **T=4 << 27%** → focal damages even with anchor; abandon focal direction; reconsider per-token KL on long-context training data.
-- **Pre-eval gate:** verify `[smoke] loaded 80 trainable tensors  missing=0 unexpected=0` (bug-050 guard). Run pandorum-side LCB-30 first (free GPU), then HE-20 if v6K has any LCB delta worth confirming.
+**Teacher distillation — only TWO trainings to date have used it:**
+
+| Run | Recipe | Cache | Result |
+|---|---|---|---|
+| **v6Q** | Distill α=0.5 (BLANKET, all tokens) — replaces kl_anchor | `dscoder_v2_lite_bf16_top32_seed0.pt` | ckpt-400: HE-164 ≈ base, LCB-medium-full = base on every T |
+| **v6R** | Distill α=0.3 + refinement-mask (only tokens where T_lo argmax ≠ teacher top-1) | same cache | ckpt-400: HE-164 = base on T=1/T=4, T=2 -1.2pp; LCB T=1 = base, T=2 = -3.6pp; **T=4 in flight** |
+
+All earlier v6 runs (v6A through v6N) used `kl_anchor` instead of distillation. v6Q switched to distill against the model's own BF16 self.
+
+**v6Q FA2+MoEVec full re-eval (memory `project_v6q_fa2_full_eval.md`):**
+- HE-164: 70.7 / 70.1 / 72.0 / 70.7
+- LCB-medium-full (n=55): 25.5 / 25.5 / 23.6 / 23.6
+- **Statistically flat at every T on both benchmarks** (HE SE 3.6pp, LCB SE 5.8pp)
+- Distill α=0.5 anchors wrapper to teacher distribution → no observable lift
+
+**v6R interim (PHASE 2 in flight):**
+- Training: 400 steps, exit_code=0, runtime 4h 38m, wandb `s6r1mvhd`
+- Final wandb: `ce_lo_T=0.19`, `ce_hi_T=2.10` (= v6Q), `ce_gap=1.91` (vs v6Q ~0), `teacher_refine_mask_frac=0.033` (only 3.3% of tokens carry distill signal — mask vanished as T_lo converged to teacher)
+- HE-164 done: 70.7 / 70.7 / 69.5 / 70.7 (= base ±1 problem)
+- LCB-medium-full so far: BASE 25.5, T=1 25.5, T=2 21.8 (-3.6pp). T=4 generating.
+
+**Series so far (LCB-30 medium / LCB-medium-full, base ≈ 25-30%):**
+
+| Run | Recipe delta | Loss recipe | LCB T=1 | T=2 | T=4 | Verdict |
+|---|---|---|---|---|---|---|
+| v6H | Fix-A baseline + kl_anchor 0.5 + margin 0.10 | kl_anchor | 30 | 20 | 27 | ✅ no-harm |
+| v6I | drop kl_anchor | margin only | 30 | 20 | 10 | 🔴 rejected |
+| v6K | + focal-γ=1.0 on T=4 | kl_anchor + focal | 30 | 30 | **33** | 🟡 +1 (best of pre-distill) |
+| v6L | shrink block to 6 layers | kl_anchor + focal | 0 | 0 | 0 | 🔴 rejected |
+| v6M | LoRA rank 16 | kl_anchor + focal | — | — | — | 🟡 ran |
+| v6N | focal-γ=2.0 | kl_anchor + focal | 30 | 23 | 33 | 🟡 ties v6K |
+| **v6Q** | **distill α=0.5 (replaces kl_anchor)** | **distill blanket** | 25.5 | 23.6 | 23.6 | 🟡 flat, no lift |
+| **v6R** | **distill α=0.3 + refinement-mask** | **distill masked** | 25.5 | 21.8 | TBD | in flight |
+
+### Mythic-RDT next-step decision tree (gated on v6R T=4 LCB)
+
+**If v6R T=4 ≥ 30.9%** (= +3 problems vs base, > 1 SE) → **REAL signal**. Iterate (v6S = longer + rank 16).
+
+**If v6R T=4 ∈ [22%, 30%]** → mask alone insufficient. Two paths:
+- **v6T (same-vocab stronger teacher)**: rebuild cache with **DeepSeek-Coder-V2-236B-Instruct** as teacher. Fits 4× A100 80GB or 2× H100 80GB at Q4. Precompute one-shot ~$50-150 on vast pod. Training same as v6Q. Same vocab (102400) → no cross-tokenizer plumbing.
+- **v6U (cross-vocab stronger teacher via CTD)**: use **Qwen3-Coder-Next 80B-A3B** (vocab 151936 ≠ 102400). Requires `cross-tokenizer-distill` library (now scaffolded — see below). Cheaper precompute (~$15-20, 80B-A3B is 3B-active MoE) but needs CTD validation first.
+
+**If v6R T=4 < 22%** → mask + lower α damaged the prior. Revert to v6Q baseline and try a different angle (rank, longer, stronger teacher).
+
+### v6S (longer + rank 16)
+
+Conditional on v6R T=4 ≥ 30.9%. Scale: 800-1200 steps + LoRA rank 16 with same v6R recipe. Confirms whether the signal scales.
+
+### Cross-tokenizer-distill library (NEW — scaffolded 2026-05-02)
+
+Repo: https://github.com/mann1x/cross-tokenizer-distill (private). Local: `/shared/dev/cross-tokenizer-distill/`.
+
+**Status:** v0.0.1 — VocabMapper + alignment + precompute + losses + HF Trainer adapter implemented and tested (22/22 unit + 3 real-tokenizer tests pass). Validation experiment scaffolded.
+
+**Live coverage measurement** (Qwen2.5-Coder ↔ DeepSeek-Coder-V2-Lite, the actual Mythic-RDT pair):
+- 100% mass coverage with `multi_token=distribute`
+- 46% single-token clean matches / 54% multi-token (avg 2.7 fragments)
+- 0 byte-roundtrip failures
+
+**Validation plan (Plan 1):** small-models 3-way A/B/C on a single 3090 / pod, ~3-8h:
+- Student: `deepseek-ai/deepseek-coder-1.3b-instruct` (vocab 32256)
+- Teacher B (same vocab): `deepseek-ai/deepseek-coder-6.7b-instruct` (HE ~78%)
+- Teacher C (CTD, **stronger**): `Qwen/Qwen2.5-Coder-7B-Instruct` (HE ~88%, vocab 152064)
+- Decision: ratio (C-A)/(B-A) ≥ 0.8 → CTD works → proceed to v6U-Qwen3 with strong confidence
+- Run: `cd /shared/dev/cross-tokenizer-distill/experiments/validation && bash run_all.sh`
+- **Will launch on pod 35822024 once v6R PHASE 2b finishes** (~22:50 CEST)
 
 ### Settled items (decisions locked, no re-litigation)
 
@@ -384,4 +457,62 @@ nvidia-smi  # check free; if GPU >2GB used by non-ours, USE PANDORUM, do not for
 
 ---
 
-*Memory entries cross-referenced: `project_v6h_final_verdict.md`, `project_v6i_rejected.md`, `project_v6k_design.md`, `project_v6a_post_fix_verdict.md`, `project_v6e_inference_path_bug.md`, `project_recurrence_root_cause_block_mode.md`, `project_phase1_v3_t1_validation.md`, `project_phase1_v4_anchored_corrected_verdict.md`, `feedback_smoke_max_loop_iters.md`, `feedback_pyc_purge_after_modeling_patch.md`, `feedback_init_from_checkpoint_pattern.md`, `project_dscoder_5x_blocker.md`. Bug log: `.wolf/buglog.json` entries `bug-049`, `bug-050`, `bug-054`.*
+*Memory entries cross-referenced: `project_v6h_final_verdict.md`, `project_v6i_rejected.md`, `project_v6k_design.md`, `project_v6q_final_verdict.md`, `project_v6q_ckpt300_verdict.md`, `project_v6q_ckpt200_verdict.md`, `project_v6q_ckpt100_verdict.md`, `project_v6n_ckpt300_verdict.md`, `project_v6n_ckpt200_verdict.md`, `project_v6l_ckpt100_verdict.md`, `project_v6a_post_fix_verdict.md`, `project_v6e_inference_path_bug.md`, `project_recurrence_root_cause_block_mode.md`, `project_phase1_v3_t1_validation.md`, `project_phase1_v4_anchored_corrected_verdict.md`, `feedback_smoke_max_loop_iters.md`, `feedback_pyc_purge_after_modeling_patch.md`, `feedback_init_from_checkpoint_pattern.md`, `feedback_focal_gamma_loss_shape_not_warmup.md`, `feedback_nf4_cache.md`, `feedback_nf4_cache_load_venv.md`, `project_dscoder_5x_blocker.md`. Bug log: `.wolf/buglog.json` entries `bug-049`, `bug-050`, `bug-054`.*
+
+---
+
+## 11. Inference / eval speed stack (2026-05-02)
+
+**Problem:** original eval path (eager attention + Python MoE expert mask loop + NF4) saturates at ~13% GPU util on RTX 6000 Ada — entirely CPU/Python bound. HE-164 takes ~1.8 hours; LCB-medium-full another ~50 min.
+
+**Landed (2026-05-02):**
+
+1. **flash-attn 2.8.3** wired via `--attn-impl flash_attention_2` flag in `humaneval_smoke.py` and `finetune_phase1.py`. Pod (Ubuntu 22.04, GLIBC 2.35) installs cleanly; local solidPC (Debian 11, GLIBC 2.31) needed `polyfill-glibc` + `LD_PRELOAD` shim because flash_attn_2_cuda.so requires `__libc_single_threaded@GLIBC_2.32`. Shim at `/opt/fa2_shim/libfa2_glibc232_shim.so`; .so patched with `polyfill-glibc --clear-symbol-version=__libc_single_threaded --target-glibc=2.30`. Both hosts now align on FA2.
+
+2. **MoE vectorization** via runtime monkey-patch (`_patch_moe_forward` in `humaneval_smoke.py`, exposed via `--moe-vec` flag, mirrored into `finetune_phase1.py`). Replaces the per-expert Python mask loop with sorted/grouped dispatch: tokens sorted by expert id once, dispatched to active experts only. Numerically equivalent in fp32; bf16 may diverge by ~1e-3. Patches 26/27 layers (layer 0 is dense MLP per `first_k_dense_replace=1`, by design).
+
+3. **Persistent NF4 cache** (`scripts/cache_nf4_base.py`): pre-quantize DS-Coder once via `save_pretrained`, load with `--quant none` from the cached dir. Cuts model load from 5-15 min to ~30s. Mandatory env: `mythic-rdt` conda env (transformers 4.46.3 + torch 2.6.0+cu126); transformers 5.x crashes inside `_init_weights` (memory `feedback_nf4_cache_load_venv.md`).
+
+4. **Wrapper-incremental progress logging** (`_run_wrapper_eval_incremental` in `humaneval_smoke.py`): wrapper T=1/2/4 phases now emit per-problem `[smoke wT={T} {HE,LCB}]   N/total task_id=… {PASS,fail} gen=…s score=…s` lines, matching the BASE incremental flow. Previously wrapper phases were silent until the final pass@1 — invisible progress on multi-hour LCB runs.
+
+**Validated parity (HE-20, v6Q ckpt-400, bs=16, NF4):**
+
+| | BASE | T=1 | T=2 | T=4 |
+|---|---|---|---|---|
+| Eager + naive MoE | 100% | 100% | 100% | 100% |
+| **FA2 + MoE-vec** | **100%** | **100%** | **100%** | **100%** |
+
+Pass@1 identical across all four cells.
+
+**Throughput:**
+- Original (eager + naive, bs=24): ~25s/batch ≈ 1.04s/problem
+- New (FA2 + MoE-vec, bs=32): ~9s/batch ≈ 0.28s/problem
+- **~3.7× wall-time speedup per problem**, despite GPU util only rising 13% → 16% (kernels finish faster, Python remains the bottleneck — utilization metric is misleading on Python-bound workloads).
+
+**Remaining bottlenecks (not fixed, ranked by impact):**
+
+1. **NF4 dequant per forward** — bnb dequantizes every step. Memory-bandwidth bound. Only fixable by switching to bf16 base, which is rejected (user constraint: 3090 must stay viable, NF4 mandatory).
+2. **64-expert Python loop** still iterates in Python (skipping empties only). A fused MoE kernel (triton/vllm-style) would eliminate this. Out of scope.
+3. **HF `.generate()` Python step loop** — one Python round-trip per generated token. Possible improvements: torch.compile + static cache (1.5-3× more, MoE makes graph-tracing fragile), CUDA graphs (probably impossible due to MoE dynamic dispatch), spec decoding (see §12).
+
+### Speed measurement: pending solo bench
+
+- Current re-eval (in flight) is solo on pod, full HE-164 + LCB-medium-full at bs=32. First clean wall-time vs the eager run will land when this finishes.
+
+---
+
+## 12. Speculative decoding (deferred)
+
+**Plan:** once a v6 variant produces a real T=2 or T=4 quality lift over base (LCB pass@1 +5pp or more, durable across HE / MBPP / LCB), prototype speculative decoding to recover throughput.
+
+**Setup:** base DS-Coder-V2-Lite at T=1 generates K candidate tokens cheaply; wrapper at T=2/4 verifies all K in a single parallel forward and accepts the longest matching prefix. Effective throughput ~ acceptance_rate × K × wrapper_step_cost / base_step_cost.
+
+**Why conditional:** if T=2/T=4 give no quality lift, there's nothing to speculate FOR — base alone is the production model and spec decoding is irrelevant.
+
+**Why useful:** wrapper at T=4 is ~4× the wall time of base at T=1 (4 loop iters per token). Spec decoding could collapse that to ~1.2-2× while preserving the wrapper's quality on the accepted tokens. Makes wrapper deployment viable at inference time.
+
+**Effort:** 2-3 days. Probably build on transformers' built-in `assistant_model` API as a starting point; may need a custom verifier path because the wrapper's `forward(T=K)` semantics differ from a stock model.
+
+**Reference:** transformers `model.generate(assistant_model=..., do_sample=False)`, "Fast Inference from Transformers via Speculative Decoding" (Leviathan et al.), and the Medusa / EAGLE follow-ups.
+
+**Blocker:** v6R or v6S landing a real T>1 quality lift. Tracked as task #71 with addBlockedBy on #69 (v6R) and #70 (v6S).

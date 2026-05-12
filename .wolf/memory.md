@@ -4,1133 +4,1055 @@
 > Old sessions are consolidated by the daemon weekly.
 
 ## Session: 2026-04-26 17:15
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 17:16
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 17:36
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 17:37
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 17:37
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 17:41
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 17:46 | Created src/mythic_rdt/configuration.py | — | ~1994 |
-| 17:48 | Created src/mythic_rdt/modeling.py | — | ~3519 |
-| 17:48 | Edited src/mythic_rdt/__init__.py | expanded (+6 lines) | ~124 |
-| 17:49 | Created scripts/phase0_sanity.py | — | ~2465 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 17:51
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 17:51 | Edited base/DeepSeek-Coder-V2-Lite-Instruct/modeling_deepseek.py | modified is_torch_fx_available() | ~318 |
-| 17:52 | Session end: 1 writes across 1 files (modeling_deepseek.py) | 0 reads | ~318 tok |
-| 18:03 | Edited src/mythic_rdt/modeling.py | modified parameters() | ~312 |
-| 18:08 | Phase 0 bit-exact gate PASSED | scripts/phase0_sanity.py | layers 10/13/16 all max_abs_diff=0.0 (bf16 CPU, seq=8) | ~50 |
-| 18:10 | Logged 2 bugs (is_torch_fx_available, recurrence dtype) | .wolf/buglog.json | bug-001, bug-002 | ~600 |
-| 18:11 | Updated cerebrum learnings + decisions | .wolf/cerebrum.md | DS-Coder/transformers 5.x compat, dtype rule, vendoring decision | ~700 |
-| 18:14 | Session end: 2 writes across 2 files (modeling_deepseek.py, modeling.py) | 0 reads | ~630 tok |
-| 18:17 | Created scripts/phase0_probe_layers.py | — | ~5410 |
-| 18:17 | Edited scripts/phase0_probe_layers.py | "[probe] candidates={args." → "[probe] candidates={args." | ~22 |
-| 18:17 | Session end: 4 writes across 3 files (modeling_deepseek.py, modeling.py, phase0_probe_layers.py) | 0 reads | ~6062 tok |
-| 18:21 | Edited scripts/phase0_probe_layers.py | modified teacher_forced_ppl_batch() | ~877 |
-| 18:22 | Edited scripts/phase0_probe_layers.py | expanded (+8 lines) | ~212 |
-| 18:23 | Edited scripts/phase0_probe_layers.py | modified probe_one() | ~779 |
-| 18:23 | Edited scripts/phase0_probe_layers.py | 4→4 lines | ~50 |
-| 18:23 | Edited scripts/phase0_probe_layers.py | 10→11 lines | ~100 |
-| 18:24 | Session end: 9 writes across 3 files (modeling_deepseek.py, modeling.py, phase0_probe_layers.py) | 1 reads | ~13954 tok |
-| 18:26 | Session end: 9 writes across 3 files (modeling_deepseek.py, modeling.py, phase0_probe_layers.py) | 1 reads | ~13954 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 18:27
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 18:28 | Created ../../../../tmp/pod_setup.sh | — | ~691 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 18:32
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 18:37
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 18:53 | Created ../../../../tmp/make_prompts.py | — | ~430 |
-| 18:54 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:54 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:54 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:55 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:55 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:56 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:56 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:57 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:57 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:58 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:58 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:59 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 18:59 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:00 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:00 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:01 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:01 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:02 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:03 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:03 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:03 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:04 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:05 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:05 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:06 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
-| 19:06 | Session end: 1 writes across 1 files (make_prompts.py) | 0 reads | ~430 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 19:07
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 19:08 | Created experiments/01_phase0_probe/HYPOTHESIS_AND_RESULT.md | — | ~1315 |
-| 19:10 | Session end: 1 writes across 1 files (HYPOTHESIS_AND_RESULT.md) | 0 reads | ~1409 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 19:10
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 19:15 | Edited src/mythic_rdt/configuration.py | 4→8 lines | ~126 |
-| 19:15 | Edited experiments/01_phase0_probe/HYPOTHESIS_AND_RESULT.md | modified Justification() | ~248 |
-| 19:18 | Created scripts/humaneval_smoke.py | — | ~4281 |
-| 19:19 | Session end: 3 writes across 3 files (configuration.py, HYPOTHESIS_AND_RESULT.md, humaneval_smoke.py) | 0 reads | ~4673 tok |
-| 19:25 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_pod_sync.md | — | ~351 |
-| 19:26 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_finetune_resumable.md | — | ~638 |
-| 19:26 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | — | ~76 |
-| 19:27 | Session end: 6 writes across 6 files (configuration.py, HYPOTHESIS_AND_RESULT.md, humaneval_smoke.py, feedback_pod_sync.md, feedback_finetune_resumable.md) | 0 reads | ~5815 tok |
-| 19:27 | Edited scripts/humaneval_smoke.py | expanded (+7 lines) | ~208 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 19:27
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 19:29 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_dscoder_5x_kvcache_blocker.md | — | ~1028 |
-| 19:29 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 2→3 lines | ~126 |
-| 19:29 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:30 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:30 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:31 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:31 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:32 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:32 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:33 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:33 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
-| 19:33 | Session end: 2 writes across 2 files (project_dscoder_5x_kvcache_blocker.md, MEMORY.md) | 0 reads | ~1237 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 19:33
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 19:35 | Edited scripts/humaneval_smoke.py | inline fix | ~26 |
-| 19:37 | Edited scripts/humaneval_smoke.py | modified _prepend_bos() | ~332 |
-| 19:37 | Edited scripts/humaneval_smoke.py | 8→9 lines | ~108 |
-| 19:37 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:38 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:38 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:38 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:39 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:40 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:40 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:41 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:41 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:42 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:42 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:43 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
-| 19:44 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 0 reads | ~466 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 19:46
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 19:48 | Edited scripts/humaneval_smoke.py | modified definition() | ~1008 |
-| 19:48 | Edited scripts/humaneval_smoke.py | modified _prepend_bos() | ~470 |
-| 19:48 | Edited scripts/humaneval_smoke.py | _prepend_bos() → rendered() | ~230 |
-| 19:48 | Edited scripts/humaneval_smoke.py | 13→12 lines | ~153 |
-| 19:48 | Edited scripts/humaneval_smoke.py | modified zip() | ~71 |
-| 19:49 | Edited scripts/humaneval_smoke.py | 4→4 lines | ~54 |
-| 19:49 | Edited scripts/humaneval_smoke.py | 10→14 lines | ~170 |
-| 19:49 | Edited scripts/humaneval_smoke.py | 6→6 lines | ~74 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 19:54
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 19:56 | Created scripts/_diag_chat_decode.py | — | ~608 |
-| 19:56 | Session end: 1 writes across 1 files (_diag_chat_decode.py) | 0 reads | ~608 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 19:56
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 19:58 | Edited scripts/_diag_chat_decode.py | 2→2 lines | ~35 |
-| 19:59 | Created scripts/_diag_tokenizer.py | — | ~335 |
-| 20:01 | Edited scripts/humaneval_smoke.py | 4→5 lines | ~74 |
-| 20:02 | Edited scripts/humaneval_smoke.py | modified _load_dscoder_tokenizer() | ~369 |
-| 20:07 | Created scripts/_diag_minimal_gen.py | — | ~754 |
-| 20:12 | Edited scripts/_diag_minimal_gen.py | 4→8 lines | ~89 |
-| 20:17 | Edited scripts/humaneval_smoke.py | 8→12 lines | ~148 |
-| 20:17 | Edited scripts/humaneval_smoke.py | 15→12 lines | ~154 |
-| 20:20 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_dscoder_5x_blocker.md | — | ~1587 |
-| 20:20 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~104 |
-| 20:22 | Created scripts/setup_pod_env.sh | — | ~550 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 20:22
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 20:26
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 20:29 | Created scripts/_dscoder_compat.py | — | ~544 |
-| 20:29 | Edited scripts/phase0_probe_layers.py | 12→15 lines | ~164 |
-| 20:29 | Edited scripts/phase0_probe_layers.py | expanded (+10 lines) | ~378 |
-| 20:29 | Edited scripts/phase0_probe_layers.py | expanded (+6 lines) | ~138 |
-| 20:41 | Edited experiments/01_phase0_probe/HYPOTHESIS_AND_RESULT.md | expanded (+72 lines) | ~1358 |
-| 20:44 | Session end: 5 writes across 3 files (_dscoder_compat.py, phase0_probe_layers.py, HYPOTHESIS_AND_RESULT.md) | 2 reads | ~10207 tok |
-| 20:47 | Created src/mythic_rdt/loop_state.py | — | ~413 |
-| 20:48 | Created src/mythic_rdt/training/__init__.py | — | ~160 |
-| 20:52 | Created src/mythic_rdt/training/lora_inject.py | — | ~2412 |
-| 20:53 | Created src/mythic_rdt/training/curriculum.py | — | ~1444 |
-| 20:53 | Created src/mythic_rdt/training/data.py | — | ~1860 |
-| 20:54 | Edited src/mythic_rdt/modeling.py | added 3 import(s) | ~111 |
-| 20:54 | Edited src/mythic_rdt/modeling.py | modified forward() | ~119 |
-| 20:54 | Edited src/mythic_rdt/modeling.py | modified range() | ~117 |
-| 20:54 | Edited src/mythic_rdt/modeling.py | expanded (+18 lines) | ~294 |
-| 20:55 | Created src/mythic_rdt/training/trainer.py | — | ~3275 |
-| 20:56 | Edited src/mythic_rdt/training/trainer.py | modified build_training_args() | ~101 |
-| 20:56 | Edited src/mythic_rdt/training/trainer.py | expanded (+10 lines) | ~430 |
-| 20:57 | Created scripts/finetune_phase1.py | — | ~3054 |
-| 20:57 | Edited scripts/setup_pod_env.sh | 9→12 lines | ~78 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 20:58
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 21:00 | Edited src/mythic_rdt/training/data.py | needed() → open() | ~264 |
-| 21:02 | Session end: 1 writes across 1 files (data.py) | 0 reads | ~264 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 21:02
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 21:08 | Edited src/mythic_rdt/training/data.py | open() → access() | ~252 |
-| 21:08 | Edited src/mythic_rdt/training/trainer.py | expanded (+8 lines) | ~272 |
-| 21:10 | Edited src/mythic_rdt/training/data.py | expanded (+8 lines) | ~154 |
-| 21:10 | Edited src/mythic_rdt/training/data.py | 8→10 lines | ~85 |
-| 21:10 | Edited src/mythic_rdt/training/data.py | modified range() | ~392 |
-| 21:13 | Session end: 5 writes across 2 files (data.py, trainer.py) | 1 reads | ~1155 tok |
-| 21:18 | Edited scripts/finetune_phase1.py | expanded (+12 lines) | ~317 |
-| 21:21 | Edited scripts/finetune_phase1.py | modified exists() | ~418 |
-| 21:21 | Edited scripts/finetune_phase1.py | 2→2 lines | ~34 |
-| 21:22 | Edited scripts/finetune_phase1.py | added 1 import(s) | ~33 |
-| 21:23 | Edited scripts/finetune_phase1.py | modified in() | ~337 |
-| 21:30 | Session end: 10 writes across 3 files (data.py, trainer.py, finetune_phase1.py) | 1 reads | ~2294 tok |
-| 21:31 | Session end: 10 writes across 3 files (data.py, trainer.py, finetune_phase1.py) | 1 reads | ~2294 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 21:32
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 21:37
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 21:37
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 01:01 | Edited src/mythic_rdt/modeling.py | modified range() | ~344 |
-| 01:01 | Edited src/mythic_rdt/modeling.py | modified _run_layer() | ~442 |
-| 01:02 | Edited src/mythic_rdt/modeling.py | 11→16 lines | ~265 |
-| 01:02 | Edited scripts/finetune_phase1.py | expanded (+8 lines) | ~263 |
-| 01:02 | Edited scripts/finetune_phase1.py | 2→7 lines | ~136 |
-| 01:09 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_phase1_oom_root_causes.md | — | ~603 |
-| 01:09 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~112 |
-| 01:10 | Session end: 7 writes across 4 files (modeling.py, finetune_phase1.py, feedback_phase1_oom_root_causes.md, MEMORY.md) | 3 reads | ~10034 tok |
-| 01:10 | Session end: 7 writes across 4 files (modeling.py, finetune_phase1.py, feedback_phase1_oom_root_causes.md, MEMORY.md) | 3 reads | ~10034 tok |
-| 01:11 | Session end: 7 writes across 4 files (modeling.py, finetune_phase1.py, feedback_phase1_oom_root_causes.md, MEMORY.md) | 3 reads | ~10034 tok |
-| 01:11 | Session end: 7 writes across 4 files (modeling.py, finetune_phase1.py, feedback_phase1_oom_root_causes.md, MEMORY.md) | 3 reads | ~10034 tok |
-| 01:12 | Session end: 7 writes across 4 files (modeling.py, finetune_phase1.py, feedback_phase1_oom_root_causes.md, MEMORY.md) | 3 reads | ~10034 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 01:13
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 01:14 | Edited scripts/humaneval_smoke.py | expanded (+18 lines) | ~422 |
-| 01:14 | Session end: 1 writes across 1 files (humaneval_smoke.py) | 1 reads | ~6512 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-26 01:14
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 01:14 | Edited scripts/humaneval_smoke.py | expanded (+9 lines) | ~272 |
-| 01:14 | Session end: 1 writes across 1 files (humaneval_smoke.py) | 0 reads | ~272 tok |
-| 01:14 | Edited scripts/humaneval_smoke.py | modified exists() | ~697 |
-| 01:16 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:16 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:17 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:17 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:17 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:18 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:19 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:19 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:19 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:20 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:21 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:21 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:22 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:22 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:23 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:23 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:24 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:24 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:25 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:25 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:26 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:27 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:27 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:28 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:28 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:29 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:29 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:30 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:30 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:31 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:31 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:32 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:33 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:33 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:34 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:34 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:35 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:36 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:37 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:38 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:38 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:39 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:40 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:42 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:42 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:43 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:44 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:45 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:46 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:46 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:47 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:48 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:49 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:50 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:51 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:52 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:52 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:53 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:54 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:54 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:55 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:56 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:56 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:57 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:58 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 01:59 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:00 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:01 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:01 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:02 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:03 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:04 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:04 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:05 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:06 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:06 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:07 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:08 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:08 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:09 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:10 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:11 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:12 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:13 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:14 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:14 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:15 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:16 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:17 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:18 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:19 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:20 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:21 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:22 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:23 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:24 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:25 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:26 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:28 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:29 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:30 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:31 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:32 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:33 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:34 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:35 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:36 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:37 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:38 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:39 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:40 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:41 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:42 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:43 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:44 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:45 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:46 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:47 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:48 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:49 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:50 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:51 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:52 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:53 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:54 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:55 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:56 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:57 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 02:58 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:00 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:01 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:02 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:03 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:04 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:06 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:06 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:07 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:08 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:12 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:12 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:13 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:14 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:16 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:16 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:18 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:19 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:19 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:19 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:20 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:21 | Session end: 2 writes across 1 files (humaneval_smoke.py) | 0 reads | ~969 tok |
-| 03:23 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v2_gate_bias_dead.md | — | ~561 |
-| 03:24 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~97 |
-| 03:24 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:24 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:25 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:26 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:27 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:29 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:30 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:30 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:32 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:33 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:34 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:35 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:36 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:37 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:38 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:39 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:40 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:41 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:41 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:42 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:43 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:44 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:46 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:47 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:48 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:49 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:50 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:51 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:52 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:53 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:54 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 03:58 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 04:02 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 04:04 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 04:05 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 04:07 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 1 reads | ~1674 tok |
-| 04:08 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 2 reads | ~8895 tok |
-| 04:15 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 2 reads | ~8895 tok |
-| 04:19 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 2 reads | ~8895 tok |
-| 04:19 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 2 reads | ~8895 tok |
-| 04:21 | Session end: 4 writes across 3 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md) | 2 reads | ~8895 tok |
-| 04:23 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v2_catastrophic_regression.md | — | ~995 |
-| 04:23 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~110 |
-| 04:27 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v2_catastrophic_regression.md | modified Why() | ~450 |
-| 04:28 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v2_catastrophic_regression.md | modified apply() | ~514 |
-| 04:30 | Session end: 8 writes across 4 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md, project_phase1_v2_catastrophic_regression.md) | 2 reads | ~11112 tok |
-| 04:40 | Session end: 8 writes across 4 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md, project_phase1_v2_catastrophic_regression.md) | 2 reads | ~11112 tok |
-| 04:41 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v2_catastrophic_regression.md | modified of() | ~396 |
-| 04:42 | Session end: 9 writes across 4 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md, project_phase1_v2_catastrophic_regression.md) | 2 reads | ~11536 tok |
-| 04:43 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v2_catastrophic_regression.md | modified of() | ~290 |
-| 04:43 | Session end: 10 writes across 4 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md, project_phase1_v2_catastrophic_regression.md) | 2 reads | ~11847 tok |
-| 06:13 | Session end: 10 writes across 4 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md, project_phase1_v2_catastrophic_regression.md) | 2 reads | ~11847 tok |
-| 06:17 | Session end: 10 writes across 4 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md, project_phase1_v2_catastrophic_regression.md) | 2 reads | ~11847 tok |
-| 06:46 | Session end: 10 writes across 4 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md, project_phase1_v2_catastrophic_regression.md) | 2 reads | ~11847 tok |
-| 06:54 | Session end: 10 writes across 4 files (humaneval_smoke.py, project_phase1_v2_gate_bias_dead.md, MEMORY.md, project_phase1_v2_catastrophic_regression.md) | 2 reads | ~11847 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 07:01
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 07:02 | Edited src/mythic_rdt/configuration.py | modified __init__() | ~2061 |
-| 07:03 | Edited src/mythic_rdt/recurrence.py | inline fix | ~20 |
-| 07:03 | Edited src/mythic_rdt/recurrence.py | modified __init__() | ~304 |
-| 07:03 | Edited src/mythic_rdt/recurrence.py | modified __init__() | ~315 |
-| 07:03 | Edited src/mythic_rdt/recurrence.py | modified 0() | ~274 |
-| 07:03 | Session end: 5 writes across 2 files (configuration.py, recurrence.py) | 0 reads | ~2974 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 07:03
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 07:03 | Edited src/mythic_rdt/modeling.py | 11→13 lines | ~187 |
-| 07:03 | Edited src/mythic_rdt/modeling.py | modified _loop_step() | ~446 |
-| 07:03 | Edited src/mythic_rdt/modeling.py | modified forward() | ~130 |
-| 07:03 | Edited src/mythic_rdt/modeling.py | modified range() | ~553 |
-| 07:03 | Edited src/mythic_rdt/modeling.py | modified range() | ~163 |
-| 07:04 | Edited src/mythic_rdt/training/lora_inject.py | modified inject_depth_lora() | ~742 |
-| 07:04 | Edited scripts/finetune_phase1.py | expanded (+22 lines) | ~546 |
-| 07:04 | Edited scripts/finetune_phase1.py | expanded (+6 lines) | ~184 |
-| 07:05 | Edited scripts/humaneval_smoke.py | modified wrapper_generate() | ~356 |
-| 07:05 | Edited scripts/humaneval_smoke.py | expanded (+19 lines) | ~441 |
-| 07:05 | Edited scripts/humaneval_smoke.py | expanded (+6 lines) | ~134 |
-| 07:05 | Edited scripts/humaneval_smoke.py | 3→4 lines | ~55 |
-| 07:09 | Session end: 12 writes across 4 files (modeling.py, lora_inject.py, finetune_phase1.py, humaneval_smoke.py) | 1 reads | ~11639 tok |
-| 07:15 | Session end: 12 writes across 4 files (modeling.py, lora_inject.py, finetune_phase1.py, humaneval_smoke.py) | 1 reads | ~11639 tok |
-| 07:17 | Edited src/mythic_rdt/training/curriculum.py | modified default_curriculum() | ~644 |
-| 07:17 | Edited scripts/finetune_phase1.py | 1→5 lines | ~42 |
-| 07:17 | Edited scripts/finetune_phase1.py | modified to() | ~173 |
-| 07:17 | Edited scripts/finetune_phase1.py | expanded (+11 lines) | ~185 |
-| 07:20 | Session end: 16 writes across 5 files (modeling.py, lora_inject.py, finetune_phase1.py, humaneval_smoke.py, curriculum.py) | 2 reads | ~14127 tok |
-| 07:21 | Session end: 16 writes across 5 files (modeling.py, lora_inject.py, finetune_phase1.py, humaneval_smoke.py, curriculum.py) | 2 reads | ~14127 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 07:23
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 07:26 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_monitor_gpu_at_training_start.md | — | ~750 |
-| 07:26 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~124 |
-| 07:27 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:29 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:32 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:34 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:34 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:36 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:38 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:40 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:42 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:44 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:46 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:48 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:51 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:55 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 07:58 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 08:02 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 08:06 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 08:10 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 08:13 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 08:17 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 08:21 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
-| 08:25 | Session end: 2 writes across 2 files (feedback_monitor_gpu_at_training_start.md, MEMORY.md) | 0 reads | ~936 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 08:27
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 08:30
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 09:18 | Edited src/mythic_rdt/training/curriculum.py | modified v3_t1_only_curriculum() | ~134 |
-| 09:18 | Edited src/mythic_rdt/training/curriculum.py | 7→8 lines | ~50 |
-| 09:18 | Edited scripts/finetune_phase1.py | 5→6 lines | ~49 |
-| 09:18 | Edited scripts/finetune_phase1.py | only() → step() | ~121 |
-| 09:18 | Edited scripts/finetune_phase1.py | 1→3 lines | ~41 |
-| 09:19 | Session end: 5 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~395 tok |
-| 09:20 | Edited scripts/finetune_phase1.py | inline fix | ~27 |
-| 09:25 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:27 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:29 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:31 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:34 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:36 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:38 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:40 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:42 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:44 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:46 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:48 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:50 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:52 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:54 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:57 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 09:59 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 10:01 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
-| 10:01 | Session end: 6 writes across 2 files (curriculum.py, finetune_phase1.py) | 0 reads | ~422 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 10:03
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 10:03 | Created scripts/measure_base_loss.py | — | ~838 |
-| 10:08 | Session end: 1 writes across 1 files (measure_base_loss.py) | 0 reads | ~838 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 10:08
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 10:22
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 12:58 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v3_t1_validation.md | — | ~879 |
-| 12:59 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~120 |
-| 12:59 | Session end: 2 writes across 2 files (project_phase1_v3_t1_validation.md, MEMORY.md) | 1 reads | ~1070 tok |
-| 13:13 | Session end: 2 writes across 2 files (project_phase1_v3_t1_validation.md, MEMORY.md) | 1 reads | ~1070 tok |
-| 13:16 | Edited src/mythic_rdt/training/curriculum.py | modified v4_anchored_curriculum() | ~368 |
-| 13:17 | Edited src/mythic_rdt/training/trainer.py | modified __init__() | ~301 |
-| 13:17 | Edited src/mythic_rdt/training/trainer.py | added 1 condition(s) | ~514 |
-| 13:17 | Edited scripts/finetune_phase1.py | 6→7 lines | ~57 |
-| 13:17 | Edited scripts/finetune_phase1.py | modified to() | ~405 |
-| 13:17 | Edited scripts/finetune_phase1.py | expanded (+6 lines) | ~153 |
-| 13:17 | Edited scripts/finetune_phase1.py | 6→8 lines | ~68 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 13:17
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 13:21 | Edited src/mythic_rdt/training/trainer.py | modified no_grad() | ~133 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 13:23
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 13:27
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 13:32
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 13:32 | Edited src/mythic_rdt/training/trainer.py | 7→11 lines | ~204 |
-| 13:38 | Session end: 1 writes across 1 files (trainer.py) | 0 reads | ~204 tok |
-| 13:40 | Edited src/mythic_rdt/training/trainer.py | added 1 condition(s) | ~572 |
-| 13:41 | Edited scripts/finetune_phase1.py | 9→13 lines | ~89 |
-| 13:41 | Edited scripts/finetune_phase1.py | expanded (+10 lines) | ~277 |
-| 13:41 | Edited scripts/finetune_phase1.py | modified print() | ~441 |
-| 13:49 | Session end: 5 writes across 2 files (trainer.py, finetune_phase1.py) | 0 reads | ~1583 tok |
-| 13:49 | Session end: 5 writes across 2 files (trainer.py, finetune_phase1.py) | 0 reads | ~1583 tok |
-| 13:53 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_init_from_checkpoint_pattern.md | — | ~941 |
-| 13:53 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~128 |
-| 13:53 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 13:56 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 13:59 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:02 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:05 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:07 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:10 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:13 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:17 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:20 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:23 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:27 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:29 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:34 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:39 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:42 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:45 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:48 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:49 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:49 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 14:55 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 15:01 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 15:07 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 15:15 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 15:23 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 15:30 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 15:38 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
-| 15:49 | Session end: 7 writes across 4 files (trainer.py, finetune_phase1.py, feedback_init_from_checkpoint_pattern.md, MEMORY.md) | 0 reads | ~2729 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 15:49
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 15:52
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 16:50 | Edited scripts/humaneval_smoke.py | modified load_lcb() | ~2352 |
-| 16:51 | Edited scripts/humaneval_smoke.py | expanded (+13 lines) | ~346 |
-| 16:51 | Edited scripts/humaneval_smoke.py | expanded (+24 lines) | ~522 |
-| 16:52 | Edited scripts/humaneval_smoke.py | expanded (+13 lines) | ~367 |
-| 16:52 | Edited scripts/humaneval_smoke.py | modified _by() | ~348 |
-| 16:53 | Session end: 5 writes across 1 files (humaneval_smoke.py) | 1 reads | ~11650 tok |
-| 17:01 | Edited scripts/humaneval_smoke.py | modified load_lcb() | ~1130 |
-| 17:03 | Edited scripts/humaneval_smoke.py | modified _score_lcb_worker() | ~863 |
-| 17:04 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 17:06 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 17:26 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 17:44 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 17:51 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 17:51 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 18:06 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 18:14 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 18:24 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 18:44 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 18:51 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 18:52 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 19:06 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 19:20 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
-| 19:32 | Session end: 7 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13643 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 19:32
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 19:35
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 20:17 | Edited src/mythic_rdt/modeling.py | modified _run_layer() | ~318 |
-| 20:17 | Edited src/mythic_rdt/modeling.py | 5→5 lines | ~64 |
-| 20:17 | Edited src/mythic_rdt/modeling.py | modified forward() | ~153 |
-| 20:17 | Edited src/mythic_rdt/modeling.py | modified values() | ~587 |
-| 20:18 | Edited src/mythic_rdt/modeling.py | modified range() | ~220 |
-| 20:18 | Edited src/mythic_rdt/modeling.py | modified enumerate() | ~542 |
-| 20:18 | Edited src/mythic_rdt/modeling.py | modified range() | ~157 |
-| 20:18 | Edited src/mythic_rdt/modeling.py | 9→11 lines | ~150 |
-| 20:18 | Edited scripts/humaneval_smoke.py | modified wrapper_generate() | ~1293 |
-| 20:19 | Session end: 9 writes across 2 files (modeling.py, humaneval_smoke.py) | 2 reads | ~12846 tok |
-| 20:28 | Session end: 9 writes across 2 files (modeling.py, humaneval_smoke.py) | 2 reads | ~12846 tok |
-| 20:31 | Edited src/mythic_rdt/modeling.py | modified values() | ~324 |
-| 20:31 | Edited src/mythic_rdt/modeling.py | modified range() | ~142 |
-| 20:31 | Edited src/mythic_rdt/modeling.py | modified range() | ~382 |
-| 20:31 | Edited src/mythic_rdt/modeling.py | modified range() | ~160 |
-| 20:31 | Edited scripts/humaneval_smoke.py | 1→3 lines | ~46 |
-| 20:35 | Edited src/mythic_rdt/modeling.py | modified range() | ~464 |
-| 20:35 | Edited src/mythic_rdt/modeling.py | modified range() | ~185 |
-| 20:35 | Edited src/mythic_rdt/modeling.py | modified range() | ~303 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 20:35
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 20:36 | Edited src/mythic_rdt/modeling.py | get() → cache() | ~155 |
-| 20:36 | Edited src/mythic_rdt/modeling.py | 5→6 lines | ~72 |
-| 20:40 | Session end: 2 writes across 1 files (modeling.py) | 0 reads | ~227 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 20:40
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 20:49
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 21:49 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v4_anchored_verdict.md | — | ~992 |
-| 21:49 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~142 |
-| 21:50 | Session end: 2 writes across 2 files (project_phase1_v4_anchored_verdict.md, MEMORY.md) | 1 reads | ~1215 tok |
-| 22:17 | Session end: 2 writes across 2 files (project_phase1_v4_anchored_verdict.md, MEMORY.md) | 1 reads | ~1215 tok |
-| 22:20 | Edited scripts/humaneval_smoke.py | 13→12 lines | ~139 |
-| 22:20 | Edited scripts/humaneval_smoke.py | 4→5 lines | ~67 |
-| 22:20 | Edited scripts/humaneval_smoke.py | 4→5 lines | ~75 |
-| 22:21 | Edited scripts/humaneval_smoke.py | 2→7 lines | ~138 |
-| 22:22 | Session end: 6 writes across 3 files (project_phase1_v4_anchored_verdict.md, MEMORY.md, humaneval_smoke.py) | 2 reads | ~14031 tok |
-| 22:23 | Edited scripts/humaneval_smoke.py | 2→3 lines | ~49 |
-| 22:23 | Edited scripts/humaneval_smoke.py | 10→11 lines | ~160 |
-| 22:23 | Edited scripts/humaneval_smoke.py | 13→14 lines | ~208 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 22:24
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 22:26
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 22:44 | Edited src/mythic_rdt/modeling.py | modified size() | ~455 |
-| 22:45 | Edited ../.wolf/buglog.json | expanded (+22 lines) | ~710 |
-| 22:45 | Session end: 2 writes across 2 files (modeling.py, buglog.json) | 3 reads | ~20021 tok |
-| 22:49 | Session end: 2 writes across 2 files (modeling.py, buglog.json) | 3 reads | ~20021 tok |
-| 22:56 | Session end: 2 writes across 2 files (modeling.py, buglog.json) | 3 reads | ~20021 tok |
-| 22:59 | Session end: 2 writes across 2 files (modeling.py, buglog.json) | 3 reads | ~20021 tok |
-| 23:04 | Session end: 2 writes across 2 files (modeling.py, buglog.json) | 3 reads | ~20021 tok |
-| 23:04 | Session end: 2 writes across 2 files (modeling.py, buglog.json) | 3 reads | ~20021 tok |
-| 23:23 | Session end: 2 writes across 2 files (modeling.py, buglog.json) | 3 reads | ~20021 tok |
-| 23:29 | Edited ../.wolf/buglog.json | inline fix | ~282 |
-| 23:29 | Edited ../.wolf/cerebrum.md | modified Empirically() | ~253 |
-| 23:30 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_pyc_purge_after_modeling_patch.md | — | ~890 |
-| 23:30 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~168 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 23:30
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-27 23:33
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:26
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:27
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:27
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:27
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:27
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:28
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:41
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:46
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:46
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 03:47 | Edited ../.wolf/cerebrum.md | modified Empirically() | ~345 |
-| 03:47 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_pyc_purge_after_modeling_patch.md | expanded (+6 lines) | ~175 |
-| 03:47 | Session end: 2 writes across 2 files (cerebrum.md, feedback_pyc_purge_after_modeling_patch.md) | 0 reads | ~558 tok |
-| 03:49 | Session end: 2 writes across 2 files (cerebrum.md, feedback_pyc_purge_after_modeling_patch.md) | 0 reads | ~558 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 03:49
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 04:14 | Edited ../.wolf/buglog.json | modified 10() | ~1030 |
-| 04:15 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v4_anchored_corrected_verdict.md | — | ~1271 |
-| 04:16 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 2→4 lines | ~272 |
-| 04:16 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_smoke_max_loop_iters.md | — | ~898 |
-| 04:17 | Session end: 4 writes across 4 files (buglog.json, project_phase1_v4_anchored_corrected_verdict.md, MEMORY.md, feedback_smoke_max_loop_iters.md) | 4 reads | ~20742 tok |
-| 04:19 | Session end: 4 writes across 4 files (buglog.json, project_phase1_v4_anchored_corrected_verdict.md, MEMORY.md, feedback_smoke_max_loop_iters.md) | 4 reads | ~20742 tok |
-| 04:29 | Session end: 4 writes across 4 files (buglog.json, project_phase1_v4_anchored_corrected_verdict.md, MEMORY.md, feedback_smoke_max_loop_iters.md) | 4 reads | ~20742 tok |
-| 04:32 | Session end: 4 writes across 4 files (buglog.json, project_phase1_v4_anchored_corrected_verdict.md, MEMORY.md, feedback_smoke_max_loop_iters.md) | 4 reads | ~20742 tok |
-| 04:35 | Edited src/mythic_rdt/training/trainer.py | modified __init__() | ~450 |
-| 04:36 | Edited src/mythic_rdt/training/trainer.py | modified compute_loss() | ~1279 |
-| 04:37 | Edited scripts/finetune_phase1.py | expanded (+20 lines) | ~466 |
-| 04:37 | Edited scripts/finetune_phase1.py | 8→13 lines | ~121 |
-| 04:42 | Session end: 8 writes across 6 files (buglog.json, project_phase1_v4_anchored_corrected_verdict.md, MEMORY.md, feedback_smoke_max_loop_iters.md, trainer.py) | 5 reads | ~29331 tok |
-| 04:47 | Session end: 8 writes across 6 files (buglog.json, project_phase1_v4_anchored_corrected_verdict.md, MEMORY.md, feedback_smoke_max_loop_iters.md, trainer.py) | 5 reads | ~29331 tok |
-| 04:59 | Session end: 8 writes across 6 files (buglog.json, project_phase1_v4_anchored_corrected_verdict.md, MEMORY.md, feedback_smoke_max_loop_iters.md, trainer.py) | 5 reads | ~29331 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 08:31
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 08:47 | Created STATUS.md | — | ~5090 |
-| 08:47 | Edited README.md | inline fix | ~116 |
-| 08:47 | Edited README.md | 3→4 lines | ~91 |
-| 08:48 | Session end: 3 writes across 2 files (STATUS.md, README.md) | 3 reads | ~10346 tok |
-| 08:49 | Edited src/mythic_rdt/training/trainer.py | added 1 condition(s) | ~1711 |
-| 08:50 | Created tests/test_load_trainable_state.py | — | ~1862 |
-| 08:53 | Session end: 5 writes across 4 files (STATUS.md, README.md, trainer.py, test_load_trainable_state.py) | 6 reads | ~39631 tok |
-| 09:00 | Edited .gitignore | expanded (+6 lines) | ~59 |
-| 09:01 | Edited .gitignore | 6→8 lines | ~50 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 09:02
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 09:02
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 09:02
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 09:10
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 09:10
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 09:10
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 12:34 | Edited STATUS.md | modified signals() | ~815 |
-| 12:36 | Edited STATUS.md | expanded (+17 lines) | ~740 |
-| 12:36 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v5_verdict.md | — | ~880 |
-| 12:37 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~150 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 12:42
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 12:57 | Edited scripts/humaneval_smoke.py | expanded (+7 lines) | ~178 |
-| 12:57 | Edited scripts/humaneval_smoke.py | modified print() | ~454 |
-| 13:00 | Edited scripts/humaneval_smoke.py | 7→12 lines | ~278 |
-| 13:07 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13353 tok |
-| 13:12 | Session end: 3 writes across 1 files (humaneval_smoke.py) | 1 reads | ~13353 tok |
-| 13:31 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_phase1_v6_diagnosis.md | — | ~1317 |
-| 13:32 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~243 |
-| 13:32 | Edited STATUS.md | modified fix() | ~752 |
-| 13:33 | Edited src/mythic_rdt/configuration.py | expanded (+12 lines) | ~270 |
-| 13:33 | Edited src/mythic_rdt/configuration.py | 2→3 lines | ~45 |
-| 13:34 | Edited src/mythic_rdt/modeling.py | modified getattr() | ~302 |
-| 13:34 | Edited scripts/humaneval_smoke.py | expanded (+8 lines) | ~194 |
-| 13:34 | Edited scripts/humaneval_smoke.py | 2→3 lines | ~38 |
-| 13:34 | Edited scripts/finetune_phase1.py | 2→3 lines | ~53 |
-| 13:35 | Edited scripts/finetune_phase1.py | expanded (+6 lines) | ~227 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 13:35
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 13:58 | Edited STATUS.md | modified fix() | ~223 |
-| 13:58 | Session end: 1 writes across 1 files (STATUS.md) | 0 reads | ~238 tok |
-| 13:58 | Created scripts/pod_runner/run_v6a.sh | — | ~870 |
-| 14:00 | Session end: 2 writes across 2 files (STATUS.md, run_v6a.sh) | 1 reads | ~1170 tok |
-| 14:01 | Created tests/test_first_iter_identity.py | — | ~1236 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 14:03
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 14:03
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 14:04
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 20:13 | Created scripts/pod_runner/run_v6a_bigsmoke.sh | — | ~497 |
-| 20:14 | Session end: 1 writes across 1 files (run_v6a_bigsmoke.sh) | 1 reads | ~13838 tok |
-| 20:18 | Edited scripts/humaneval_smoke.py | expanded (+6 lines) | ~140 |
-| 20:18 | Edited scripts/humaneval_smoke.py | expanded (+13 lines) | ~201 |
-| 20:19 | Edited scripts/humaneval_smoke.py | 12→11 lines | ~166 |
-| 20:22 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
-| 20:26 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
-| 20:26 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
-| 20:32 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
-| 20:42 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
-| 20:59 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
-| 21:02 | Session end: 4 writes across 2 files (run_v6a_bigsmoke.sh, humaneval_smoke.py) | 1 reads | ~14647 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 21:10
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 22:23 | Edited src/mythic_rdt/modeling.py | modified getattr() | ~499 |
-| 22:25 | Session end: 1 writes across 1 files (modeling.py) | 2 reads | ~3340 tok |
-| 22:48 | Session end: 1 writes across 1 files (modeling.py) | 2 reads | ~3340 tok |
-| 22:52 | Edited scripts/humaneval_smoke.py | expanded (+9 lines) | ~238 |
-| 22:53 | Edited scripts/humaneval_smoke.py | 1→2 lines | ~37 |
-| 22:53 | Session end: 3 writes across 2 files (modeling.py, humaneval_smoke.py) | 2 reads | ~3615 tok |
-| 23:35 | Created scripts/_probe_v6e_identity.py | — | ~1440 |
-| 23:36 | Edited scripts/_probe_v6e_identity.py | modified _to_logits() | ~150 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 23:38
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 23:48 | Edited src/mythic_rdt/modeling.py | modified __init__() | ~875 |
-| 23:49 | Edited src/mythic_rdt/modeling.py | modified can_generate() | ~1629 |
-| 23:49 | Edited src/mythic_rdt/modeling.py | modified isinstance() | ~372 |
-| 23:50 | Edited src/mythic_rdt/modeling.py | 6→9 lines | ~143 |
-| 23:50 | Created scripts/_probe_wrapper_generate.py | — | ~1478 |
-| 23:51 | Edited src/mythic_rdt/modeling.py | 7→8 lines | ~97 |
-| 23:53 | Edited scripts/humaneval_smoke.py | reduced (-46 lines) | ~584 |
-| 23:55 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
-| 23:55 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
-| 00:01 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
-| 00:09 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
-| 00:12 | Session end: 7 writes across 3 files (modeling.py, _probe_wrapper_generate.py, humaneval_smoke.py) | 2 reads | ~28240 tok |
-| 00:20 | Created scripts/_probe_wrapper_generate_lcb.py | — | ~1541 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 00:22
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 00:27 | Edited scripts/_probe_wrapper_generate_lcb.py | inline fix | ~18 |
-| 00:27 | Edited scripts/_probe_wrapper_generate_lcb.py | inline fix | ~17 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 00:28
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 00:31 | Created scripts/pod_runner/run_v6e.sh | — | ~753 |
-| 00:32 | Created scripts/probe_then_v6e_chain.sh | — | ~732 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-28 00:33
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 07:40 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_python_unbuffered.md | — | ~432 |
-| 07:40 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~107 |
-| 07:41 | Session end: 2 writes across 2 files (feedback_python_unbuffered.md, MEMORY.md) | 3 reads | ~9901 tok |
-| 07:56 | Edited scripts/humaneval_smoke.py | modified zip() | ~305 |
-| 07:56 | Edited scripts/humaneval_smoke.py | modified zip() | ~299 |
-| 07:57 | Edited scripts/humaneval_smoke.py | 8→9 lines | ~66 |
-| 07:57 | Edited scripts/_probe_wrapper_generate_lcb.py | 3→3 lines | ~26 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-29 07:57
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 08:02 | Edited scripts/_probe_wrapper_generate_lcb.py | 3→4 lines | ~66 |
-| 08:02 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
-| 08:02 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
-| 08:05 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
-| 08:05 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
-| 08:05 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
-| 08:08 | Session end: 1 writes across 1 files (_probe_wrapper_generate_lcb.py) | 0 reads | ~66 tok |
-| 08:12 | Created scripts/_probe_wrapper_generate_lcb.py | — | ~2152 |
-| 08:21 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md | — | ~655 |
-| 08:21 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~136 |
-| 08:23 | Session end: 4 writes across 3 files (_probe_wrapper_generate_lcb.py, project_flash_attn_install_blocked.md, MEMORY.md) | 2 reads | ~4654 tok |
-| 08:23 | Session end: 4 writes across 3 files (_probe_wrapper_generate_lcb.py, project_flash_attn_install_blocked.md, MEMORY.md) | 2 reads | ~4654 tok |
-| 08:24 | Session end: 4 writes across 3 files (_probe_wrapper_generate_lcb.py, project_flash_attn_install_blocked.md, MEMORY.md) | 2 reads | ~4654 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-29 08:28
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 08:29 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md | modified retrying() | ~580 |
-| 08:29 | Session end: 1 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~621 tok |
-| 08:31 | Session end: 1 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~621 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-29 08:31
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 08:31 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md | 8→11 lines | ~190 |
-| 08:31 | Session end: 1 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~204 tok |
-| 08:33 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_flash_attn_install_blocked.md | modified fixes() | ~614 |
-| 08:34 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 08:37 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 08:46 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 08:48 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 08:48 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 08:49 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 09:00 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 09:01 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 09:02 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 09:09 | Session end: 2 writes across 1 files (project_flash_attn_install_blocked.md) | 0 reads | ~862 tok |
-| 09:12 | Edited src/mythic_rdt/modeling.py | modified range() | ~653 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-29 09:20
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 09:22 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6e_inference_path_bug.md | — | ~1248 |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-29 09:22
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 09:24 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~244 |
-| 09:25 | Session end: 1 writes across 1 files (MEMORY.md) | 1 reads | ~261 tok |
-| 09:28 | Session end: 1 writes across 1 files (MEMORY.md) | 1 reads | ~261 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-29 09:28
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 09:45 | Created scripts/_probe_logit_identity.py | — | ~1503 |
-| 09:46 | Edited ../.wolf/buglog.json | expanded (+20 lines) | ~522 |
-| 09:47 | Session end: 2 writes across 2 files (_probe_logit_identity.py, buglog.json) | 5 reads | ~14545 tok |
-| 09:48 | Session end: 2 writes across 2 files (_probe_logit_identity.py, buglog.json) | 5 reads | ~14545 tok |
-| 09:50 | Session end: 2 writes across 2 files (_probe_logit_identity.py, buglog.json) | 5 reads | ~14545 tok |
-| 09:51 | Session end: 2 writes across 2 files (_probe_logit_identity.py, buglog.json) | 5 reads | ~14545 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-29 09:52
-
-| Time | Action | File(s) | Outcome | ~Tokens |
-|------|--------|---------|---------|--------|
-| 09:53 | Edited ../.wolf/cerebrum.md | modified forgetting() | ~616 |
-| 09:55 | Session end: 1 writes across 1 files (cerebrum.md) | 1 reads | ~660 tok |
-| 09:57 | Session end: 1 writes across 1 files (cerebrum.md) | 1 reads | ~660 tok |
-| 09:57 | Session end: 1 writes across 1 files (cerebrum.md) | 1 reads | ~660 tok |
-| 09:59 | Session end: 1 writes across 1 files (cerebrum.md) | 1 reads | ~660 tok |
+> Consolidated session (0 actions)
 
 ## Session: 2026-04-29 09:59
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 11:19
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 11:19
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 11:19
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 11:25
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 12:18
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 12:27
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 12:54
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 12:58
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 13:23
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 13:39
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 13:44
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 13:50
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 13:51
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 13:57
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 14:44
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 14:47
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 15:11
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 15:14
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 19:30
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 19:31
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 19:36
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 19:39
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 21:24
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 21:26
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 23:28
+> Consolidated session (0 actions)
+
+## Session: 2026-04-29 23:32
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 06:47
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 06:48
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 06:49
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 11:07
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 11:07
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 11:31
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 11:55
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 11:58
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 12:29
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 12:34
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 12:38
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 14:01
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 14:05
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 15:55
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 16:03
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 16:10
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 17:01
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 17:05
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 17:50
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 17:57
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 18:01
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 19:45
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 19:51
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 21:09
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 22:10
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 22:17
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 22:23
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 01:44
+> Consolidated session (0 actions)
+
+## Session: 2026-04-30 01:49
+> Consolidated session (0 actions)
+
+## Session: 2026-05-01 06:46
+> Consolidated session (0 actions)
+
+## Session: 2026-05-01 06:47
+> Consolidated session (0 actions)
+
+## Session: 2026-05-01 10:20
+> Consolidated session (0 actions)
+
+## Session: 2026-05-01 19:46
+> Consolidated session (0 actions)
+
+## Session: 2026-05-02 07:57
+> Consolidated session (0 actions)
+
+## Session: 2026-05-02 15:51
+> Consolidated session (0 actions)
+
+## Session: 2026-05-02 01:11
+> Consolidated session (0 actions)
+
+## Session: 2026-05-03 03:00
+> Consolidated session (0 actions)
+
+## Session: 2026-05-03 14:55
+> Consolidated session (0 actions)
+
+## Session: 2026-05-03 01:24
+> Consolidated session (0 actions)
+
+## Session: 2026-05-04 08:46
+> Consolidated session (0 actions)
+
+## Session: 2026-05-04 17:53
+> Consolidated session (0 actions)
+
+## Session: 2026-05-05 13:18
+> Consolidated session (160 actions)
+
+## Session: 2026-05-06 14:12
 
 | Time | Action | File(s) | Outcome | ~Tokens |
 |------|--------|---------|---------|--------|
-| 10:56 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6a_post_fix_verdict.md | — | ~1209 |
-| 10:57 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~211 |
-| 10:57 | Session end: 2 writes across 2 files (project_v6a_post_fix_verdict.md, MEMORY.md) | 0 reads | ~1522 tok |
-| 11:08 | Session end: 2 writes across 2 files (project_v6a_post_fix_verdict.md, MEMORY.md) | 0 reads | ~1522 tok |
-| 11:18 | Edited .gitignore | expanded (+7 lines) | ~59 |
+| 14:30 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | 2→3 lines | ~64 |
+| 14:30 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | modified update() | ~296 |
+| 14:30 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md | modified with() | ~878 |
+| 14:31 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md | 2→3 lines | ~92 |
+| 14:31 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_m26_off_policy_kl_collapse.md | — | ~696 |
+| 14:31 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 3→4 lines | ~69 |
+| 14:34 | Created ../../../../tmp/06_train_xv_anchor.py | — | ~4231 |
+| 14:34 | Created ../../../../tmp/run_m27.sh | — | ~417 |
+| 14:40 | Session end: 8 writes across 6 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 3 reads | ~6921 tok |
+| 14:45 | Created ../../../../tmp/06_train_grpo_kl_distill.py | — | ~6450 |
+| 14:45 | Created ../../../../tmp/run_m27_grpo.sh | — | ~447 |
+| 14:51 | Session end: 10 writes across 8 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 3 reads | ~13850 tok |
+| 14:54 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | expanded (+6 lines) | ~136 |
+| 14:54 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | 4→9 lines | ~159 |
+| 14:54 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | modified get() | ~262 |
+| 14:54 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | expanded (+21 lines) | ~531 |
+| 14:54 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | 2→4 lines | ~36 |
+| 14:55 | Edited ../../../../tmp/run_m27_grpo.sh | 21→23 lines | ~330 |
+| 14:56 | Session end: 16 writes across 8 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 3 reads | ~15328 tok |
+| 14:58 | Session end: 16 writes across 8 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 3 reads | ~15328 tok |
+| 15:01 | Session end: 16 writes across 8 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 3 reads | ~15328 tok |
+| 15:05 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | expanded (+8 lines) | ~226 |
+| 15:05 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | modified items() | ~407 |
+| 15:05 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | modified no_grad() | ~180 |
+| 15:06 | Session end: 19 writes across 8 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 3 reads | ~16141 tok |
+| 15:07 | Created ../../../../shared/dev/cross-tokenizer-distill/ctd/util.py | — | ~724 |
+| 15:08 | Edited ../../../../shared/dev/cross-tokenizer-distill/ctd/__init__.py | 5→9 lines | ~96 |
+| 15:08 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | added 1 import(s) | ~53 |
+| 15:08 | Edited ../../../../tmp/06_train_grpo_kl_distill.py | reduced (-8 lines) | ~196 |
+| 15:08 | Edited ../../../../tmp/gen_teacher_completions.py | 6→9 lines | ~96 |
+| 15:09 | Edited ../../../../tmp/gen_teacher_completions.py | expanded (+6 lines) | ~184 |
+| 15:09 | Edited ../../../../tmp/gen_teacher_completions.py | expanded (+6 lines) | ~171 |
+| 15:09 | Edited ../../../../tmp/gen_teacher_completions.py | modified no_grad() | ~171 |
+| 15:09 | Edited ../../../../tmp/eval_teacher_chat.py | 9→12 lines | ~124 |
+| 15:09 | Edited ../../../../tmp/eval_teacher_chat.py | modified generate_batch_chat() | ~269 |
+| 15:10 | Edited ../../../../tmp/eval_teacher_chat.py | modified run_task() | ~38 |
+| 15:10 | Edited ../../../../tmp/eval_teacher_chat.py | 2→2 lines | ~37 |
+| 15:10 | Edited ../../../../tmp/eval_teacher_chat.py | expanded (+6 lines) | ~169 |
+| 15:10 | Edited ../../../../tmp/eval_teacher_chat.py | expanded (+6 lines) | ~171 |
+| 15:11 | Edited ../../../../tmp/eval_teacher_chat.py | inline fix | ~28 |
+| 15:11 | Edited ../../../../tmp/eval_teacher_chat.py | inline fix | ~27 |
+| 15:12 | Edited ../../../../shared/dev/cross-tokenizer-distill/ctd/util.py | expanded (+15 lines) | ~420 |
+| 15:13 | Session end: 36 writes across 12 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 5 reads | ~19115 tok |
+| 15:15 | Created ../../../../shared/dev/cross-tokenizer-distill/docs/TEACHER_TOKEN_MASKING.md | — | ~2220 |
+| 15:16 | Edited ../../../../shared/dev/cross-tokenizer-distill/README.md | 9→10 lines | ~153 |
+| 15:16 | Edited ../../../../shared/dev/cross-tokenizer-distill/README.md | 5→8 lines | ~139 |
+| 15:17 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 15:52 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 15:52 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 15:52 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 15:54 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 15:59 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:05 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:10 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:16 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:21 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:26 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:32 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:37 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:43 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:48 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:52 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:52 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:53 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:53 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:53 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:54 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:55 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:55 | Session end: 39 writes across 14 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~23419 tok |
+| 16:56 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | 1→2 lines | ~58 |
+| 16:57 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | modified explicitly() | ~337 |
+| 16:57 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md | hybrid() → Distill() | ~87 |
+| 16:57 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md | modified is() | ~1169 |
+| 16:58 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md | 1→2 lines | ~89 |
+| 16:58 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_m27_grpo_teacher_ll_collapse.md | — | ~1102 |
+| 16:59 | Session end: 45 writes across 15 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 6 reads | ~26462 tok |
+| 17:00 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | 1→2 lines | ~56 |
+| 17:00 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | modified update() | ~426 |
+| 17:01 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md | expanded (+10 lines) | ~250 |
+| 17:01 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md | 1→2 lines | ~59 |
+| 17:01 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/STYLE_SHIFT_ISSUE.md | 3→7 lines | ~116 |
+| 17:02 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~122 |
+| 17:07 | Edited ../../../../tmp/06_train_grpo_kl_verified.py | modified advantage() | ~615 |
+| 17:07 | Edited ../../../../tmp/06_train_grpo_kl_verified.py | modified _alarm_handler() | ~539 |
+| 17:08 | Edited ../../../../tmp/06_train_grpo_kl_verified.py | modified enumerate() | ~944 |
+| 17:09 | Edited ../../../../tmp/06_train_grpo_kl_verified.py | 4→5 lines | ~78 |
+| 17:09 | Edited ../../../../tmp/06_train_grpo_kl_verified.py | 7→9 lines | ~122 |
+| 17:10 | Edited ../../../../tmp/06_train_grpo_kl_verified.py | expanded (+6 lines) | ~474 |
+| 17:10 | Edited ../../../../tmp/06_train_grpo_kl_verified.py | 3→3 lines | ~57 |
+| 17:10 | Edited ../../../../tmp/06_train_grpo_kl_verified.py | modified print() | ~97 |
+| 17:12 | Created ../../../../tmp/run_m28_verified.sh | — | ~508 |
+| 17:19 | Session end: 60 writes across 17 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~31035 tok |
+| 17:19 | Session end: 60 writes across 17 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~31035 tok |
+| 17:23 | Session end: 60 writes across 17 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~31035 tok |
+| 17:31 | Session end: 60 writes across 17 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~31035 tok |
+| 17:33 | Session end: 60 writes across 17 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~31035 tok |
+| 17:39 | Session end: 60 writes across 17 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~31035 tok |
+| 17:46 | Created ../../../../tmp/filter_corpus_strict.py | — | ~1392 |
+| 17:48 | Edited ../../../../tmp/filter_corpus_strict.py | modified _truncate_at_function_end() | ~232 |
+| 17:49 | Created ../../../../tmp/run_m29_filtered_sft.sh | — | ~392 |
+| 17:51 | Session end: 63 writes across 19 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~33079 tok |
+| 17:52 | Created ../../../../tmp/run_m30_xv_clip.sh | — | ~452 |
+| 17:59 | Session end: 64 writes across 20 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~33564 tok |
+| 17:59 | Session end: 64 writes across 20 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~33564 tok |
+| 18:13 | Session end: 64 writes across 20 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~33564 tok |
+| 18:15 | Session end: 64 writes across 20 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~33564 tok |
+| 18:19 | Session end: 64 writes across 20 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~33564 tok |
+| 18:22 | Session end: 64 writes across 20 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~33564 tok |
+| 18:27 | Session end: 64 writes across 20 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~33564 tok |
+| 18:38 | Created ../../../../tmp/run_m31_2stage.sh | — | ~478 |
+| 18:38 | Created ../../../../tmp/run_m32_bigcorpus.sh | — | ~480 |
+| 18:38 | Created ../../../../tmp/run_m33_distribute.sh | — | ~477 |
+| 18:39 | Created ../../../../tmp/run_m34_rank64.sh | — | ~478 |
+| 18:39 | Created ../../../../tmp/queue_m31_to_m34.sh | — | ~266 |
+| 18:40 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:42 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:51 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:52 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:53 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:54 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:54 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:54 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:55 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:55 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:55 | Session end: 69 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~35898 tok |
+| 18:56 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | expanded (+6 lines) | ~200 |
+| 18:57 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 18:57 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 18:59 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 19:17 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 19:27 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 19:32 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 19:39 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 19:44 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 19:47 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 8 reads | ~36112 tok |
+| 19:53 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~36112 tok |
+| 19:59 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~36112 tok |
+| 19:59 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~36112 tok |
+| 19:59 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~36112 tok |
+| 20:00 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~36112 tok |
+| 20:00 | Session end: 70 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~36112 tok |
+| 20:01 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | 2→2 lines | ~41 |
+| 20:01 | Session end: 71 writes across 25 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~36156 tok |
+| 20:19 | Created ../../../../tmp/run_reeval_chain.sh | — | ~431 |
+| 20:28 | Created ../../../../tmp/run_reeval_chain2.sh | — | ~471 |
+| 20:28 | Session end: 73 writes across 27 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37121 tok |
+| 20:33 | Session end: 73 writes across 27 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37121 tok |
+| 20:57 | Session end: 73 writes across 27 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37121 tok |
+| 20:59 | Session end: 73 writes across 27 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37121 tok |
+| 20:59 | Session end: 73 writes across 27 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37121 tok |
+| 21:01 | Session end: 73 writes across 27 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37121 tok |
+| 21:06 | Session end: 73 writes across 27 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37121 tok |
+| 21:07 | Session end: 73 writes across 27 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37121 tok |
+| 21:11 | Created ../../../../tmp/run_reeval_chain3.sh | — | ~652 |
+| 21:12 | Session end: 74 writes across 28 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~37820 tok |
+| 21:14 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | modified BODY() | ~1134 |
+| 21:15 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | modified update() | ~195 |
+| 21:15 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | 6→7 lines | ~120 |
+| 21:17 | Session end: 77 writes across 28 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~39372 tok |
+| 21:17 | Session end: 77 writes across 28 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~39372 tok |
+| 21:40 | Session end: 77 writes across 28 files (RESULTS.md, STYLE_SHIFT_ISSUE.md, project_m26_off_policy_kl_collapse.md, MEMORY.md, 06_train_xv_anchor.py) | 9 reads | ~39372 tok |
+
+## Session: 2026-05-06 21:43
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-06 22:01
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 04:30 | Edited BASE_DEEPSEEK_CODER_V2_LITE.md | expanded (+16 lines) | ~549 |
+| 04:31 | Edited BASE_DEEPSEEK_CODER_V2_LITE.md | 3→3 lines | ~93 |
+| 04:31 | Edited BASE_DEEPSEEK_CODER_V2_LITE.md | 3→3 lines | ~110 |
+
+## Session: 2026-05-07 04:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-07 04:34
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 04:36 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | 4→4 lines | ~100 |
+| 04:36 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/RESULTS.md | expanded (+54 lines) | ~744 |
+| 04:37 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 04:42 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 04:53 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 04:58 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 04:58 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 05:01 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 05:14 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 05:14 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 05:21 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 05:29 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 05:32 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 05:38 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 06:11 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 06:15 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 06:18 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 06:23 | Session end: 2 writes across 1 files (RESULTS.md) | 1 reads | ~905 tok |
+| 06:57 | Created ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | — | ~2288 |
+| 06:58 | Session end: 3 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~3357 tok |
+| 06:58 | Session end: 3 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~3357 tok |
+| 07:06 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | inline fix | ~108 |
+| 07:07 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | inline fix | ~79 |
+| 07:07 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 5→5 lines | ~70 |
+| 07:07 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | inline fix | ~72 |
+| 07:07 | Session end: 7 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~3709 tok |
+| 07:09 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 3→3 lines | ~164 |
+| 07:10 | Session end: 8 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~3885 tok |
+| 07:13 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | expanded (+6 lines) | ~646 |
+| 07:13 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | vocab() → downstream() | ~233 |
+| 07:13 | Session end: 10 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~4826 tok |
+| 07:16 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 6→6 lines | ~226 |
+| 07:16 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 1→2 lines | ~218 |
+| 07:16 | Session end: 12 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~5302 tok |
+| 07:20 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 7→6 lines | ~437 |
+| 07:21 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 1→4 lines | ~160 |
+| 07:21 | Session end: 14 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~5941 tok |
+| 07:29 | Session end: 14 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~5941 tok |
+| 08:23 | Session end: 14 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~5941 tok |
+| 09:40 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | expanded (+13 lines) | ~325 |
+| 09:40 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 7→8 lines | ~248 |
+| 09:41 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 26→29 lines | ~817 |
+| 09:41 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | 5→8 lines | ~274 |
+| 09:43 | Session end: 18 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~7723 tok |
+| 09:43 | Session end: 18 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~7723 tok |
+| 09:51 | Session end: 18 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~7723 tok |
+| 09:52 | Session end: 18 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~7723 tok |
+| 09:54 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | inline fix | ~130 |
+| 09:54 | Session end: 19 writes across 2 files (RESULTS.md, V2_CTD_PLAN.md) | 1 reads | ~7862 tok |
+| 11:31 | Created ../../../../tmp/patch_eval_chat.py | — | ~1049 |
+| 11:33 | Session end: 20 writes across 3 files (RESULTS.md, V2_CTD_PLAN.md, patch_eval_chat.py) | 1 reads | ~8911 tok |
+| 12:14 | Session end: 20 writes across 3 files (RESULTS.md, V2_CTD_PLAN.md, patch_eval_chat.py) | 1 reads | ~8911 tok |
+| 12:14 | Session end: 20 writes across 3 files (RESULTS.md, V2_CTD_PLAN.md, patch_eval_chat.py) | 1 reads | ~8911 tok |
+| 12:43 | Session end: 20 writes across 3 files (RESULTS.md, V2_CTD_PLAN.md, patch_eval_chat.py) | 1 reads | ~8911 tok |
+| 12:52 | Session end: 20 writes across 3 files (RESULTS.md, V2_CTD_PLAN.md, patch_eval_chat.py) | 1 reads | ~8911 tok |
+| 12:55 | Created ../../../../tmp/run_v2_phase0_v2.sh | — | ~2043 |
+| 12:56 | Session end: 21 writes across 4 files (RESULTS.md, V2_CTD_PLAN.md, patch_eval_chat.py, run_v2_phase0_v2.sh) | 1 reads | ~11100 tok |
+
+## Session: 2026-05-07 13:28
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:40 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/gen_teacher_completions.py | inline fix | ~23 |
+| 13:40 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/gen_teacher_completions.py | 3→5 lines | ~126 |
+| 13:41 | Created ../../../../tmp/run_v2_phase0_v2_followup.sh | — | ~1065 |
+| 13:44 | Session end: 3 writes across 2 files (gen_teacher_completions.py, run_v2_phase0_v2_followup.sh) | 1 reads | ~1290 tok |
+| 13:58 | Session end: 3 writes across 2 files (gen_teacher_completions.py, run_v2_phase0_v2_followup.sh) | 1 reads | ~1290 tok |
+| 14:10 | Session end: 3 writes across 2 files (gen_teacher_completions.py, run_v2_phase0_v2_followup.sh) | 1 reads | ~1290 tok |
+
+## Session: 2026-05-07 17:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 18:03 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | inline fix | ~105 |
+| 18:03 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | inline fix | ~53 |
+| 18:03 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | base() → chat() | ~80 |
+| 18:17 | Edited ../../../../shared/dev/cross-tokenizer-distill/ctd/mapper.py | modified tokenizers_match() | ~1295 |
+| 18:17 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_onpolicy_xv_v2.py | 2→2 lines | ~32 |
+| 18:18 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_onpolicy_xv_v2.py | modified exists() | ~327 |
+| 18:18 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_onpolicy_xv_v2.py | modified _identity_alignment() | ~190 |
+| 18:21 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_onpolicy_xv_v2.py | modified len() | ~182 |
+| 18:33 | Created ../../../../tmp/run_v2_phase12.sh | — | ~1283 |
+| 18:39 | Edited ../../../../tmp/run_v2_phase12.sh | modified adapter_path() | ~128 |
+| 18:39 | Edited ../../../../tmp/run_v2_phase12.sh | inline fix | ~5 |
+| 18:39 | Edited ../../../../tmp/run_v2_phase12.sh | expanded (+8 lines) | ~218 |
+| 18:40 | Edited ../../../../tmp/run_v2_phase12.sh | modified train_onpolicy() | ~598 |
+| 18:43 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_onpolicy_xv_v2.py | expanded (+8 lines) | ~220 |
+| 18:44 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_onpolicy_xv_v2.py | modified no_grad() | ~928 |
+| 18:44 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_onpolicy_xv_v2.py | modified any() | ~653 |
+| 18:48 | Edited ../../../../shared/dev/cross-tokenizer-distill/docs/V2_CTD_PLAN.md | modified Validation() | ~301 |
+| 19:40 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | modified extract_code_chat() | ~147 |
+| 19:40 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | modified score_humaneval() | ~244 |
+| 19:41 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | modified score_mbpp() | ~175 |
+| 19:42 | Edited ../../../../tmp/run_v2_phase12.sh | modified train_sft_rank64() | ~477 |
+| 20:52 | Created ../../../../tmp/measure_completion_verbosity.py | — | ~543 |
+| 21:38 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/gen_teacher_completions.py | 1→6 lines | ~118 |
+| 21:38 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/gen_teacher_completions.py | modified _msgs() | ~140 |
+| 21:39 | Edited ../../../../tmp/06_train_sft_on_teacher.py | modified __init__() | ~681 |
+| 21:39 | Edited ../../../../tmp/06_train_sft_on_teacher.py | modified collate() | ~230 |
+| 21:39 | Edited ../../../../tmp/06_train_sft_on_teacher.py | 2→7 lines | ~133 |
+| 21:40 | Edited ../../../../tmp/06_train_sft_on_teacher.py | 2→5 lines | ~103 |
+| 21:40 | Edited ../../../../tmp/06_train_sft_on_teacher.py | expanded (+8 lines) | ~179 |
+| 21:41 | Created ../../../../tmp/run_v2_phase25.sh | — | ~1557 |
+
+## Session: 2026-05-07 21:46
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 23:26 | Edited ../../../../shared/dev/cross-tokenizer-distill/README.md | expanded (+43 lines) | ~957 |
+| 23:39 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v2_phase25_winners.md | — | ~544 |
+| 23:39 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_path_c_corpus_dependence.md | — | ~534 |
+| 23:41 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | 6→9 lines | ~179 |
+| 23:43 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+7 lines) | ~275 |
+| 23:43 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+6 lines) | ~234 |
+| 23:43 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | modified range() | ~469 |
+| 23:44 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+9 lines) | ~381 |
+| 23:51 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_council_m45_style_logic.md | — | ~541 |
+| 00:00 | Edited ../../../../tmp/run_v2_phase3.sh | modified open() | ~266 |
+| 00:26 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_scp_overwrite_in_flight_bash.md | — | ~617 |
+| 04:51 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+7 lines) | ~163 |
+| 04:51 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+19 lines) | ~467 |
+| 05:00 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+14 lines) | ~501 |
+
+## Session: 2026-05-08 06:24
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:44 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | 9→13 lines | ~202 |
+| 08:45 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | added 5 import(s) | ~56 |
+| 08:45 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | modified startswith() | ~62 |
+| 08:45 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | 1→2 lines | ~17 |
+| 08:45 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | 1→2 lines | ~26 |
+| 08:45 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_eval_batched.py | 1→2 lines | ~27 |
+
+## Session: 2026-05-08 09:24
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:27 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | modified __init__() | ~510 |
+| 09:27 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | added 4 import(s) | ~18 |
+
+## Session: 2026-05-08 09:27
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:28 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | 1→2 lines | ~22 |
+| 09:28 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | 1→2 lines | ~20 |
+| 09:28 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | 1→2 lines | ~26 |
+| 09:28 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | 1→3 lines | ~16 |
+| 09:29 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | 1→3 lines | ~30 |
+| 09:29 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+15 lines) | ~366 |
+| 09:29 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | modified print() | ~262 |
+| 11:24 | Edited BASE_DEEPSEEK_CODER_V2_LITE.md | expanded (+37 lines) | ~778 |
+| 11:24 | Edited BASE_DEEPSEEK_CODER_V2_LITE.md | 2→2 lines | ~79 |
+
+## Session: 2026-05-08 11:25
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-08 11:27
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 12:50 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+27 lines) | ~548 |
+| 12:51 | Edited ../../../../shared/dev/cross-tokenizer-distill/experiments/validation/06_train_sft_on_teacher.py | expanded (+10 lines) | ~347 |
+
+## Session: 2026-05-08 13:12
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 13:26 | Created ../../../../tmp/run_123_base.sh | — | ~1280 |
+| 17:33 | Created ../../../../tmp/run_123b_base.sh | — | ~670 |
+| 18:28 | Created ../../../../tmp/run_chain_121_122_123b.sh | — | ~1139 |
+| 20:50 | Created ../../../../tmp/run_chain_122_124a.sh | — | ~1021 |
+| 01:55 | Created ../../../../tmp/run_chain_124b.sh | — | ~828 |
+| 04:51 | Created ../../../../tmp/run_123c_base.sh | — | ~664 |
+| 04:58 | Created ../../../../tmp/run_123d_base.sh | — | ~669 |
+| 05:12 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_expandable_segments_moe.md | — | ~438 |
+
+## Session: 2026-05-09 05:52
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:30 | Created ../../../../tmp/run_chain_124c.sh | — | ~905 |
+| 10:30 | Created ../../../../tmp/run_chain_124d.sh | — | ~1033 |
+| 13:16 | Created ../../../../tmp/run_chain_124e.sh | — | ~1023 |
+| 13:24 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/reference_unsloth_nvidia_2026_optimizations.md | — | ~1223 |
+| 15:38 | Created ../../../../tmp/run_chain_124f.sh | — | ~1076 |
+| 18:47 | Created ../../../../tmp/run_chain_124g.sh | — | ~870 |
+| 18:47 | Created ../../../../tmp/run_chain_124h.sh | — | ~867 |
+| 19:00 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_no_concurrent_chain_launches.md | — | ~800 |
+
+## Session: 2026-05-09 20:20
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 23:03 | Created PRE_RECURRENCE_VERDICT.md | — | ~1986 |
+| 23:05 | Edited src/mythic_rdt/modeling.py | modified _ac_offload_ctx() | ~741 |
+| 23:08 | Edited scripts/finetune_phase1.py | expanded (+11 lines) | ~382 |
+| 23:08 | Edited scripts/finetune_phase1.py | expanded (+10 lines) | ~221 |
+| 23:10 | Created V6S_PLAN.md | — | ~2033 |
+| 23:18 | Created scripts/merge_adapter.py | — | ~1881 |
+| 23:18 | Edited scripts/merge_adapter.py | 2→1 lines | ~11 |
+| 23:24 | Created scripts/pod_runner/run_v6s.sh | — | ~1180 |
+
+## Session: 2026-05-09 23:24
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 23:24 | Created scripts/pod_runner/run_v6t.sh | — | ~1136 |
+| 23:25 | Created scripts/pod_runner/run_v6st_sequential.sh | — | ~294 |
+| 23:26 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6st_unattended_chain.md | — | ~1193 |
+
+## Session: 2026-05-09 23:26
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 23:30 | Edited scripts/pod_runner/run_v6s.sh | expanded (+11 lines) | ~278 |
+| 23:30 | Edited scripts/pod_runner/run_v6t.sh | 5→6 lines | ~51 |
+| 23:30 | Edited scripts/pod_runner/run_v6t.sh | inline fix | ~7 |
+
+## Session: 2026-05-10 03:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 06:29 | Created scripts/precompute_xv_teacher_logits.py | — | ~4547 |
+| 06:29 | Edited scripts/precompute_xv_teacher_logits.py | 2→2 lines | ~33 |
+| 06:29 | Edited src/mythic_rdt/training/trainer.py | modified NEW() | ~458 |
+| 06:29 | Edited src/mythic_rdt/training/trainer.py | expanded (+11 lines) | ~286 |
+| 06:30 | Created scripts/pod_runner/run_v6v_precompute.sh | — | ~534 |
+| 06:31 | Created scripts/pod_runner/run_v6v_train.sh | — | ~1091 |
+| 06:31 | Created scripts/pod_runner/run_v6v_chain.sh | — | ~230 |
+
+## Session: 2026-05-10 06:31
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 06:34 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6v_xv_qc14b_chain.md | — | ~1475 |
+
+## Session: 2026-05-10 06:36
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-10 06:38
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-10 06:38
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 06:42 | Created scripts/06_train_sft_recurrence.py | — | ~6253 |
+| 06:43 | Edited scripts/06_train_sft_recurrence.py | 4→3 lines | ~40 |
+| 06:44 | Created scripts/precompute_xv_sft_cache.py | — | ~3534 |
+| 06:45 | Created scripts/pod_runner/run_v6v_precompute.sh | — | ~551 |
+| 06:45 | Created scripts/pod_runner/run_v6v_train.sh | — | ~1070 |
+
+## Session: 2026-05-10 06:47
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 06:54 | Created scripts/pod_runner/run_v6t.sh | — | ~194 |
+| 07:02 | Edited scripts/pod_runner/run_v6v_precompute.sh | expanded (+12 lines) | ~282 |
+| 07:03 | Created ../../../../shared/dev/cross-tokenizer-distill/docs/POD_ARCHIVE.md | — | ~1390 |
+| 07:04 | Edited ../../../../shared/dev/cross-tokenizer-distill/CLAUDE.md | modified pod() | ~231 |
+
+## Session: 2026-05-10 07:20
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-10 07:22
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 08:23 | Edited scripts/06_train_sft_recurrence.py | 1→3 lines | ~112 |
+| 08:24 | Edited scripts/06_train_sft_recurrence.py | expanded (+12 lines) | ~276 |
+| 08:24 | Edited scripts/pod_runner/run_v6v_train.sh | expanded (+14 lines) | ~221 |
+| 08:27 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6s_regression_and_v6v_bug.md | — | ~1248 |
+| 08:28 | Edited scripts/06_train_sft_recurrence.py | expanded (+7 lines) | ~201 |
+| 08:28 | Edited scripts/06_train_sft_recurrence.py | 3→8 lines | ~173 |
+| 08:35 | Edited src/mythic_rdt/training/lora_inject.py | modified named_modules() | ~671 |
+
+## Session: 2026-05-10 10:09
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 10:09 | Edited scripts/pod_runner/run_v6v_train.sh | 16 → 24 | ~19 |
+
+## Session: 2026-05-10 10:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 10:14 | Edited src/mythic_rdt/modeling.py | modified requires() | ~238 |
+| 10:57 | Edited src/mythic_rdt/modeling.py | expanded (+10 lines) | ~236 |
+
+## Session: 2026-05-10 11:02
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-10 11:03
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-10 13:47
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-10 16:32
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 17:02 | Edited scripts/humaneval_smoke.py | added 1 condition(s) | ~681 |
+| 17:04 | Edited scripts/humaneval_smoke.py | 3→2 lines | ~23 |
+| 17:04 | Edited scripts/humaneval_smoke.py | 4→3 lines | ~48 |
+| 17:04 | Edited scripts/humaneval_smoke.py | expanded (+10 lines) | ~268 |
+| 17:07 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_smoke_lora_autodetect.md | — | ~553 |
+
+## Session: 2026-05-10 19:15
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 20:09 | Edited src/mythic_rdt/recurrence.py | modified v6W() | ~260 |
+| 20:09 | Edited src/mythic_rdt/recurrence.py | expanded (+7 lines) | ~262 |
+| 20:10 | Edited src/mythic_rdt/modeling.py | 4→5 lines | ~72 |
+| 20:10 | Edited src/mythic_rdt/configuration.py | modified v6W() | ~128 |
+| 20:10 | Edited src/mythic_rdt/configuration.py | 3→4 lines | ~67 |
+| 20:11 | Edited scripts/06_train_sft_recurrence.py | 2→6 lines | ~124 |
+| 20:11 | Edited scripts/06_train_sft_recurrence.py | 3→4 lines | ~55 |
+
+## Session: 2026-05-10 20:11
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 20:12 | Edited scripts/finetune_phase1.py | 3→4 lines | ~54 |
+| 20:14 | Edited scripts/finetune_phase1.py | modified add_argument() | ~226 |
+| 20:15 | Created scripts/pod_runner/run_v6w.sh | — | ~1890 |
+| 20:19 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6w_council_recipe.md | — | ~573 |
+
+## Session: 2026-05-10 20:35
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-10 20:59
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 22:48 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6w_council_audit.md | — | ~688 |
+| 22:48 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~213 |
+
+## Session: 2026-05-10 01:30
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-11 04:00
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-11 15:46
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 19:56 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/feedback_humaneval_smoke_output_schema.md | — | ~874 |
+| 19:56 | Edited ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/MEMORY.md | 1→2 lines | ~205 |
+
+## Session: 2026-05-12 03:05
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 03:11 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6w_final_rejected.md | — | ~711 |
+| 03:15 | Edited scripts/humaneval_smoke.py | expanded (+8 lines) | ~210 |
+| 03:16 | Edited scripts/humaneval_smoke.py | modified exists() | ~615 |
+| 03:16 | Edited src/mythic_rdt/recurrence.py | modified v6X() | ~393 |
+
+## Session: 2026-05-12 03:18
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 03:22 | Created ../../../dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models/Mythic-RDT/scripts/pod_runner/run_v6x.sh | — | ~1636 |
+
+## Session: 2026-05-12 03:27
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 03:31 | Created ../../../../root/.claude/projects/-srv-dev-disk-by-uuid-f8b1803e-334f-4f4b-af3b-f802bb6883c5-backup-models-Mythic-RDT/memory/project_v6x_parked_pending_pod.md | — | ~529 |
+
+## Session: 2026-05-12 03:34
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-12 18:37
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-05-12 18:37
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|

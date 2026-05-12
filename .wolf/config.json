@@ -53,12 +53,12 @@
       "reflection_frequency": "weekly"
     },
     "daemon": {
-      "port": 18790,
+      "port": 18808,
       "log_level": "info"
     },
     "dashboard": {
       "enabled": true,
-      "port": 18791
+      "port": 18809
     },
     "designqc": {
       "enabled": true,
