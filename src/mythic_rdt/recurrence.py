@@ -395,17 +395,26 @@ class RecurrenceCell(nn.Module):
                 # iteration is a convex combination, not a replacement.
                 # LTI injection — by default dropped (legacy behavior); v6W+
                 # re-introduces it at a small FIXED scale (lti_residual_scale,
-                # default 0.0). The scale is independent of `mix` so LTI
-                # cannot blow up ||h|| even if the block_out residual is
-                # near-zero (the trained gate/layerscale can't amplify LTI
-                # past the fixed cap). 0.01 is the recommended starting
-                # value: large enough to give A_diag/B_proj a real gradient
-                # signal, small enough to stay bounded across T iterations
-                # (||h|| growth ≤ 1 + T·0.01·||inj||/||h|| ≈ 4% over T=4).
+                # default 0.0). v6X (2026-05-12 council fix): the LTI add is
+                # now INSIDE the `mix` blend so gate=0 -> h_next=h is true
+                # bit-identity to base even when LTI is active. v6W placed
+                # the LTI add OUTSIDE the gate, breaking the gate=0 identity
+                # invariant and contributing to the T=4 LCB collapse:
+                #   v6W (broken):
+                #     h_next = h + mix*(block_out-h) + s·injection
+                #     gate=0 -> h_next = h + s·injection ≠ h
+                #   v6X (correct):
+                #     h_next = h + mix*((block_out-h) + s·injection)
+                #     gate=0 -> h_next = h (true identity)
+                # 0.01 stays the recommended scale; under v6X gating the
+                # trained gate can fully suppress LTI when needed, so the
+                # noise mode that wrecked v6W generation is gated off.
                 mix = (ls * gate_value).clamp(min=0.0, max=1.0)
-                h_next = h + mix * (block_out - h)
                 if self.lti_residual_scale != 0.0:
-                    h_next = h_next + self.lti_residual_scale * injection
+                    delta = (block_out - h) + self.lti_residual_scale * injection
+                else:
+                    delta = block_out - h
+                h_next = h + mix * delta
             else:
                 # v3+ original block_mode: h_next = block_out + ε·inj.
                 # KNOWN BROKEN at T>=2 because there's no h-residual to

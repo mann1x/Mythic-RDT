@@ -964,6 +964,14 @@ def parse_args() -> argparse.Namespace:
                         "build. v3 default 0.0; v0-v2 used -3.0.")
     p.add_argument("--layerscale-init", type=float, default=1e-4)
     p.add_argument("--layerscale-clamp-max", type=float, default=None)
+    p.add_argument("--lti-residual-scale", type=float, default=None,
+                   help="LTI residual scale at eval time. If --checkpoint is "
+                        "given AND this is unset, auto-loaded from the ckpt's "
+                        "mythic_rdt_config.json. v6V/v6W bug: if the trained "
+                        "wrapper used lti_residual_scale>0 but smoke construct "
+                        "the cfg with default 0.0, LTI is DEAD at eval -> "
+                        "trained behaviour partially silenced. Default None = "
+                        "auto-detect (recommended).")
     p.add_argument("--force-bypass", action="store_true",
                    help="Phase 0 sanity: zero gate AND layerscale at every "
                         "iteration so block_out flows through unmodified. "
@@ -1205,6 +1213,34 @@ def main() -> int:
                   f"— skipping legacy overwrite")
         return 0
 
+    # Auto-detect lti_residual_scale from ckpt config if a checkpoint is
+    # provided and the user didn't override on the CLI. Closes the v6V/v6W
+    # eval bug: smoke previously hard-coded the 0.0 default, silencing LTI
+    # at eval even when training had it active.
+    _lti_eff = args.lti_residual_scale
+    if _lti_eff is None and args.checkpoint:
+        from pathlib import Path as _Path
+        _ckpt_dir = _Path(args.checkpoint)
+        if not (_ckpt_dir / "mythic_rdt_config.json").exists():
+            _subs = sorted(_ckpt_dir.glob("checkpoint-*"),
+                           key=lambda p: int(p.name.split("-")[1]))
+            if _subs:
+                _ckpt_dir = _subs[-1]
+        _cfg_path = _ckpt_dir / "mythic_rdt_config.json"
+        if _cfg_path.exists():
+            try:
+                with open(_cfg_path) as _f:
+                    _ckpt_cfg = json.load(_f)
+                _lti_eff = float(_ckpt_cfg.get("lti_residual_scale", 0.0))
+                print(f"[smoke] auto-detected lti_residual_scale={_lti_eff} "
+                      f"from {_cfg_path}")
+            except Exception as _e:
+                print(f"[smoke] WARN failed to read lti_residual_scale from "
+                      f"{_cfg_path}: {_e}; defaulting 0.0")
+                _lti_eff = 0.0
+    if _lti_eff is None:
+        _lti_eff = 0.0
+
     cfg = MythicRDTDeepseekV2Config(
         prelude_layers=args.prelude_layers,
         coda_layers=args.coda_layers,
@@ -1217,6 +1253,7 @@ def main() -> int:
         gate_init_bias=args.gate_init_bias,
         layerscale_init=args.layerscale_init,
         layerscale_clamp_max=args.layerscale_clamp_max,
+        lti_residual_scale=_lti_eff,
         train_loop_iters=1,
         max_loop_iters=(args.max_loop_iters if args.max_loop_iters is not None
                         else max(args.T_values)),
